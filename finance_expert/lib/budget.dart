@@ -46,7 +46,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(children: [
-          Positioned(top: 0, left: 0, right: 0, child: Container(height: 1.5, decoration: const BoxDecoration(gradient: LinearGradient(colors: [AppColors.tertiary, Colors.transparent])))),
+          Positioned(top: 0, left: 0, right: 0, child: Container(height: 1.5, decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.tertiary, Colors.transparent])))),
           Padding(
             padding: EdgeInsets.all(s.sp(16)),
             child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

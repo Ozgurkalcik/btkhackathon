@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "670307146743",
+    "project_id": "btkhackathon-f309b",
+    "storage_bucket": "btkhackathon-f309b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:670307146743:android:483ffd6b5f67a151b82cf2",
+        "android_client_info": {
+          "package_name": "com.example.finance_expert"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "670307146743-pn7j3206ic5l3ds92lvi2vuvlm9ub4pr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9Jmwm4Gj2XWPVZrqHZ5dEinBtpzxbqXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "670307146743-pn7j3206ic5l3ds92lvi2vuvlm9ub4pr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "670307146743-qrooiglv68a0d8eqd781p83r10jd4lum.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.financeExpert"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

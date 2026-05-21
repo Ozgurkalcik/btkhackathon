@@ -17,11 +17,52 @@ class SecureStorageService {
   static const _keyBankClientId = 'bank_client_id_';
   static const _keyBankClientSecret = 'bank_client_secret_';
   static const _keyHiveEncryptionKey = 'hive_encryption_key';
-  static const _keyUserPin = 'user_pin_hash';
   static const _keyBiometricEnabled = 'biometric_enabled';
   static const _keyThemeMode = 'theme_mode';
   static const _keyNotificationsEnabled = 'notifications_enabled';
   static const _keyAiInsightsEnabled = 'ai_insights_enabled';
+  static const _keyRememberMe = 'remember_me';
+  static const _keyRememberMeEmail = 'remember_me_email';
+  static const _keyRememberMeExpiry = 'remember_me_expiry';
+
+  // ═══════════════════════════════════════════════
+  //  BENİ HATIRLA (REMEMBER ME)
+  // ═══════════════════════════════════════════════
+
+  /// Beni hatırla durumunu ve e-postayı güvenli depoya kaydet
+  static Future<void> setRememberMe(bool enabled, {String? email}) async {
+    await _storage.write(key: _keyRememberMe, value: enabled.toString());
+    if (enabled && email != null) {
+      await _storage.write(key: _keyRememberMeEmail, value: email);
+      final expiry = DateTime.now().add(const Duration(days: 30)).millisecondsSinceEpoch;
+      await _storage.write(key: _keyRememberMeExpiry, value: expiry.toString());
+    } else {
+      await _storage.delete(key: _keyRememberMeEmail);
+      await _storage.delete(key: _keyRememberMeExpiry);
+    }
+  }
+
+  /// Beni hatırla aktif mi?
+  static Future<bool> isRememberMeEnabled() async {
+    final val = await _storage.read(key: _keyRememberMe);
+    return val == 'true';
+  }
+
+  /// Kaydedilen Beni hatırla e-postasını oku
+  static Future<String?> getRememberMeEmail() async {
+    return _storage.read(key: _keyRememberMeEmail);
+  }
+
+  /// Beni hatırla süresi geçerli mi? (1 ay)
+  static Future<bool> isRememberMeValid() async {
+    final enabled = await isRememberMeEnabled();
+    if (!enabled) return false;
+    final expiryStr = await _storage.read(key: _keyRememberMeExpiry);
+    if (expiryStr == null) return false;
+    final expiry = int.tryParse(expiryStr);
+    if (expiry == null) return false;
+    return DateTime.now().millisecondsSinceEpoch < expiry;
+  }
 
   // ═══════════════════════════════════════════════
   //  GEMİNİ API KEY
@@ -101,6 +142,65 @@ class SecureStorageService {
   static Future<bool> isBiometricEnabled() async {
     final val = await _storage.read(key: _keyBiometricEnabled);
     return val == 'true';
+  }
+
+  static const _keyBiometricEmail = 'biometric_email';
+  static const _keyBiometricPassword = 'biometric_password';
+  static const _keyTwoFactorEnabledPrefix = '2fa_enabled_';
+  static const _keyTwoFactorSecretPrefix = '2fa_secret_';
+
+  // ═══════════════════════════════════════════════
+  //  BİYOMETRİK ŞİFRE SAKLAMA
+  // ═══════════════════════════════════════════════
+
+  /// Biyometrik giriş için kullanıcı bilgilerini kaydet
+  static Future<void> saveBiometricCredentials(String email, String password) async {
+    await _storage.write(key: _keyBiometricEmail, value: email);
+    await _storage.write(key: _keyBiometricPassword, value: password);
+  }
+
+  /// Biyometrik giriş için kaydedilmiş bilgileri oku
+  static Future<({String? email, String? password})> getBiometricCredentials() async {
+    final email = await _storage.read(key: _keyBiometricEmail);
+    final password = await _storage.read(key: _keyBiometricPassword);
+    return (email: email, password: password);
+  }
+
+  /// Biyometrik kimlik bilgilerini sil
+  static Future<void> deleteBiometricCredentials() async {
+    await _storage.delete(key: _keyBiometricEmail);
+    await _storage.delete(key: _keyBiometricPassword);
+  }
+
+  // ═══════════════════════════════════════════════
+  //  İKİ FAKTÖRLÜ DOĞRULAMA (2FA)
+  // ═══════════════════════════════════════════════
+
+  /// Kullanıcı bazlı 2FA aktiflik durumunu kaydet
+  static Future<void> setTwoFactorEnabled(String email, bool enabled) async {
+    await _storage.write(key: '$_keyTwoFactorEnabledPrefix$email', value: enabled.toString());
+  }
+
+  /// Kullanıcı bazlı 2FA aktif mi?
+  static Future<bool> isTwoFactorEnabled(String email) async {
+    final val = await _storage.read(key: '$_keyTwoFactorEnabledPrefix$email');
+    return val == 'true';
+  }
+
+  /// Kullanıcı bazlı 2FA gizli anahtarını (secret) kaydet
+  static Future<void> setTwoFactorSecret(String email, String secret) async {
+    await _storage.write(key: '$_keyTwoFactorSecretPrefix$email', value: secret);
+  }
+
+  /// Kullanıcı bazlı 2FA gizli anahtarını (secret) oku
+  static Future<String?> getTwoFactorSecret(String email) async {
+    return _storage.read(key: '$_keyTwoFactorSecretPrefix$email');
+  }
+
+  /// Kullanıcının 2FA ayarlarını sil
+  static Future<void> deleteTwoFactor(String email) async {
+    await _storage.delete(key: '$_keyTwoFactorEnabledPrefix$email');
+    await _storage.delete(key: '$_keyTwoFactorSecretPrefix$email');
   }
 
   // ═══════════════════════════════════════════════

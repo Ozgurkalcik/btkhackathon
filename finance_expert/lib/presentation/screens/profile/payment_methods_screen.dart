@@ -37,66 +37,68 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
         final sizes = AppSizes(context);
         return Padding(
           padding: EdgeInsets.only(
-            bottom: MediaQuery.of(ctx).viewInsets.bottom,
+            bottom: MediaQuery.viewInsetsOf(ctx).bottom,
             left: sizes.sp(20),
             right: sizes.sp(20),
             top: sizes.sp(20),
           ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Yeni Kart Ekle', style: TextStyle(fontSize: sizes.sp(20), fontWeight: FontWeight.bold)),
-                SizedBox(height: sizes.sp(20)),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Banka Adı', border: OutlineInputBorder()),
-                  validator: (val) => val == null || val.isEmpty ? 'Gerekli' : null,
-                  onSaved: (val) => _newBankName = val!,
-                ),
-                SizedBox(height: sizes.sp(16)),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Kart Numarası', border: OutlineInputBorder()),
-                  keyboardType: TextInputType.number,
-                  validator: (val) => val == null || val.length < 16 ? 'Geçersiz kart numarası' : null,
-                  onSaved: (val) {
-                    final str = val ?? '';
-                    final last4 = str.length > 4 ? str.substring(str.length - 4) : str;
-                    _newCardNumber = '**** **** **** $last4';
-                  },
-                ),
-                SizedBox(height: sizes.sp(16)),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Son Kullanma (MM/YY)', border: OutlineInputBorder()),
-                  validator: (val) => val == null || val.isEmpty ? 'Gerekli' : null,
-                  onSaved: (val) => _newExpiry = val!,
-                ),
-                SizedBox(height: sizes.sp(24)),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
-                    minimumSize: Size(double.infinity, sizes.sp(50)),
+          child: RepaintBoundary(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Yeni Kart Ekle', style: TextStyle(fontSize: sizes.sp(20), fontWeight: FontWeight.bold)),
+                  SizedBox(height: sizes.sp(20)),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Banka Adı', border: OutlineInputBorder()),
+                    validator: (val) => val == null || val.isEmpty ? 'Gerekli' : null,
+                    onSaved: (val) => _newBankName = val!,
                   ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState!.save();
-                      setState(() {
-                        _cards.add(PaymentCard(
-                          number: _newCardNumber,
-                          expiry: _newExpiry,
-                          bankName: _newBankName,
-                          bgColor: AppColors.secondaryContainer,
-                        ));
-                      });
-                      Navigator.pop(ctx);
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Kart başarıyla eklendi!')));
-                    }
-                  },
-                  child: const Text('Kaydet'),
-                ),
-                SizedBox(height: sizes.sp(20)),
-              ],
+                  SizedBox(height: sizes.sp(16)),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Kart Numarası', border: OutlineInputBorder()),
+                    keyboardType: TextInputType.number,
+                    validator: (val) => val == null || val.length < 16 ? 'Geçersiz kart numarası' : null,
+                    onSaved: (val) {
+                      final str = val ?? '';
+                      final last4 = str.length > 4 ? str.substring(str.length - 4) : str;
+                      _newCardNumber = '**** **** **** $last4';
+                    },
+                  ),
+                  SizedBox(height: sizes.sp(16)),
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Son Kullanma (MM/YY)', border: OutlineInputBorder()),
+                    validator: (val) => val == null || val.isEmpty ? 'Gerekli' : null,
+                    onSaved: (val) => _newExpiry = val!,
+                  ),
+                  SizedBox(height: sizes.sp(24)),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: AppColors.onPrimary,
+                      minimumSize: Size(double.infinity, sizes.sp(50)),
+                    ),
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _formKey.currentState!.save();
+                        setState(() {
+                          _cards.add(PaymentCard(
+                            number: _newCardNumber,
+                            expiry: _newExpiry,
+                            bankName: _newBankName,
+                            bgColor: AppColors.secondaryContainer,
+                          ));
+                        });
+                        Navigator.pop(ctx);
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Kart başarıyla eklendi!')));
+                      }
+                    },
+                    child: const Text('Kaydet'),
+                  ),
+                  SizedBox(height: sizes.sp(20)),
+                ],
+              ),
             ),
           ),
         );
@@ -153,7 +155,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             label: const Text('Yeni Kart Ekle'),
             style: OutlinedButton.styleFrom(
               foregroundColor: AppColors.primary,
-              side: const BorderSide(color: AppColors.primary),
+              side: BorderSide(color: AppColors.primary),
               padding: EdgeInsets.symmetric(vertical: sizes.sp(16)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),

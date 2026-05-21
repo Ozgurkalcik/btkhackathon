@@ -1,29 +1,47 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'presentation/widgets/glass_container.dart';
 
 /// Tüm sayfalar arasında paylaşılan renk paleti
 class AppColors {
-  static const Color background = Color(0xFF101415);
-  static const Color surface = Color(0xFF101415);
-  static const Color surfaceContainer = Color(0xFF1D2022);
-  static const Color surfaceContainerHigh = Color(0xFF272A2C);
-  static const Color surfaceContainerHighest = Color(0xFF323537);
-  static const Color surfaceContainerLow = Color(0xFF191C1E);
+  // Arka Plan (Light Mode: #e9edf05b, Dark Mode: #0B1020)
+  static const Color backgroundLight = Color(0xFFF8FAFC);
+  static const Color background = Color(0xFF0B1020); // Default to Dark Mode as requested
+  
+  // Surface colors for Dark Mode
+  static const Color surface = Color(0xFF131A2E);
+  static const Color surfaceContainer = Color(0xFF1B233E); // Slightly lighter than background card
+  static const Color surfaceContainerHigh = Color(0xFF242F50);
+  static const Color surfaceContainerHighest = Color(0xFF2E3A60);
+  static const Color surfaceContainerLow = Color(0xFF080C18);
 
-  static const Color primary = Color(0xFF4EDEA3);
-  static const Color primaryContainer = Color(0xFF10B981);
-  static const Color secondary = Color(0xFFFFB2B9);
-  static const Color secondaryContainer = Color(0xFF891933);
-  static const Color tertiary = Color(0xFFFFB95F);
-  static const Color tertiaryContainer = Color(0xFFE29100);
-  static const Color error = Color(0xFFFFB4AB);
-  static const Color errorContainer = Color(0xFF93000a);
+  // Ana Renk (Primary): #00C896 (Mint Green matching financialGreen)
+  static const Color primary = Color(0xFF00C896);
+  static const Color primaryContainer = Color(0xFF005E46); // Darker mint
+  
+  // Gelir (Income): #00C896
+  static const Color secondary = Color(0xFF00E5FF); // Neon Cyan
+  static const Color income = Color(0xFF00C896); // Mint
+  
+  // Gider (Expense): Neon Red/Pink
+  static const Color error = Color(0xFFFF4A5A); 
+  static const Color expense = Color(0xFFFF4A5A);
 
-  static const Color onBackground = Color(0xFFE0E3E5);
-  static const Color onSurface = Color(0xFFE0E3E5);
-  static const Color onSurfaceVariant = Color(0xFFBBCABF);
-  static const Color onPrimary = Color(0xFF003824);
-  static const Color onPrimaryContainer = Color(0xFF00422B);
+  // Tasarruf / Yatırım: Neon Purple #7C5CFF
+  static const Color tertiary = Color(0xFF7C5CFF);
+  static const Color savings = Color(0xFF7C5CFF);
+  static const Color tertiaryContainer = Color(0xFF5338B3);
+  static const Color secondaryContainer = Color(0xFF007C8C);
+
+  // Bilgilendirme: Neon Cyan #00E5FF
+  static const Color info = Color(0xFF00E5FF);
+
+  // Text Colors
+  static const Color onBackground = Color(0xFFFFFFFF);
+  static const Color onSurface = Color(0xFFFFFFFF);
+  static const Color onSurfaceVariant = Color(0xFF94A3B8); // Slate 400
+  static const Color onPrimary = Color(0xFFFFFFFF);
+  static const Color onPrimaryContainer = Color(0xFFE0F2FE);
 }
 
 /// Responsive boyut hesaplama yardımcıları
@@ -34,9 +52,9 @@ class AppSizes {
   late final double scaleFactor;
 
   AppSizes(this.context) {
-    final mq = MediaQuery.of(context);
-    screenWidth = mq.size.width;
-    screenHeight = mq.size.height;
+    final size = MediaQuery.sizeOf(context);
+    screenWidth = size.width;
+    screenHeight = size.height;
     // 375 genişlik referans alınarak ölçeklendirme (iPhone SE bazlı)
     scaleFactor = (screenWidth / 375).clamp(0.8, 1.4);
   }
@@ -61,9 +79,9 @@ class AppSizes {
 /// Sayfa index -> route mapping
 const Map<int, String> _navRoutes = {
   0: '/',
-  1: '/health',
-  2: '/scan',
-  3: '/analytics',
+  1: '/transactions',
+  2: '/assistant',
+  3: '/health',
   4: '/budget',
 };
 
@@ -93,6 +111,7 @@ AppBar buildCommonAppBar({
   required BuildContext context,
 }) {
   final sizes = AppSizes(context);
+  final activeColor = Theme.of(context).colorScheme.primary;
 
   return AppBar(
     backgroundColor: AppColors.background.withOpacity(0.8),
@@ -101,7 +120,7 @@ AppBar buildCommonAppBar({
     automaticallyImplyLeading: false,
     leading: showBackButton
         ? IconButton(
-            icon: const Icon(Icons.arrow_back, color: AppColors.primary),
+            icon: Icon(Icons.arrow_back, color: activeColor),
             onPressed: onBackPressed ?? () => Navigator.maybePop(context),
           )
         : null,
@@ -130,9 +149,9 @@ AppBar buildCommonAppBar({
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: AppColors.surfaceContainerHigh,
-              border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+              border: Border.all(color: activeColor.withOpacity(0.3)),
             ),
-            child: Icon(Icons.person, color: AppColors.primary, size: sizes.sp(18)),
+            child: Icon(Icons.person, color: activeColor, size: sizes.sp(18)),
           ),
         ),
         SizedBox(width: sizes.sp(12)),
@@ -141,7 +160,7 @@ AppBar buildCommonAppBar({
           style: TextStyle(
             fontSize: sizes.sp(24),
             fontWeight: FontWeight.w700,
-            color: AppColors.primary,
+            color: activeColor,
             letterSpacing: -0.5,
           ),
         ),
@@ -149,7 +168,7 @@ AppBar buildCommonAppBar({
     ),
     actions: [
       IconButton(
-        icon: const Icon(Icons.notifications_outlined, color: AppColors.primary),
+        icon: Icon(Icons.notifications_outlined, color: activeColor),
         onPressed: () {},
       ),
       SizedBox(width: sizes.sp(8)),
@@ -160,67 +179,215 @@ AppBar buildCommonAppBar({
 /// Ortak Bottom Navigation Bar builder
 Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
   final sizes = AppSizes(context);
-  final bottomPadding = MediaQuery.of(context).padding.bottom;
+  final bottomPadding = MediaQuery.paddingOf(context).bottom;
 
-  return Container(
-    height: sizes.sp(72) + bottomPadding,
-    padding: EdgeInsets.only(bottom: bottomPadding),
-    decoration: BoxDecoration(
-      color: AppColors.surfaceContainer,
-      borderRadius: const BorderRadius.only(
-        topLeft: Radius.circular(12),
-        topRight: Radius.circular(12),
-      ),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.4),
-          blurRadius: 12,
-          offset: const Offset(0, -4),
-        ),
-      ],
-    ),
+  return GlassContainer(
+    margin: EdgeInsets.only(left: sizes.sp(16), right: sizes.sp(16), bottom: sizes.sp(16) + bottomPadding),
+    height: sizes.sp(68),
+    borderRadius: 34,
+    blur: 24.0,
+    gradientColors: [
+      Colors.white.withOpacity(0.10),
+      Colors.white.withOpacity(0.03),
+    ],
+    border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.2),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildNavItem(context, selectedIndex, 0, Icons.dashboard, 'Panel', sizes),
-        _buildNavItem(context, selectedIndex, 1, Icons.health_and_safety, 'Sağlık', sizes),
-        _buildNavItem(context, selectedIndex, 2, Icons.center_focus_strong, 'Tarama', sizes),
-        _buildNavItem(context, selectedIndex, 3, Icons.insights, 'Analiz', sizes),
-        _buildNavItem(context, selectedIndex, 4, Icons.account_balance_wallet, 'Bütçe', sizes),
+        _NavBarItem(
+          index: 0,
+          selectedIndex: selectedIndex,
+          icon: Icons.dashboard,
+          label: 'Ana Sayfa',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 0),
+        ),
+        _NavBarItem(
+          index: 1,
+          selectedIndex: selectedIndex,
+          icon: Icons.receipt_long,
+          label: 'Harcamalar',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 1),
+        ),
+        _NavBarItem(
+          index: 2,
+          selectedIndex: selectedIndex,
+          icon: Icons.auto_awesome,
+          label: 'Asistan',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 2),
+        ),
+        _NavBarItem(
+          index: 3,
+          selectedIndex: selectedIndex,
+          icon: Icons.health_and_safety,
+          label: 'Sağlık',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 3),
+        ),
+        _NavBarItem(
+          index: 4,
+          selectedIndex: selectedIndex,
+          icon: Icons.account_balance_wallet,
+          label: 'Bütçe',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 4),
+        ),
       ],
     ),
   );
 }
 
-Widget _buildNavItem(BuildContext context, int selectedIndex, int index,
-    IconData icon, String label, AppSizes sizes) {
-  final isSelected = selectedIndex == index;
-  final color = isSelected ? AppColors.primary : AppColors.onSurfaceVariant;
+class _NavBarItem extends StatefulWidget {
+  final int index;
+  final int selectedIndex;
+  final IconData icon;
+  final String label;
+  final AppSizes sizes;
+  final VoidCallback onTap;
 
-  return InkWell(
-    onTap: () => navigateToIndex(context, index),
-    borderRadius: BorderRadius.circular(12),
-    child: AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      padding: EdgeInsets.symmetric(horizontal: sizes.sp(8), vertical: sizes.sp(6)),
-      transform: Matrix4.translationValues(0, isSelected ? -2 : 0, 0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, color: color, size: sizes.sp(22)),
-          SizedBox(height: sizes.sp(3)),
-          Text(
-            label,
-            style: TextStyle(
-              color: color,
-              fontSize: sizes.sp(10),
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-            ),
-          ),
+  const _NavBarItem({
+    required this.index,
+    required this.selectedIndex,
+    required this.icon,
+    required this.label,
+    required this.sizes,
+    required this.onTap,
+  });
+
+  @override
+  State<_NavBarItem> createState() => _NavBarItemState();
+}
+
+class _NavBarItemState extends State<_NavBarItem> {
+  bool _isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final isSelected = widget.selectedIndex == widget.index;
+    final activeColor = AppColors.primary;
+
+    Color iconTextColor;
+    if (isSelected) {
+      iconTextColor = activeColor;
+    } else if (_isHovered) {
+      iconTextColor = activeColor.withOpacity(0.95);
+    } else {
+      iconTextColor = AppColors.onSurfaceVariant;
+    }
+
+    Decoration decoration;
+    if (isSelected) {
+      decoration = BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        gradient: LinearGradient(
+          colors: [
+            activeColor.withOpacity(0.22),
+            activeColor.withOpacity(0.06),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(
+          color: activeColor.withOpacity(0.4),
+          width: 1.5,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: activeColor.withOpacity(0.25),
+            blurRadius: 14,
+            offset: const Offset(0, 4),
+            spreadRadius: 1,
+          )
         ],
+      );
+    } else if (_isHovered) {
+      decoration = BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        gradient: LinearGradient(
+          colors: [
+            activeColor.withOpacity(0.10),
+            activeColor.withOpacity(0.02),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        border: Border.all(
+          color: activeColor.withOpacity(0.25),
+          width: 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: activeColor.withOpacity(0.08),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          )
+        ],
+      );
+    } else {
+      decoration = BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(
+          color: Colors.transparent,
+          width: 1.0,
+        ),
+      );
+    }
+
+    return InkWell(
+      onTap: widget.onTap,
+      onHover: (hovered) {
+        setState(() {
+          _isHovered = hovered;
+        });
+      },
+      hoverColor: Colors.transparent,
+      highlightColor: activeColor.withOpacity(0.1),
+      splashColor: activeColor.withOpacity(0.2),
+      borderRadius: BorderRadius.circular(24),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        padding: EdgeInsets.symmetric(
+          horizontal: widget.sizes.sp(12),
+          vertical: widget.sizes.sp(8),
+        ),
+        decoration: decoration,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedScale(
+              scale: isSelected ? 1.10 : (_isHovered ? 1.05 : 1.0),
+              duration: const Duration(milliseconds: 200),
+              child: Icon(widget.icon, color: iconTextColor, size: widget.sizes.sp(22)),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.easeOutCubic,
+              child: (isSelected || _isHovered)
+                  ? Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SizedBox(width: widget.sizes.sp(6)),
+                        Text(
+                          widget.label,
+                          style: TextStyle(
+                            color: iconTextColor,
+                            fontSize: widget.sizes.sp(11),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 /// Boş durum widget'ı — veri yokken gösterilir

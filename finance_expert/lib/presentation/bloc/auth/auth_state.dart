@@ -21,6 +21,17 @@ class AuthAuthenticated extends AuthState {
 
 class AuthUnauthenticated extends AuthState {}
 
+class AuthPasswordResetEmailSent extends AuthState {}
+
+class AuthTwoFactorRequired extends AuthState {
+  final String email;
+  final String token;
+  const AuthTwoFactorRequired(this.email, this.token);
+
+  @override
+  List<Object?> get props => [email, token];
+}
+
 class AuthError extends AuthState {
   final String message;
   const AuthError(this.message);

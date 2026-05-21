@@ -1,5 +1,5 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
-import '../../core/security/secure_storage_service.dart';
+import '../../../core/security/secure_storage_service.dart';
 
 /// Gemini API Datasource
 ///

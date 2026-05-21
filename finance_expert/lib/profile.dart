@@ -5,6 +5,9 @@ import 'services/data_repository.dart';
 import 'config/bank_config.dart';
 import 'presentation/bloc/settings/settings_cubit.dart';
 import 'presentation/bloc/settings/settings_state.dart';
+import 'dart:convert';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'core/security/encrypted_storage.dart';
 import 'presentation/bloc/auth/auth_cubit.dart';
 import 'core/security/secure_storage_service.dart';
 
@@ -16,6 +19,37 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   final DataRepository _repo = DataRepository();
+  String _displayName = 'Kullanıcı';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserDisplayName();
+  }
+
+  void _loadUserDisplayName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      setState(() {
+        _displayName = user.displayName ?? 'Kullanıcı';
+      });
+      try {
+        final String profileKey = 'user_profile_${user.uid}';
+        final storedData = await EncryptedStorage.get<String>(
+          EncryptedStorage.boxUserProfile,
+          profileKey,
+        );
+        if (storedData != null) {
+          final profileMap = Map<String, dynamic>.from(jsonDecode(storedData));
+          if (profileMap['name'] != null && profileMap['name'].toString().isNotEmpty) {
+            setState(() {
+              _displayName = profileMap['name'];
+            });
+          }
+        }
+      } catch (_) {}
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +92,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         width: s.sp(96), height: s.sp(96), padding: EdgeInsets.all(s.sp(4)),
         decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.primary, width: 4)),
         child: Container(
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.surfaceContainerHigh),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.surfaceContainerHigh),
           child: Icon(Icons.person, color: AppColors.primary, size: s.sp(40)),
         ),
       ),
       SizedBox(height: s.sp(16)),
-      Text('Kullanıcı', style: TextStyle(fontSize: s.sp(24), fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface)),
+      Text(_displayName, style: TextStyle(fontSize: s.sp(24), fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface)),
       SizedBox(height: s.sp(8)),
       Container(
         padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(6)),
@@ -167,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Container(
       decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03), borderRadius: BorderRadius.circular(12), border: Border.all(color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05))),
       child: Column(children: [
-        _buildListTile(Icons.person, 'Kişisel Bilgiler', true, s, onTap: () => Navigator.pushNamed(context, '/profile/personal_info')),
+        _buildListTile(Icons.person, 'Kişisel Bilgiler', true, s, onTap: () => Navigator.pushNamed(context, '/profile/personal_info').then((_) => _loadUserDisplayName())),
         _buildListTile(Icons.payments, 'Ödeme Yöntemleri', true, s, onTap: () => Navigator.pushNamed(context, '/profile/payment_methods')),
         _buildListTile(Icons.shield, 'Güvenlik', true, s, onTap: () => Navigator.pushNamed(context, '/profile/security_settings')),
         _buildGeminiApiTile(s, isDark),
@@ -216,12 +250,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context) {
         return AlertDialog(
           title: const Text('Gemini API Anahtarı'),
-          content: TextField(
-            controller: controller,
-            obscureText: true,
-            decoration: const InputDecoration(
-              hintText: 'API Anahtarınızı girin',
-              border: OutlineInputBorder(),
+          content: RepaintBoundary(
+            child: TextField(
+              controller: controller,
+              obscureText: true,
+              decoration: const InputDecoration(
+                hintText: 'API Anahtarınızı girin',
+                border: OutlineInputBorder(),
+              ),
             ),
           ),
           actions: [

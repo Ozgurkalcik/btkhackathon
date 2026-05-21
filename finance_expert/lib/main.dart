@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-import 'analytics.dart' as analytics;
-import 'budget.dart' as budget;
+import 'presentation/screens/transactions_screen.dart';
+import 'presentation/screens/assistant_screen.dart';
 import 'dashbroad.dart' as dashboard;
+import 'budget.dart' as budget;
 import 'health.dart' as health;
 import 'profile.dart' as profile;
-import 'scan.dart' as scan;
 import 'services/data_repository.dart';
 
 import 'presentation/bloc/settings/settings_cubit.dart';
@@ -23,6 +25,9 @@ import 'presentation/screens/profile/security_settings_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await DataRepository().initialize();
   runApp(const MyApp());
 }
@@ -42,22 +47,24 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Finance Expert',
             debugShowCheckedModeBanner: false,
-            themeMode: state.themeMode,
-            theme: ThemeData.light().copyWith(
-              scaffoldBackgroundColor: const Color(0xFFF0F2F5),
-              textTheme: ThemeData.light().textTheme.apply(
-                    fontFamily: 'Inter',
-                    bodyColor: const Color(0xFF101415),
-                    displayColor: const Color(0xFF101415),
-                  ),
+            themeMode: ThemeMode.dark, // The user requested Dark Mode as default/mandatory
+            theme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF00C896),
+                brightness: Brightness.light,
+              ),
+              scaffoldBackgroundColor: const Color(0xFFF8FAFC), // Light: #F8FAFC
+              textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Inter'),
             ),
-            darkTheme: ThemeData.dark().copyWith(
-              scaffoldBackgroundColor: const Color(0xFF101415),
-              textTheme: ThemeData.dark().textTheme.apply(
-                    fontFamily: 'Inter',
-                    bodyColor: const Color(0xFFE0E3E5),
-                    displayColor: const Color(0xFFE0E3E5),
-                  ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: ColorScheme.fromSeed(
+                seedColor: const Color(0xFF00C896),
+                brightness: Brightness.dark,
+              ),
+              scaffoldBackgroundColor: const Color(0xFF0B1020), // Dark: #0B1020
+              textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Inter'),
             ),
             initialRoute: '/auth_check',
             routes: {
@@ -65,11 +72,11 @@ class MyApp extends StatelessWidget {
               '/login': (context) => const LoginScreen(),
               '/register': (context) => const RegisterScreen(),
               '/': (context) => const dashboard.DashboardScreen(),
-              '/analytics': (context) => const analytics.AnalyticsScreen(),
-              '/budget': (context) => const budget.BudgetScreen(),
+              '/transactions': (context) => const TransactionsScreen(),
+              '/assistant': (context) => const AssistantScreen(),
               '/health': (context) => const health.HealthDashboardScreen(),
+              '/budget': (context) => const budget.BudgetScreen(),
               '/profile': (context) => const profile.ProfileScreen(),
-              '/scan': (context) => const scan.ResolutionScreen(),
               '/profile/personal_info': (context) => const PersonalInfoScreen(),
               '/profile/payment_methods': (context) => const PaymentMethodsScreen(),
               '/profile/security_settings': (context) => const SecuritySettingsScreen(),

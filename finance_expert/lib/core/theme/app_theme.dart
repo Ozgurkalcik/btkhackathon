@@ -58,7 +58,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.financialGreen, width: 2),
+          borderSide: BorderSide(color: AppColors.financialGreen, width: 2),
         ),
         hintStyle: GoogleFonts.inter(color: AppColors.textDarkSecondary),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -137,7 +137,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: const BorderSide(color: AppColors.trustBlue, width: 2),
+          borderSide: BorderSide(color: AppColors.trustBlue, width: 2),
         ),
         hintStyle: GoogleFonts.inter(color: AppColors.textLightSecondary),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),

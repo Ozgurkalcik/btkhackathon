@@ -60,7 +60,7 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
           padding: EdgeInsets.all(s.sp(12)),
           decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(8), border: Border.all(color: AppColors.primaryContainer.withOpacity(0.2))),
           child: Row(children: [
-            Container(width: s.sp(40), height: s.sp(40), decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryContainer), child: Icon(hasApi ? Icons.check_circle : Icons.hourglass_empty, color: AppColors.onPrimaryContainer, size: s.sp(20))),
+            Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryContainer), child: Icon(hasApi ? Icons.check_circle : Icons.hourglass_empty, color: AppColors.onPrimaryContainer, size: s.sp(20))),
             SizedBox(width: s.sp(16)),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text('Çözümlenmiş Sonuç', style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
@@ -182,7 +182,7 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
 class _ArrowPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..shader = const LinearGradient(colors: [AppColors.primary, AppColors.primaryContainer]).createShader(Rect.fromLTWH(0, 0, size.width, size.height))..style = PaintingStyle.stroke..strokeWidth = 2.0;
+    final paint = Paint()..shader = LinearGradient(colors: [AppColors.primary, AppColors.primaryContainer]).createShader(Rect.fromLTWH(0, 0, size.width, size.height))..style = PaintingStyle.stroke..strokeWidth = 2.0;
     final cy = size.height / 2;
     canvas.drawLine(Offset(0, cy), Offset(size.width - 6, cy), paint);
     canvas.drawPath(Path()..moveTo(size.width, cy)..lineTo(size.width - 6, cy - 4)..lineTo(size.width - 6, cy + 4)..close(), Paint()..color = AppColors.primaryContainer..style = PaintingStyle.fill);

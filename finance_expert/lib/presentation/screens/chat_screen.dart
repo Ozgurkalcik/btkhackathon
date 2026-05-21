@@ -5,7 +5,7 @@ import '../../domain/entities/chat_message.dart';
 import '../bloc/chat/chat_bloc.dart';
 import '../bloc/chat/chat_event.dart';
 import '../bloc/chat/chat_state.dart';
-import '../../navigation_helper.dart';
+import '../../navigation_helper.dart' hide AppColors;
 
 /// Gemini AI Chat Ekranı
 class ChatScreen extends StatefulWidget {
@@ -81,7 +81,7 @@ class _ChatScreenState extends State<ChatScreen> {
         Container(
           width: s.sp(36), height: s.sp(36),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(colors: [AppColors.financialGreen, AppColors.financialGreenDark]),
+            gradient: LinearGradient(colors: [AppColors.financialGreen, AppColors.financialGreenDark]),
             borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(Icons.auto_awesome, color: AppColors.trustBlue, size: s.sp(20)),
@@ -104,16 +104,18 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget _buildChatBody(ChatLoaded state, AppSizes s, {String? errorMessage}) {
     return Column(children: [
       Expanded(
-        child: ListView.builder(
-          controller: _scrollController,
-          padding: EdgeInsets.all(s.sp(16)),
-          itemCount: state.messages.length + (state.isAiTyping ? 1 : 0),
-          itemBuilder: (context, index) {
-            if (index == state.messages.length && state.isAiTyping) {
-              return _buildTypingIndicator(s);
-            }
-            return _buildMessageBubble(state.messages[index], s);
-          },
+        child: RepaintBoundary(
+          child: ListView.builder(
+            controller: _scrollController,
+            padding: EdgeInsets.all(s.sp(16)),
+            itemCount: state.messages.length + (state.isAiTyping ? 1 : 0),
+            itemBuilder: (context, index) {
+              if (index == state.messages.length && state.isAiTyping) {
+                return _buildTypingIndicator(s);
+              }
+              return _buildMessageBubble(state.messages[index], s);
+            },
+          ),
         ),
       ),
       if (errorMessage != null) _buildErrorBanner(errorMessage, s),
@@ -170,7 +172,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
             width: s.sp(20), height: s.sp(20),
-            child: const CircularProgressIndicator(strokeWidth: 2, color: AppColors.financialGreen),
+            child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.financialGreen),
           ),
           SizedBox(width: s.sp(10)),
           Text('AI düşünüyor...', style: TextStyle(fontSize: s.sp(13), color: AppColors.textDarkSecondary)),
@@ -180,39 +182,41 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget _buildInputBar(AppSizes s) {
-    final bottomPadding = MediaQuery.of(context).padding.bottom;
-    return Container(
-      padding: EdgeInsets.only(left: s.sp(16), right: s.sp(8), top: s.sp(12), bottom: s.sp(12) + bottomPadding),
-      decoration: BoxDecoration(
-        color: AppColors.darkSurfaceContainer,
-        border: const Border(top: BorderSide(color: Colors.white10)),
-      ),
-      child: Row(children: [
-        Expanded(
-          child: TextField(
-            controller: _controller,
-            focusNode: _focusNode,
-            onSubmitted: (_) => _sendMessage(),
-            style: TextStyle(fontSize: s.sp(14), color: AppColors.textDarkPrimary),
-            decoration: InputDecoration(
-              hintText: 'Mesajınızı yazın...',
-              hintStyle: TextStyle(color: AppColors.textDarkSecondary, fontSize: s.sp(14)),
-              filled: true,
-              fillColor: AppColors.darkSurfaceHigh,
-              border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none),
-              contentPadding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(10)),
+    final bottomPadding = MediaQuery.paddingOf(context).bottom;
+    return RepaintBoundary(
+      child: Container(
+        padding: EdgeInsets.only(left: s.sp(16), right: s.sp(8), top: s.sp(12), bottom: s.sp(12) + bottomPadding),
+        decoration: BoxDecoration(
+          color: AppColors.darkSurfaceContainer,
+          border: const Border(top: BorderSide(color: Colors.white10)),
+        ),
+        child: Row(children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              focusNode: _focusNode,
+              onSubmitted: (_) => _sendMessage(),
+              style: TextStyle(fontSize: s.sp(14), color: AppColors.textDarkPrimary),
+              decoration: InputDecoration(
+                hintText: 'Mesajınızı yazın...',
+                hintStyle: TextStyle(color: AppColors.textDarkSecondary, fontSize: s.sp(14)),
+                filled: true,
+                fillColor: AppColors.darkSurfaceHigh,
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide.none),
+                contentPadding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(10)),
+              ),
             ),
           ),
-        ),
-        SizedBox(width: s.sp(8)),
-        Container(
-          decoration: const BoxDecoration(shape: BoxShape.circle, color: AppColors.financialGreen),
-          child: IconButton(
-            icon: Icon(Icons.send, color: AppColors.trustBlue, size: s.sp(20)),
-            onPressed: _sendMessage,
+          SizedBox(width: s.sp(8)),
+          Container(
+            decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.financialGreen),
+            child: IconButton(
+              icon: Icon(Icons.send, color: AppColors.trustBlue, size: s.sp(20)),
+              onPressed: _sendMessage,
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 
