@@ -42,7 +42,7 @@ class AnalyticsEngine {
     'UBER', 'BITAKSI', 'MARTI', 'BINBIN', 'TAXI', 'PETROL OFISI', 'SHELL', 'OPET'
   ];
 
-  List<InsightResult> analyzeHabits(List<Transaction> transactions) {
+  List<InsightResult> analyzeHabits(List<Transaction> transactions, {double currentBalance = 0.0}) {
     List<InsightResult> results = [];
     
     final now = DateTime.now();
@@ -70,6 +70,11 @@ class AnalyticsEngine {
 
     // 5. ANALİZ: Gece Kuşu (Dürtüsel Alışveriş)
     _analyzeNightShopping(recentExpenses, results);
+
+    // 6. BİLİŞSEL MOTOR: İleri Düzey Matematiksel Analizler
+    final cognitiveEngine = CognitiveAnalyticsEngine();
+    final cognitiveResults = cognitiveEngine.runAdvancedAnalysis(transactions, currentBalance);
+    results.addAll(cognitiveResults);
 
     // Başarı Durumu: Eğer kritik uyarı yoksa ve bütçe dengeliyse
     if (results.isEmpty) {

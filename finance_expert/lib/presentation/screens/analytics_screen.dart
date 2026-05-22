@@ -24,7 +24,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
       _repo.initialize();
     }
     // Analiz motorunu çalıştır
-    _insights = _engine.analyzeHabits(_repo.transactions);
+    _insights = _engine.analyzeHabits(
+      _repo.transactions, 
+      currentBalance: _repo.totalBalance,
+    );
   }
 
   @override
