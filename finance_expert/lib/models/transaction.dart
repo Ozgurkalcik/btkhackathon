@@ -13,6 +13,13 @@ class Transaction {
   final TransactionType type;
   final IconData icon;
 
+  // Enriched Pipeline Verileri
+  final String? enrichedCity;
+  final String? enrichedDistrict;
+  final String? naceCode;
+  final String? exactLocation;
+  final String? fullCompanyName;
+
   Transaction({
     required this.id,
     required this.title,
@@ -24,6 +31,11 @@ class Transaction {
     this.resolvedMerchant,
     required this.type,
     this.icon = Icons.receipt_long,
+    this.enrichedCity,
+    this.enrichedDistrict,
+    this.naceCode,
+    this.exactLocation,
+    this.fullCompanyName,
   });
 
   /// Tutarı formatlanmış TL string'i olarak döndürür
@@ -46,6 +58,11 @@ class Transaction {
       type: json['type'] == 'income'
           ? TransactionType.income
           : TransactionType.expense,
+      enrichedCity: json['enrichedCity'] as String?,
+      enrichedDistrict: json['enrichedDistrict'] as String?,
+      naceCode: json['naceCode'] as String?,
+      exactLocation: json['exactLocation'] as String?,
+      fullCompanyName: json['fullCompanyName'] as String?,
     );
   }
 
@@ -61,6 +78,11 @@ class Transaction {
       'rawDescription': rawDescription,
       'resolvedMerchant': resolvedMerchant,
       'type': type == TransactionType.income ? 'income' : 'expense',
+      'enrichedCity': enrichedCity,
+      'enrichedDistrict': enrichedDistrict,
+      'naceCode': naceCode,
+      'exactLocation': exactLocation,
+      'fullCompanyName': fullCompanyName,
     };
   }
 }

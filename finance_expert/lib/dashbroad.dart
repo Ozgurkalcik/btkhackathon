@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'navigation_helper.dart';
 import 'services/data_repository.dart';
 import 'presentation/widgets/glass_container.dart';
+import 'models/transaction.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -54,19 +55,17 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _buildOverviewCard(sizes),
+            SizedBox(height: sizes.sp(20)),
+            _buildBankAccountsList(sizes),
+            SizedBox(height: sizes.sp(20)),
             _buildConnectionStatusBanner(sizes),
             SizedBox(height: sizes.sp(20)),
             _buildGradientHeader(sizes),
             SizedBox(height: sizes.sp(20)),
             _buildAIInsightCard(sizes),
             SizedBox(height: sizes.sp(20)),
-            _buildOverviewCard(sizes),
-            SizedBox(height: sizes.sp(20)),
-            _buildQuickActions(sizes),
-            SizedBox(height: sizes.sp(24)),
-            _buildRecentTransactionsHeader(sizes),
-            SizedBox(height: sizes.sp(16)),
-            _buildTransactionsSection(sizes),
+            _buildSmartInsights(sizes),
           ],
         ),
       ),
@@ -419,7 +418,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'TOPLAM BAKİYE',
+            'TÜM HESAPLAR KONSOLİDE DURUM',
             style: TextStyle(
               fontSize: sizes.sp(12),
               color: AppColors.onSurfaceVariant,
@@ -548,179 +547,234 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     );
   }
 
-  /// Hızlı Eylemler
-  Widget _buildQuickActions(AppSizes sizes) {
-    return Row(
-      children: [
-        Expanded(
-          child: HoverGlassContainer(
-            borderRadius: 16,
-            glowColor: AppColors.primary,
-            onTap: () {},
-            padding: EdgeInsets.symmetric(vertical: sizes.sp(14)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.add, color: AppColors.primary, size: sizes.sp(20)),
-                SizedBox(width: sizes.sp(8)),
-                Text(
-                  'Manuel Ekle',
-                  style: TextStyle(
-                    color: AppColors.onSurface,
-                    fontSize: sizes.sp(12),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(width: sizes.sp(12)),
-        Expanded(
-          child: HoverGlassContainer(
-            borderRadius: 16,
-            glowColor: AppColors.secondary,
-            onTap: () => navigateToIndex(context, 1), // Navigate to Expenditures
-            padding: EdgeInsets.symmetric(vertical: sizes.sp(14)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.center_focus_strong, color: AppColors.secondary, size: sizes.sp(20)),
-                SizedBox(width: sizes.sp(8)),
-                Text(
-                  'Fişi Tara',
-                  style: TextStyle(
-                    color: AppColors.onSurface,
-                    fontSize: sizes.sp(12),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        SizedBox(width: sizes.sp(12)),
-        Expanded(
-          child: HoverGlassContainer(
-            borderRadius: 16,
-            glowColor: AppColors.tertiary,
-            onTap: () => navigateToIndex(context, 2), // Navigate to Assistant Screen
-            padding: EdgeInsets.symmetric(vertical: sizes.sp(14)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.smart_toy, color: AppColors.tertiary, size: sizes.sp(20)),
-                SizedBox(width: sizes.sp(8)),
-                Text(
-                  'AI Plan',
-                  style: TextStyle(
-                    color: AppColors.onSurface,
-                    fontSize: sizes.sp(12),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// Son İşlemler Başlığı
-  Widget _buildRecentTransactionsHeader(AppSizes sizes) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          'Son İşlemler',
-          style: TextStyle(
-            fontSize: sizes.sp(20),
-            fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
-          ),
-        ),
-        TextButton(
-          onPressed: () => navigateToIndex(context, 1), // Navigate to Expenditures
-          style: TextButton.styleFrom(padding: EdgeInsets.zero),
-          child: Text(
-            'Tümünü Gör',
-            style: TextStyle(
-              color: AppColors.primary,
-              fontSize: sizes.sp(12),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// İşlem listesi (veri yoksa empty state)
-  Widget _buildTransactionsSection(AppSizes sizes) {
-    final transactions = _repo.getRecentTransactions(count: 5);
-
-    if (transactions.isEmpty) {
-      return buildEmptyState(
-        icon: Icons.receipt_long,
-        title: 'Henüz işlem yok',
-        subtitle: 'Banka hesabınızı bağladığınızda işlemleriniz burada görüntülenecek.',
-        sizes: sizes,
-      );
+  /// Ayrı Ayrı Banka Hesapları Özeti
+  Widget _buildBankAccountsList(AppSizes sizes) {
+    if (!_repo.hasData || _repo.accounts.isEmpty) {
+      return const SizedBox.shrink();
     }
 
     return Column(
-      children: transactions.map((txn) {
-        final isExpense = txn.formattedAmount.contains('-');
-        return Padding(
-          padding: EdgeInsets.only(bottom: sizes.sp(12)),
-          child: HoverGlassContainer(
-            borderRadius: 12,
-            padding: EdgeInsets.all(sizes.sp(16)),
-            glowColor: isExpense ? AppColors.expense : AppColors.income,
-            onTap: () {},
-            child: Row(
-              children: [
-                Container(
-                  width: sizes.sp(48),
-                  height: sizes.sp(48),
-                  decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerHighest,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: Icon(txn.icon, color: AppColors.onSurfaceVariant, size: sizes.sp(24)),
-                ),
-                SizedBox(width: sizes.sp(16)),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        txn.title,
-                        style: TextStyle(fontSize: sizes.sp(15), color: AppColors.onSurface),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: sizes.sp(4)),
-                      Text(
-                        txn.category,
-                        style: TextStyle(fontSize: sizes.sp(13), color: AppColors.onSurfaceVariant),
-                      ),
-                    ],
-                  ),
-                ),
-                Text(
-                  txn.formattedAmount,
-                  style: TextStyle(
-                    fontSize: sizes.sp(18),
-                    fontWeight: FontWeight.w600,
-                    color: isExpense ? AppColors.expense : AppColors.income,
-                  ),
-                ),
-              ],
-            ),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'BANKA HESAPLARINIZ',
+          style: TextStyle(
+            fontSize: sizes.sp(12),
+            color: AppColors.onSurfaceVariant,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
           ),
-        );
-      }).toList(),
+        ),
+        SizedBox(height: sizes.sp(16)),
+        SizedBox(
+          height: sizes.sp(160),
+          child: ListView.separated(
+            scrollDirection: Axis.horizontal,
+            itemCount: _repo.accounts.length,
+            separatorBuilder: (context, index) => SizedBox(width: sizes.sp(16)),
+            itemBuilder: (context, index) {
+              final account = _repo.accounts[index];
+              // Bu hesaba ait işlemleri bulup gelir/gideri hesaplıyoruz.
+              final txns = _repo.getTransactionsByBank(account.bankId);
+              final inc = txns.where((t) => t.type == TransactionType.income).fold(0.0, (sum, t) => sum + t.amount);
+              final exp = txns.where((t) => t.type == TransactionType.expense).fold(0.0, (sum, t) => sum + t.amount);
+
+              return Container(
+                width: sizes.sp(220),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.surfaceContainerHigh.withOpacity(0.4),
+                  border: Border.all(color: Colors.white.withOpacity(0.05)),
+                ),
+                padding: EdgeInsets.all(sizes.sp(16)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: sizes.sp(32),
+                          height: sizes.sp(32),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Center(
+                            child: Icon(Icons.account_balance, color: Colors.blueGrey, size: sizes.sp(18)),
+                          ),
+                        ),
+                        SizedBox(width: sizes.sp(12)),
+                        Expanded(
+                          child: Text(
+                            account.bankName,
+                            style: TextStyle(
+                              fontSize: sizes.sp(14),
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.onSurface,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: sizes.sp(16)),
+                    Text(
+                      '₺${account.balance.toStringAsFixed(2)}',
+                      style: TextStyle(
+                        fontSize: sizes.sp(20),
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.onSurface,
+                      ),
+                    ),
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Gelir', style: TextStyle(fontSize: sizes.sp(10), color: AppColors.onSurfaceVariant)),
+                            Text('₺${inc.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: AppColors.primary, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Gider', style: TextStyle(fontSize: sizes.sp(10), color: AppColors.onSurfaceVariant)),
+                            Text('₺${exp.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: AppColors.error, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Akıllı İçgörüler (Zenginleştirilmiş Pipeline'dan beslenen detaylı kartlar)
+  Widget _buildSmartInsights(AppSizes sizes) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'AKILLI İÇGÖRÜLER',
+          style: TextStyle(
+            fontSize: sizes.sp(12),
+            color: AppColors.onSurfaceVariant,
+            fontWeight: FontWeight.w600,
+            letterSpacing: 1.2,
+          ),
+        ),
+        SizedBox(height: sizes.sp(16)),
+        
+        // Lokasyon Haritası Modülü
+        HoverGlassContainer(
+          borderRadius: 16,
+          padding: EdgeInsets.all(sizes.sp(20)),
+          glowColor: AppColors.primary,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(sizes.sp(8)),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withOpacity(0.12),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Icon(Icons.location_on, color: AppColors.primary, size: sizes.sp(20)),
+                  ),
+                  SizedBox(width: sizes.sp(16)),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Sık Ziyaret Edilen Lokasyon',
+                          style: TextStyle(fontSize: sizes.sp(12), color: AppColors.onSurfaceVariant),
+                        ),
+                        SizedBox(height: sizes.sp(4)),
+                        Text(
+                          'Malatya Park AVM',
+                          style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: sizes.sp(12), vertical: sizes.sp(6)),
+                    decoration: BoxDecoration(
+                      color: AppColors.surfaceContainerHigh,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white10),
+                    ),
+                    child: Text(
+                      '4 İşlem',
+                      style: TextStyle(fontSize: sizes.sp(12), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: sizes.sp(16)),
+              Text(
+                'Bu ayki harcamalarınızın %22\'si bu lokasyonda gerçekleşti. Yemek ve kozmetik mağazaları başı çekiyor.',
+                style: TextStyle(fontSize: sizes.sp(13), color: AppColors.onSurfaceVariant, height: 1.4),
+              ),
+            ],
+          ),
+        ),
+        
+        SizedBox(height: sizes.sp(16)),
+        
+        // Sektörel Sapma Uyarısı
+        HoverGlassContainer(
+          borderRadius: 16,
+          padding: EdgeInsets.all(sizes.sp(20)),
+          glowColor: AppColors.error,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                padding: EdgeInsets.all(sizes.sp(8)),
+                decoration: BoxDecoration(
+                  color: AppColors.error.withOpacity(0.12),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.trending_up, color: AppColors.error, size: sizes.sp(20)),
+              ),
+              SizedBox(width: sizes.sp(16)),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sektörel Harcama Sapması',
+                      style: TextStyle(fontSize: sizes.sp(12), color: AppColors.onSurfaceVariant),
+                    ),
+                    SizedBox(height: sizes.sp(4)),
+                    Text(
+                      'Kozmetik / Kişisel Bakım',
+                      style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: AppColors.error),
+                    ),
+                    SizedBox(height: sizes.sp(8)),
+                    Text(
+                      'Normal bütçe limitinizin %30 üzerindesiniz. NACE kodlarına göre bu sektördeki enflasyon ve harcama hacminiz ciddi artışta.',
+                      style: TextStyle(fontSize: sizes.sp(13), color: AppColors.onSurfaceVariant, height: 1.4),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

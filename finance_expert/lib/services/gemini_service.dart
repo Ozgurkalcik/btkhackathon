@@ -40,4 +40,58 @@ class GeminiService {
     ];
     return responses[_random.nextInt(responses.length)];
   }
+
+  /// Aşama 2: LLM Parsing
+  /// Verilen ham metni analiz edip yapılandırılmış JSON çıktısı döndürür.
+  Future<Map<String, dynamic>> parseTransactionToJSON(String rawText) async {
+    await Future.delayed(const Duration(milliseconds: 1200));
+    
+    // Gerçek bir Gemini API bağlantısı olsaydı burada System Prompt ile çağrı yapılırdı.
+    // Örnek bir mock response döndürüyoruz.
+    if (rawText.contains("NIKBEY GIDA")) {
+      return {
+        "Sirket_Adi": "NIKBEY GIDA",
+        "Sube_Kodu": "",
+        "Sehir": "MALATYA",
+        "Ekstra_Lokasyon_Ipucu": "",
+        "Olası_Sektor": "Gıda/Market"
+      };
+    } else if (rawText.contains("GRATIS")) {
+      return {
+        "Sirket_Adi": "GRATIS",
+        "Sube_Kodu": "MLT",
+        "Sehir": "MALATYA",
+        "Ekstra_Lokasyon_Ipucu": "P", // "Park" için ipucu
+        "Olası_Sektor": "Kozmetik"
+      };
+    } else {
+      return {
+        "Sirket_Adi": "BILINMEYEN",
+        "Sehir": "BELIRSIZ",
+        "Olası_Sektor": "Diğer"
+      };
+    }
+  }
+
+  /// Aşama 4: Konum Çıkarımı (Deduction)
+  /// Kullanıcının son işlemlerini baz alarak mantıksal lokasyon eşleştirmesi yapar.
+  Future<Map<String, dynamic>> deduceLocationContext(List<String> recentMerchants, String currentMerchant) async {
+    await Future.delayed(const Duration(milliseconds: 1500));
+    
+    if (recentMerchants.contains("GRATIS") && currentMerchant == "NIKBEY GIDA") {
+      return {
+        "exactLocation": "Malatya Park AVM",
+        "district": "Yeşilyurt",
+        "confidence": 0.95,
+        "reasoning": "Önceki alışveriş Gratis (Malatya Park AVM) içinde yapılmış, NIKBEY GIDA muhtemelen AVM içerisinde veya çok yakınında."
+      };
+    }
+
+    return {
+      "exactLocation": "Bilinmiyor",
+      "district": "Bilinmiyor",
+      "confidence": 0.0,
+      "reasoning": "Bağlam bulunamadı."
+    };
+  }
 }

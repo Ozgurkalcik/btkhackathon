@@ -23,6 +23,8 @@ import 'presentation/screens/profile/personal_info_screen.dart';
 import 'presentation/screens/profile/payment_methods_screen.dart';
 import 'presentation/screens/profile/security_settings_screen.dart';
 
+import 'presentation/screens/analytics_screen.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -76,6 +78,7 @@ class MyApp extends StatelessWidget {
               '/assistant': (context) => const AssistantScreen(),
               '/health': (context) => const health.HealthDashboardScreen(),
               '/budget': (context) => const budget.BudgetScreen(),
+              '/analytics': (context) => const AnalyticsScreen(),
               '/profile': (context) => const profile.ProfileScreen(),
               '/profile/personal_info': (context) => const PersonalInfoScreen(),
               '/profile/payment_methods': (context) => const PaymentMethodsScreen(),

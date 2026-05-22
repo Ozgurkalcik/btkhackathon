@@ -76,13 +76,13 @@ class AppSizes {
   }
 }
 
-/// Sayfa index -> route mapping
 const Map<int, String> _navRoutes = {
   0: '/',
   1: '/transactions',
   2: '/assistant',
   3: '/health',
   4: '/budget',
+  5: '/analytics',
 };
 
 /// Aktif sayfayı route'dan belirle
@@ -191,12 +191,16 @@ Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
       Colors.white.withOpacity(0.03),
     ],
     border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.2),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _NavBarItem(
-          index: 0,
-          selectedIndex: selectedIndex,
+    child: FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: sizes.sp(8)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _NavBarItem(
+              index: 0,
+              selectedIndex: selectedIndex,
           icon: Icons.dashboard,
           label: 'Ana Sayfa',
           sizes: sizes,
@@ -234,7 +238,17 @@ Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
           sizes: sizes,
           onTap: () => navigateToIndex(context, 4),
         ),
+        _NavBarItem(
+          index: 5,
+          selectedIndex: selectedIndex,
+          icon: Icons.insights,
+          label: 'Analitik',
+          sizes: sizes,
+          onTap: () => navigateToIndex(context, 5),
+        ),
       ],
+    ),
+    ),
     ),
   );
 }
