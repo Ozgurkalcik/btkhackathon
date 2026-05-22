@@ -40,6 +40,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
   }
 
   void _showChangePasswordDialog() {
+    final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
       builder: (ctx) {
@@ -49,12 +50,12 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              backgroundColor: AppColors.surfaceContainer,
+              backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: Colors.white.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
               ),
-              title: const Text('Şifreyi Değiştir'),
+              title: Text('Şifreyi Değiştir', style: TextStyle(color: colorScheme.onSurface)),
               content: SingleChildScrollView(
                 child: RepaintBoundary(
                   child: Column(
@@ -62,12 +63,12 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                     children: [
                       TextField(
                         obscureText: hide1,
-                        style: const TextStyle(color: AppColors.onSurface),
+                        style: TextStyle(color: colorScheme.onSurface),
                         decoration: InputDecoration(
                           labelText: 'Mevcut Şifre',
-                          labelStyle: const TextStyle(color: AppColors.onSurfaceVariant),
+                          labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                           suffixIcon: IconButton(
-                            icon: Icon(hide1 ? Icons.visibility_off : Icons.visibility, color: AppColors.onSurfaceVariant),
+                            icon: Icon(hide1 ? Icons.visibility_off : Icons.visibility, color: colorScheme.onSurfaceVariant),
                             onPressed: () => setStateDialog(() => hide1 = !hide1),
                           ),
                         ),
@@ -75,12 +76,12 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                       const SizedBox(height: 10),
                       TextField(
                         obscureText: hide2,
-                        style: const TextStyle(color: AppColors.onSurface),
+                        style: TextStyle(color: colorScheme.onSurface),
                         decoration: InputDecoration(
                           labelText: 'Yeni Şifre',
-                          labelStyle: const TextStyle(color: AppColors.onSurfaceVariant),
+                          labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                           suffixIcon: IconButton(
-                            icon: Icon(hide2 ? Icons.visibility_off : Icons.visibility, color: AppColors.onSurfaceVariant),
+                            icon: Icon(hide2 ? Icons.visibility_off : Icons.visibility, color: colorScheme.onSurfaceVariant),
                             onPressed: () => setStateDialog(() => hide2 = !hide2),
                           ),
                         ),
@@ -88,12 +89,12 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                       const SizedBox(height: 10),
                       TextField(
                         obscureText: hide3,
-                        style: const TextStyle(color: AppColors.onSurface),
+                        style: TextStyle(color: colorScheme.onSurface),
                         decoration: InputDecoration(
                           labelText: 'Yeni Şifre (Tekrar)',
-                          labelStyle: const TextStyle(color: AppColors.onSurfaceVariant),
+                          labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                           suffixIcon: IconButton(
-                            icon: Icon(hide3 ? Icons.visibility_off : Icons.visibility, color: AppColors.onSurfaceVariant),
+                            icon: Icon(hide3 ? Icons.visibility_off : Icons.visibility, color: colorScheme.onSurfaceVariant),
                             onPressed: () => setStateDialog(() => hide3 = !hide3),
                           ),
                         ),
@@ -112,8 +113,8 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: const Text('Değiştir'),
@@ -173,6 +174,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
     bool obscurePassword = true;
     bool isLoading = false;
     String? errorMessage;
+    final colorScheme = Theme.of(context).colorScheme;
 
     showDialog(
       context: context,
@@ -181,52 +183,52 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              backgroundColor: AppColors.surfaceContainer,
+              backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: Colors.white.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
               ),
-              title: const Row(
+              title: Row(
                 children: [
-                  Icon(Icons.fingerprint, color: AppColors.secondary),
-                  SizedBox(width: 8),
-                  Text('Biyometrik Giriş'),
+                  Icon(Icons.fingerprint, color: colorScheme.secondary),
+                  const SizedBox(width: 8),
+                  Text('Biyometrik Giriş', style: TextStyle(color: colorScheme.onSurface)),
                 ],
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Text(
+                  Text(
                     'Güvenliğiniz için lütfen mevcut şifrenizi girin. Şifreniz cihazın yerel güvenli deposunda (Keychain/Keystore) şifreli olarak saklanacaktır.',
-                    style: TextStyle(fontSize: 13, height: 1.4),
+                    style: TextStyle(fontSize: 13, height: 1.4, color: colorScheme.onSurface),
                   ),
                   const SizedBox(height: 16),
                   TextField(
                     controller: passwordController,
                     obscureText: obscurePassword,
-                    style: const TextStyle(color: AppColors.onSurface, fontSize: 14),
+                    style: TextStyle(color: colorScheme.onSurface, fontSize: 14),
                     decoration: InputDecoration(
                       labelText: 'Şifre',
-                      labelStyle: const TextStyle(color: AppColors.onSurfaceVariant),
-                      prefixIcon: const Icon(Icons.lock_outline, color: AppColors.onSurfaceVariant),
+                      labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                      prefixIcon: Icon(Icons.lock_outline, color: colorScheme.onSurfaceVariant),
                       suffixIcon: IconButton(
                         icon: Icon(
                           obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                          color: AppColors.onSurfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                           size: 20,
                         ),
                         onPressed: () => setStateDialog(() => obscurePassword = !obscurePassword),
                       ),
                       filled: true,
-                      fillColor: AppColors.background.withOpacity(0.6),
+                      fillColor: colorScheme.surface.withOpacity(0.6),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide.none,
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
-                        borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                        borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                       ),
                     ),
                   ),
@@ -294,15 +296,15 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                           }
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: isLoading
-                      ? const SizedBox(
+                      ? SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.onPrimary),
                         )
                       : const Text('Doğrula'),
                 ),
@@ -327,6 +329,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
     final codeController = TextEditingController();
     String? errorMessage;
     bool isVerifying = false;
+    final colorScheme = Theme.of(context).colorScheme;
 
     showDialog(
       context: context,
@@ -335,26 +338,26 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
         return StatefulBuilder(
           builder: (context, setStateDialog) {
             return AlertDialog(
-              backgroundColor: AppColors.surfaceContainer,
+              backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: Colors.white.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
               ),
-              title: const Row(
+              title: Row(
                 children: [
-                  Icon(Icons.security, color: AppColors.secondary),
-                  SizedBox(width: 8),
-                  Text('2FA Kurulumu'),
+                  Icon(Icons.security, color: colorScheme.secondary),
+                  const SizedBox(width: 8),
+                  Text('2FA Kurulumu', style: TextStyle(color: colorScheme.onSurface)),
                 ],
               ),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Text(
+                    Text(
                       'Google Authenticator veya benzeri bir uygulama kullanarak bu QR kodu taratın veya altındaki anahtarı ekleyin.',
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 13, height: 1.4),
+                      style: TextStyle(fontSize: 13, height: 1.4, color: colorScheme.onSurface),
                     ),
                     const SizedBox(height: 20),
                     
@@ -403,9 +406,9 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        color: AppColors.background.withOpacity(0.6),
+                        color: colorScheme.surface.withOpacity(0.6),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white.withOpacity(0.08)),
+                        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
                       ),
                       child: Row(
                         children: [
@@ -413,18 +416,18 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
+                                Text(
                                   'GİZLİ ANAHTAR',
-                                  style: TextStyle(fontSize: 10, color: AppColors.onSurfaceVariant, fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 10, color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.bold),
                                 ),
                                 const SizedBox(height: 2),
                                 Text(
                                   secret,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontFamily: 'monospace',
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
-                                    color: AppColors.onSurface,
+                                    color: colorScheme.onSurface,
                                     letterSpacing: 1.2,
                                   ),
                                 ),
@@ -432,7 +435,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                             ),
                           ),
                           IconButton(
-                            icon: const Icon(Icons.copy, color: AppColors.secondary, size: 20),
+                            icon: Icon(Icons.copy, color: colorScheme.secondary, size: 20),
                             onPressed: () {
                               Clipboard.setData(ClipboardData(text: secret));
                               ScaffoldMessenger.of(ctx).showSnackBar(
@@ -451,20 +454,20 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                       keyboardType: TextInputType.number,
                       maxLength: 6,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 8, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 8, color: colorScheme.onSurface),
                       decoration: InputDecoration(
                         labelText: 'Doğrulama Kodu',
-                        labelStyle: const TextStyle(letterSpacing: 0, color: AppColors.onSurfaceVariant),
+                        labelStyle: TextStyle(letterSpacing: 0, color: colorScheme.onSurfaceVariant),
                         counterText: '',
                         filled: true,
-                        fillColor: AppColors.background.withOpacity(0.6),
+                        fillColor: colorScheme.surface.withOpacity(0.6),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
-                          borderSide: const BorderSide(color: AppColors.primary, width: 1.5),
+                          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                         ),
                       ),
                     ),
@@ -519,15 +522,15 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                           }
                         },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: isVerifying
-                      ? const SizedBox(
+                      ? SizedBox(
                           width: 20,
                           height: 20,
-                          child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
+                          child: CircularProgressIndicator(strokeWidth: 2, color: colorScheme.onPrimary),
                         )
                       : const Text('Doğrula ve Aktifleştir'),
                 ),
@@ -542,11 +545,11 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
   @override
   Widget build(BuildContext context) {
     final sizes = AppSizes(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: buildCommonAppBar(context: context, title: 'Güvenlik', showBackButton: true),
-      backgroundColor: AppColors.background,
+      backgroundColor: colorScheme.surface,
       body: ListView(
         padding: sizes.screenPadding.copyWith(top: sizes.sp(24)),
         children: [
@@ -556,28 +559,28 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
             child: Column(
               children: [
                 ListTile(
-                  leading: const Icon(Icons.fingerprint, color: AppColors.onSurfaceVariant),
-                  title: const Text('Biyometrik Giriş (Face ID / Touch ID)', style: TextStyle(color: AppColors.onSurface)),
+                  leading: Icon(Icons.fingerprint, color: colorScheme.onSurfaceVariant),
+                  title: Text('Biyometrik Giriş (Face ID / Touch ID)', style: TextStyle(color: colorScheme.onSurface)),
                   trailing: Switch(
                     value: _biometricEnabled,
-                    activeColor: AppColors.secondary,
+                    activeColor: colorScheme.secondary,
                     onChanged: _toggleBiometric,
                   ),
                 ),
-                Divider(color: Colors.white.withOpacity(0.08), height: 1),
+                Divider(color: colorScheme.onSurface.withOpacity(0.08), height: 1),
                 ListTile(
-                  leading: const Icon(Icons.password, color: AppColors.onSurfaceVariant),
-                  title: const Text('Şifreyi Değiştir', style: TextStyle(color: AppColors.onSurface)),
-                  trailing: const Icon(Icons.chevron_right, color: AppColors.onSurfaceVariant),
+                  leading: Icon(Icons.password, color: colorScheme.onSurfaceVariant),
+                  title: Text('Şifreyi Değiştir', style: TextStyle(color: colorScheme.onSurface)),
+                  trailing: Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
                   onTap: _showChangePasswordDialog,
                 ),
-                Divider(color: Colors.white.withOpacity(0.08), height: 1),
+                Divider(color: colorScheme.onSurface.withOpacity(0.08), height: 1),
                 ListTile(
-                  leading: const Icon(Icons.security, color: AppColors.onSurfaceVariant),
-                  title: const Text('İki Faktörlü Doğrulama (2FA)', style: TextStyle(color: AppColors.onSurface)),
+                  leading: Icon(Icons.security, color: colorScheme.onSurfaceVariant),
+                  title: Text('İki Faktörlü Doğrulama (2FA)', style: TextStyle(color: colorScheme.onSurface)),
                   trailing: Switch(
                     value: _twoFactorEnabled,
-                    activeColor: AppColors.secondary,
+                    activeColor: colorScheme.secondary,
                     onChanged: (val) async {
                       if (val) {
                         _show2FASetup();
@@ -603,7 +606,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: sizes.sp(12),
-              color: isDark ? AppColors.onSurfaceVariant : Colors.grey[600],
+              color: colorScheme.onSurfaceVariant,
               height: 1.5,
             ),
           )

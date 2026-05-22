@@ -53,6 +53,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Widget _buildContent(AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SingleChildScrollView(
       padding: EdgeInsets.only(
         left: sizes.sp(20),
@@ -69,7 +70,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             'YAPAY ZEKA ÇIKARIMLARI',
             style: TextStyle(
               fontSize: sizes.sp(12),
-              color: AppColors.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
@@ -82,33 +83,37 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             'AYLIK KATEGORİ DAĞILIMI',
             style: TextStyle(
               fontSize: sizes.sp(12),
-              color: AppColors.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
           ),
           SizedBox(height: sizes.sp(16)),
-          _buildChartPlaceholder(sizes), // Pasta grafik temsili
+          _buildChartPlaceholder(sizes),
         ],
       ),
     );
   }
 
   Widget _buildHeader(AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(sizes.sp(24)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1B233E), Color(0xFF131A2E)],
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF1B233E), const Color(0xFF131A2E)]
+              : [colorScheme.surfaceContainer, colorScheme.surfaceContainerHigh],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.tertiary.withOpacity(0.1),
+            color: colorScheme.tertiary.withOpacity(0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -119,14 +124,14 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
         children: [
           Row(
             children: [
-              Icon(Icons.psychology, color: AppColors.tertiary, size: sizes.sp(24)),
+              Icon(Icons.psychology, color: colorScheme.tertiary, size: sizes.sp(24)),
               SizedBox(width: sizes.sp(12)),
               Text(
                 'Davranışsal Analiz',
                 style: TextStyle(
                   fontSize: sizes.sp(20),
                   fontWeight: FontWeight.w800,
-                  color: AppColors.onSurface,
+                  color: colorScheme.onSurface,
                 ),
               ),
             ],
@@ -136,7 +141,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             'Son 30 günlük harcamalarınız incelenerek psikolojik ve fiziksel sağlığınızı etkileyen gizli kalıplar (pattern) çıkarıldı.',
             style: TextStyle(
               fontSize: sizes.sp(13),
-              color: AppColors.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
               height: 1.4,
             ),
           ),
@@ -146,6 +151,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Widget _buildInsightCard(InsightResult insight, AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.only(bottom: sizes.sp(16)),
       child: HoverGlassContainer(
@@ -183,7 +189,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               insight.description,
               style: TextStyle(
                 fontSize: sizes.sp(14),
-                color: AppColors.onSurface,
+                color: colorScheme.onSurface,
                 height: 1.5,
               ),
             ),
@@ -206,7 +212,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         insight.actionPlan,
                         style: TextStyle(
                           fontSize: sizes.sp(13),
-                          color: AppColors.onSurface,
+                          color: colorScheme.onSurface,
                           height: 1.4,
                         ),
                       ),
@@ -226,6 +232,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Widget _buildStat(AppSizes sizes, String label, String value) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -233,7 +240,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           label,
           style: TextStyle(
             fontSize: sizes.sp(11),
-            color: AppColors.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w500,
           ),
         ),
@@ -243,7 +250,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           style: TextStyle(
             fontSize: sizes.sp(16),
             fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
+            color: colorScheme.onSurface,
           ),
         ),
       ],
@@ -251,16 +258,16 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Widget _buildChartPlaceholder(AppSizes sizes) {
-    // Basit bir bar grafik çizimi
     final breakdown = _repo.getCategoryBreakdown();
     if (breakdown.isEmpty) return const SizedBox.shrink();
 
     final maxVal = breakdown.values.fold(0.0, (a, b) => a > b ? a : b);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return HoverGlassContainer(
       borderRadius: 16,
       padding: EdgeInsets.all(sizes.sp(20)),
-      glowColor: AppColors.primary,
+      glowColor: colorScheme.primary,
       child: Column(
         children: breakdown.entries.take(5).map((entry) {
           final percentage = maxVal > 0 ? entry.value / maxVal : 0.0;
@@ -272,15 +279,15 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(entry.key, style: TextStyle(color: AppColors.onSurface, fontSize: sizes.sp(12))),
-                    Text('₺${entry.value.toStringAsFixed(0)}', style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: sizes.sp(12))),
+                    Text(entry.key, style: TextStyle(color: colorScheme.onSurface, fontSize: sizes.sp(12))),
+                    Text('₺${entry.value.toStringAsFixed(0)}', style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: sizes.sp(12))),
                   ],
                 ),
                 SizedBox(height: sizes.sp(6)),
                 Container(
                   height: sizes.sp(8),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.05),
+                    color: colorScheme.onSurface.withOpacity(0.05),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: FractionallySizedBox(
@@ -288,11 +295,11 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                     widthFactor: percentage.clamp(0.0, 1.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         borderRadius: BorderRadius.circular(4),
                         boxShadow: [
                           BoxShadow(
-                            color: AppColors.primary.withOpacity(0.4),
+                            color: colorScheme.primary.withOpacity(0.4),
                             blurRadius: 6,
                           )
                         ],

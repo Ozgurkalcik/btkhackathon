@@ -24,6 +24,7 @@ import 'presentation/screens/profile/payment_methods_screen.dart';
 import 'presentation/screens/profile/security_settings_screen.dart';
 
 import 'presentation/screens/analytics_screen.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,25 +50,9 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Finance Expert',
             debugShowCheckedModeBanner: false,
-            themeMode: ThemeMode.dark, // The user requested Dark Mode as default/mandatory
-            theme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF00C896),
-                brightness: Brightness.light,
-              ),
-              scaffoldBackgroundColor: const Color(0xFFF8FAFC), // Light: #F8FAFC
-              textTheme: ThemeData.light().textTheme.apply(fontFamily: 'Inter'),
-            ),
-            darkTheme: ThemeData(
-              useMaterial3: true,
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: const Color(0xFF00C896),
-                brightness: Brightness.dark,
-              ),
-              scaffoldBackgroundColor: const Color(0xFF0B1020), // Dark: #0B1020
-              textTheme: ThemeData.dark().textTheme.apply(fontFamily: 'Inter'),
-            ),
+            themeMode: state.themeMode,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
             initialRoute: '/auth_check',
             routes: {
               '/auth_check': (context) => const AuthCheckScreen(),

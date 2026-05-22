@@ -1,5 +1,3 @@
-# btkhackathon
-
 <div align="center">
   
 # 🚀 Finance Expert: Cognitive Wealth Manager

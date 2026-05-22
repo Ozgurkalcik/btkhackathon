@@ -176,18 +176,20 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     final sizes = AppSizes(context);
     final metrics = _calculateHealthScore();
     final double score = metrics['total'];
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     // Dinamik Skor Durum Rengi
-    Color scoreColor = AppColors.error;
+    Color scoreColor = colorScheme.error;
     String scoreStatus = 'Kritik';
     if (score >= 80) {
-      scoreColor = AppColors.primary;
+      scoreColor = colorScheme.primary;
       scoreStatus = 'Mükemmel';
     } else if (score >= 60) {
-      scoreColor = AppColors.tertiary;
+      scoreColor = colorScheme.tertiary;
       scoreStatus = 'Sağlıklı';
     } else if (score >= 40) {
-      scoreColor = AppColors.info;
+      scoreColor = colorScheme.secondary;
       scoreStatus = 'Orta';
     }
 
@@ -218,6 +220,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
 
   /// Premium Gauge Gösterge Kartı
   Widget _buildScoreGaugeCard(AppSizes s, double score, Color scoreColor, String status) {
+    final colorScheme = Theme.of(context).colorScheme;
     return HoverGlassContainer(
       borderRadius: 24,
       padding: EdgeInsets.all(s.sp(20)),
@@ -231,7 +234,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                 'SAĞLIK ENDEKSİ',
                 style: TextStyle(
                   fontSize: s.sp(12),
-                  color: AppColors.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.bold,
                   letterSpacing: 1.2,
                 ),
@@ -240,14 +243,14 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                 children: [
                   Text(
                     'Simülatör',
-                    style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant),
                   ),
                   SizedBox(width: s.sp(8)),
                   SizedBox(
                     height: s.sp(24),
                     child: Switch(
                       value: _useSimulationMode,
-                      activeColor: AppColors.primary,
+                      activeColor: colorScheme.primary,
                       onChanged: (val) {
                         setState(() {
                           _useSimulationMode = val;
@@ -280,7 +283,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                         style: TextStyle(
                           fontSize: s.sp(48),
                           fontWeight: FontWeight.w800,
-                          color: AppColors.onSurface,
+                          color: colorScheme.onSurface,
                           letterSpacing: -1,
                         ),
                       ),
@@ -315,6 +318,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
 
   /// AI Asistan Doktor Tavsiye Metni
   Widget _buildAiAdviceCard(AppSizes s, double score) {
+    final colorScheme = Theme.of(context).colorScheme;
     String advice = 'Verileriniz yüklendiğinde AI analiziniz oluşturulacak.';
     if (score >= 80) {
       advice = 'Harika! Finansal sağlığınız mükemmel durumda. Kazancınız giderlerinizin üzerinde ve birikim oranınız çok sağlıklı. Tasarruflarınızı yatırıma dönüştürmeye devam edip finansal özgürlük hedeflerinize sadık kalabilirsiniz.';
@@ -329,9 +333,9 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow.withOpacity(0.5),
+        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.white.withOpacity(0.04)),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.04)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -339,10 +343,10 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
           Container(
             padding: EdgeInsets.all(s.sp(8)),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.12),
+              color: colorScheme.primary.withOpacity(0.12),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: Icon(Icons.psychology, color: AppColors.primary, size: s.sp(20)),
+            child: Icon(Icons.psychology, color: colorScheme.primary, size: s.sp(20)),
           ),
           SizedBox(width: s.sp(16)),
           Expanded(
@@ -354,7 +358,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   style: TextStyle(
                     fontSize: s.sp(10),
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: colorScheme.primary,
                     letterSpacing: 1.0,
                   ),
                 ),
@@ -363,7 +367,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   advice,
                   style: TextStyle(
                     fontSize: s.sp(13),
-                    color: AppColors.onSurfaceVariant,
+                    color: colorScheme.onSurfaceVariant,
                     height: 1.4,
                   ),
                 ),
@@ -393,6 +397,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
 
   Widget _buildTabItem(int index, String title, AppSizes s) {
     final isSelected = _activeTab == index;
+    final colorScheme = Theme.of(context).colorScheme;
     return Expanded(
       child: GestureDetector(
         onTap: () {
@@ -404,16 +409,16 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
           duration: const Duration(milliseconds: 200),
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary.withOpacity(0.15) : Colors.transparent,
+            color: isSelected ? colorScheme.primary.withOpacity(0.15) : Colors.transparent,
             borderRadius: BorderRadius.circular(8),
             border: isSelected
-                ? Border.all(color: AppColors.primary.withOpacity(0.3), width: 1)
+                ? Border.all(color: colorScheme.primary.withOpacity(0.3), width: 1)
                 : null,
           ),
           child: Text(
             title,
             style: TextStyle(
-              color: isSelected ? AppColors.primary : AppColors.onSurfaceVariant,
+              color: isSelected ? colorScheme.primary : colorScheme.onSurfaceVariant,
               fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
               fontSize: s.sp(13),
             ),
@@ -442,6 +447,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
   // ==========================================
   Widget _buildAnalysisTab(AppSizes s, Map<String, dynamic> m) {
     final net = currentIncome - currentExpense;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Column(
       children: [
@@ -449,19 +455,19 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.swap_horiz,
-          color: net >= 0 ? AppColors.primary : AppColors.error,
+          color: net >= 0 ? colorScheme.primary : colorScheme.error,
           title: '1. Gelir-Gider Dengesi',
           subtitle: net >= 0 ? 'Pozitif Sağlık Göstergesi' : 'Bütçe Açığı Var',
           child: Column(
             children: [
               _buildMetricRow('Gelir:', '₺${currentIncome.toStringAsFixed(0)}', s),
               _buildMetricRow('Gider:', '₺${currentExpense.toStringAsFixed(0)}', s),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               _buildMetricRow(
                 'Kalan / Tasarruf:',
                 '₺${net.toStringAsFixed(0)}',
                 s,
-                valueColor: net >= 0 ? AppColors.primary : AppColors.error,
+                valueColor: net >= 0 ? colorScheme.primary : colorScheme.error,
                 isBold: true,
               ),
               SizedBox(height: s.sp(10)),
@@ -469,7 +475,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                 net >= 0
                     ? 'Kazandığınızdan daha az harcıyorsunuz. Bu durum güçlü finansal dayanıklılık ve pozitif finansal sağlığın ana temelidir.'
                     : 'Giderleriniz gelirinizi aşmış durumda. Bütçenizi dengelemek için harcamalarınızı acilen azaltmalısınız.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
@@ -479,7 +485,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.account_balance_wallet,
-          color: AppColors.tertiary,
+          color: colorScheme.tertiary,
           title: '2. Tasarruf ve Birikim',
           subtitle: 'Düzenli Birikim & Acil Durum Fonu',
           child: Column(
@@ -492,15 +498,15 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                 borderRadius: BorderRadius.circular(4),
                 child: LinearProgressIndicator(
                   value: (m['savingsRate'] / 20.0).clamp(0.0, 1.0),
-                  color: AppColors.tertiary,
-                  backgroundColor: Colors.white.withOpacity(0.05),
+                  color: colorScheme.tertiary,
+                  backgroundColor: colorScheme.onSurface.withOpacity(0.05),
                   minHeight: s.sp(6),
                 ),
               ),
               SizedBox(height: s.sp(10)),
               Text(
                 'Önerilen tasarruf oranı %10 ila %20 arasındadır. Acil durum fonunuzun ise beklenmedik kriz durumları için 3 ila 6 aylık sabit giderinizi karşılaması gerekir.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
@@ -510,31 +516,31 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.credit_score,
-          color: m['dti'] > 40 ? AppColors.error : AppColors.info,
+          color: m['dti'] > 40 ? colorScheme.error : colorScheme.secondary,
           title: '3. Borç Yönetimi',
           subtitle: 'Borç / Gelir Oranı ve Faiz Kontrolü',
           child: Column(
             children: [
               _buildMetricRow('Borç Taksit Yükü (Aylık):', '₺${currentDebtPayment.toStringAsFixed(0)}', s),
               _buildMetricRow('Borç / Gelir Oranı (DTI):', '%${m['dti'].toStringAsFixed(1)}', s),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               if (_cardMinimumLoop)
                 Container(
                   margin: EdgeInsets.only(bottom: s.sp(10)),
                   padding: EdgeInsets.all(s.sp(10)),
                   decoration: BoxDecoration(
-                    color: AppColors.error.withOpacity(0.12),
+                    color: colorScheme.error.withOpacity(0.12),
                     borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: AppColors.error.withOpacity(0.3)),
+                    border: Border.all(color: colorScheme.error.withOpacity(0.3)),
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.warning_amber, color: AppColors.error, size: s.sp(18)),
+                      Icon(Icons.warning_amber, color: colorScheme.error, size: s.sp(18)),
                       SizedBox(width: s.sp(8)),
                       Expanded(
                         child: Text(
                           'Kredi kartınızı sürekli minimum ödemeyle kapatmak faiz sarmalına sokar.',
-                          style: TextStyle(fontSize: s.sp(11), color: AppColors.error, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: s.sp(11), color: colorScheme.error, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -544,7 +550,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                 m['dti'] <= 35
                     ? 'Borç yükünüz makul sınırlarda (%35 altı). Aylık ödemelerinizi düzenli olarak kapatabiliyorsunuz.'
                     : 'Dikkat! Aylık borç oranınız kritik seviyede (%35 üzeri). Gelirinizin büyük kısmı kredi ve kart borçlarına gidiyor.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
@@ -554,7 +560,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.shopping_bag,
-          color: m['badHabitsCount'] > 1 ? AppColors.error : AppColors.primary,
+          color: m['badHabitsCount'] > 1 ? colorScheme.error : colorScheme.primary,
           title: '4. Harcama Davranışı',
           subtitle: 'Zararlı Alışkanlık Analizi',
           child: Column(
@@ -567,7 +573,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
               SizedBox(height: s.sp(10)),
               Text(
                 'Finansal sağlık sadece rakamlardan ibaret değildir, aynı zamanda harcama davranışınızın kalitesidir. Dürtüsel harcamaları keserek bütçenizi hızla toparlayabilirsiniz.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
@@ -577,18 +583,18 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.shield,
-          color: AppColors.info,
+          color: colorScheme.secondary,
           title: '5. Finansal Güvenlik',
           subtitle: 'Kriz Dayanıklılık Kapasitesi',
           child: Column(
             children: [
               _buildMetricRow('Acil Masraf Dayanımı:', m['efMonths'] >= 3 ? 'Tam Dayanıklı' : 'Zayıf Dayanıklı', s,
-                  valueColor: m['efMonths'] >= 3 ? AppColors.primary : AppColors.error),
+                  valueColor: m['efMonths'] >= 3 ? colorScheme.primary : colorScheme.error),
               _buildMetricRow('İş Kaybı Güvencesi:', '${m['efMonths'].toStringAsFixed(1)} Ay Yaşam Desteği', s),
               SizedBox(height: s.sp(10)),
               Text(
                 'Hastalık, iş kaybı veya ani ekonomik kriz durumlarında borç batağına düşmeden tamamen ayakta kalabilmeniz için acil durum yedek akçenizin hazır olması şarttır.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
@@ -598,7 +604,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         _buildPillarCard(
           s: s,
           icon: Icons.flag,
-          color: AppColors.tertiary,
+          color: colorScheme.tertiary,
           title: '6. Finansal Hedefler',
           subtitle: 'Geleceğe Dönük Bütçe Planlama',
           child: Column(
@@ -606,7 +612,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
             children: [
               Text(
                 'Ev alma, yatırım yapma, emeklilik ve iş kurma gibi hedeflerin bütçelenmesi tasarruflarınıza odaklanmanızı sağlar. ${_goals.length} adet aktif finansal hedefiniz bulunuyor.',
-                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
               SizedBox(height: s.sp(12)),
               Center(
@@ -616,8 +622,8 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                       _activeTab = 2; // Hedefler sekmesine git
                     });
                   },
-                  icon: const Icon(Icons.arrow_right_alt, color: AppColors.primary),
-                  label: const Text('Hedeflerimi Yönet', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                  icon: Icon(Icons.arrow_right_alt, color: colorScheme.primary),
+                  label: Text('Hedeflerimi Yönet', style: TextStyle(color: colorScheme.primary, fontWeight: FontWeight.bold)),
                 ),
               ),
             ],
@@ -631,12 +637,13 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
   //  SEKME 2: FİNANSAL SAĞLIK SİMÜLATÖRÜ
   // ==========================================
   Widget _buildSimulatorTab(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'FİNANSAL DURUM PARAMETRELERİ',
-          style: TextStyle(fontSize: s.sp(12), color: AppColors.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
+          style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
         ),
         SizedBox(height: s.sp(12)),
 
@@ -707,7 +714,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         SizedBox(height: s.sp(20)),
         Text(
           'HARCAMA DAVRANIŞLARI VE RİSKLER',
-          style: TextStyle(fontSize: s.sp(12), color: AppColors.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
+          style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
         ),
         SizedBox(height: s.sp(12)),
 
@@ -727,7 +734,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   });
                 },
               ),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               _buildSwitchRow(
                 title: 'Dürtüsel (anlık isteklerle) alışveriş yaparım.',
                 value: _habitImpulse,
@@ -738,7 +745,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   });
                 },
               ),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               _buildSwitchRow(
                 title: 'Plansız, takip etmediğim aboneliklerim var.',
                 value: _habitSubscriptions,
@@ -749,7 +756,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   });
                 },
               ),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               _buildSwitchRow(
                 title: 'Bütçemi aşacak gereksiz lüks tüketim yaparım.',
                 value: _habitLuxury,
@@ -760,7 +767,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                   });
                 },
               ),
-              const Divider(color: Colors.white10),
+              Divider(color: colorScheme.onSurface.withOpacity(0.1)),
               _buildSwitchRow(
                 title: 'Maaş günü öncesi sürekli nakit sıkışıklığı çekerim.',
                 value: _habitPaydayLoop,
@@ -782,6 +789,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
   //  SEKME 3: FİNANSAL HEDEFLERİM
   // ==========================================
   Widget _buildGoalsTab(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -790,10 +798,10 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
           children: [
             Text(
               'HEDEF LİSTESİ VE BİRİKİM DURUMU',
-              style: TextStyle(fontSize: s.sp(12), color: AppColors.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
+              style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.bold, letterSpacing: 1.0),
             ),
             IconButton(
-              icon: Icon(Icons.add_circle, color: AppColors.primary, size: s.sp(28)),
+              icon: Icon(Icons.add_circle, color: colorScheme.primary, size: s.sp(28)),
               onPressed: () => _showAddGoalDialog(s),
             ),
           ],
@@ -807,7 +815,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
               child: HoverGlassContainer(
                 borderRadius: 16,
                 padding: EdgeInsets.all(s.sp(16)),
-                glowColor: AppColors.tertiary,
+                glowColor: colorScheme.tertiary,
                 child: Column(
                   children: [
                     Row(
@@ -815,10 +823,10 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                         Container(
                           padding: EdgeInsets.all(s.sp(10)),
                           decoration: BoxDecoration(
-                            color: AppColors.tertiary.withOpacity(0.12),
+                            color: colorScheme.tertiary.withOpacity(0.12),
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Icon(goal.icon, color: AppColors.tertiary, size: s.sp(22)),
+                          child: Icon(goal.icon, color: colorScheme.tertiary, size: s.sp(22)),
                         ),
                         SizedBox(width: s.sp(16)),
                         Expanded(
@@ -827,19 +835,19 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                             children: [
                               Text(
                                 goal.title,
-                                style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                                style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: colorScheme.onSurface),
                               ),
                               SizedBox(height: s.sp(4)),
                               Text(
                                 'Hedef: ₺${goal.targetAmount.toStringAsFixed(0)}',
-                                style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant),
+                                style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant),
                               ),
                             ],
                           ),
                         ),
                         Text(
                           '%${(goal.progress * 100).toStringAsFixed(0)}',
-                          style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.bold, color: AppColors.tertiary),
+                          style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.bold, color: colorScheme.tertiary),
                         ),
                       ],
                     ),
@@ -848,8 +856,8 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                       borderRadius: BorderRadius.circular(4),
                       child: LinearProgressIndicator(
                         value: goal.progress,
-                        color: AppColors.tertiary,
-                        backgroundColor: Colors.white.withOpacity(0.05),
+                        color: colorScheme.tertiary,
+                        backgroundColor: colorScheme.onSurface.withOpacity(0.05),
                         minHeight: s.sp(8),
                       ),
                     ),
@@ -859,15 +867,15 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                       children: [
                         Text(
                           'Biriken: ₺${goal.currentAmount.toStringAsFixed(0)}',
-                          style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant),
                         ),
                         SizedBox(
                           width: s.sp(160),
                           child: SliderTheme(
                             data: SliderTheme.of(context).copyWith(
-                              activeTrackColor: AppColors.tertiary,
-                              thumbColor: AppColors.tertiary,
-                              overlayColor: AppColors.tertiary.withOpacity(0.2),
+                              activeTrackColor: colorScheme.tertiary,
+                              thumbColor: colorScheme.tertiary,
+                              overlayColor: colorScheme.tertiary.withOpacity(0.2),
                               trackHeight: 3.0,
                             ),
                             child: Slider(
@@ -900,6 +908,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     final TextEditingController targetController = TextEditingController();
     final TextEditingController currentController = TextEditingController();
     IconData selectedIcon = Icons.stars;
+    final colorScheme = Theme.of(context).colorScheme;
 
     final List<Map<String, dynamic>> icons = [
       {'icon': Icons.home, 'label': 'Ev'},
@@ -916,47 +925,47 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
         return StatefulBuilder(
           builder: (context, setDialogState) {
             return AlertDialog(
-              backgroundColor: AppColors.surface,
-              title: const Text('Yeni Finansal Hedef Ekle', style: TextStyle(color: AppColors.onSurface, fontWeight: FontWeight.bold)),
+              backgroundColor: colorScheme.surface,
+              title: Text('Yeni Finansal Hedef Ekle', style: TextStyle(color: colorScheme.onSurface, fontWeight: FontWeight.bold)),
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     TextField(
                       controller: titleController,
-                      style: const TextStyle(color: AppColors.onSurface),
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: colorScheme.onSurface),
+                      decoration: InputDecoration(
                         labelText: 'Hedef Adı',
-                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white24)),
+                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
                       ),
                     ),
                     SizedBox(height: s.sp(12)),
                     TextField(
                       controller: targetController,
                       keyboardType: TextInputType.number,
-                      style: const TextStyle(color: AppColors.onSurface),
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: colorScheme.onSurface),
+                      decoration: InputDecoration(
                         labelText: 'Hedef Bütçe Tutarı (TL)',
-                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white24)),
+                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
                       ),
                     ),
                     SizedBox(height: s.sp(12)),
                     TextField(
                       controller: currentController,
                       keyboardType: TextInputType.number,
-                      style: const TextStyle(color: AppColors.onSurface),
-                      decoration: const InputDecoration(
+                      style: TextStyle(color: colorScheme.onSurface),
+                      decoration: InputDecoration(
                         labelText: 'Mevcut Birikim Tutarı (TL)',
-                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
-                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: Colors.white24)),
+                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                        enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
                       ),
                     ),
                     SizedBox(height: s.sp(20)),
-                    const Align(
+                    Align(
                       alignment: Alignment.centerLeft,
-                      child: Text('Hedef İkonu Seçin:', style: TextStyle(color: AppColors.onSurfaceVariant)),
+                      child: Text('Hedef İkonu Seçin:', style: TextStyle(color: colorScheme.onSurfaceVariant)),
                     ),
                     SizedBox(height: s.sp(8)),
                     Wrap(
@@ -964,10 +973,10 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
                       children: icons.map((iconData) {
                         final isSelected = selectedIcon == iconData['icon'];
                         return ChoiceChip(
-                          label: Icon(iconData['icon'], color: isSelected ? AppColors.onPrimary : AppColors.onSurfaceVariant, size: 18),
+                          label: Icon(iconData['icon'], color: isSelected ? colorScheme.onPrimary : colorScheme.onSurfaceVariant, size: 18),
                           selected: isSelected,
-                          selectedColor: AppColors.tertiary,
-                          backgroundColor: AppColors.surfaceContainerHigh,
+                          selectedColor: colorScheme.tertiary,
+                          backgroundColor: colorScheme.surfaceContainerHigh,
                           onSelected: (val) {
                             setDialogState(() {
                               selectedIcon = iconData['icon'];
@@ -982,12 +991,12 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('İptal', style: TextStyle(color: AppColors.onSurfaceVariant)),
+                  child: Text('İptal', style: TextStyle(color: colorScheme.onSurfaceVariant)),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                   ),
                   onPressed: () {
                     final title = titleController.text.trim();
@@ -1028,6 +1037,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     required String subtitle,
     required Widget child,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: EdgeInsets.only(bottom: s.sp(16)),
       child: GlassContainer(
@@ -1044,14 +1054,14 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
           ),
           title: Text(
             title,
-            style: TextStyle(fontSize: s.sp(15), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+            style: TextStyle(fontSize: s.sp(15), fontWeight: FontWeight.bold, color: colorScheme.onSurface),
           ),
           subtitle: Text(
             subtitle,
-            style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant),
+            style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant),
           ),
-          iconColor: AppColors.onSurfaceVariant,
-          collapsedIconColor: AppColors.onSurfaceVariant,
+          iconColor: colorScheme.onSurfaceVariant,
+          collapsedIconColor: colorScheme.onSurfaceVariant,
           childrenPadding: EdgeInsets.only(top: s.sp(12)),
           expandedCrossAxisAlignment: CrossAxisAlignment.start,
           shape: const Border(), // Sınır çizgilerini kaldır
@@ -1063,18 +1073,19 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
   }
 
   Widget _buildMetricRow(String label, String value, AppSizes s, {Color? valueColor, bool isBold = false}) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: s.sp(4)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label, style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
+          Text(label, style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant)),
           Text(
             value,
             style: TextStyle(
               fontSize: s.sp(14),
               fontWeight: isBold ? FontWeight.bold : FontWeight.w500,
-              color: valueColor ?? AppColors.onSurface,
+              color: valueColor ?? colorScheme.onSurface,
             ),
           ),
         ],
@@ -1083,13 +1094,14 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
   }
 
   Widget _buildHabitStatusRow(String title, bool isActive, AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: s.sp(4)),
       child: Row(
         children: [
           Icon(
             isActive ? Icons.cancel : Icons.check_circle,
-            color: isActive ? AppColors.error : AppColors.primary,
+            color: isActive ? colorScheme.error : colorScheme.primary,
             size: s.sp(18),
           ),
           SizedBox(width: s.sp(8)),
@@ -1097,7 +1109,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
             title,
             style: TextStyle(
               fontSize: s.sp(13),
-              color: isActive ? AppColors.error.withOpacity(0.8) : AppColors.onSurface,
+              color: isActive ? colorScheme.error.withOpacity(0.8) : colorScheme.onSurface,
             ),
           ),
         ],
@@ -1115,6 +1127,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     required AppSizes s,
     required ValueChanged<double> onChanged,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       margin: EdgeInsets.only(bottom: s.sp(12)),
       child: GlassContainer(
@@ -1126,18 +1139,18 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
+                Text(title, style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant)),
                 Text(
                   '₺${value.toStringAsFixed(0)}',
-                  style: TextStyle(fontSize: s.sp(14), fontWeight: FontWeight.bold, color: AppColors.primary),
+                  style: TextStyle(fontSize: s.sp(14), fontWeight: FontWeight.bold, color: colorScheme.primary),
                 ),
               ],
             ),
             SliderTheme(
               data: SliderTheme.of(context).copyWith(
-                activeTrackColor: AppColors.primary,
-                thumbColor: AppColors.primary,
-                overlayColor: AppColors.primary.withOpacity(0.2),
+                activeTrackColor: colorScheme.primary,
+                thumbColor: colorScheme.primary,
+                overlayColor: colorScheme.primary.withOpacity(0.2),
                 trackHeight: 4.0,
               ),
               child: Slider(
@@ -1160,6 +1173,7 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
     required AppSizes s,
     required ValueChanged<bool> onChanged,
   }) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: s.sp(4)),
       child: Row(
@@ -1168,12 +1182,12 @@ class _HealthDashboardScreenState extends State<HealthDashboardScreen> with Sing
           Expanded(
             child: Text(
               title,
-              style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurface),
+              style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurface),
             ),
           ),
           Switch(
             value: value,
-            activeColor: AppColors.error,
+            activeColor: colorScheme.error,
             onChanged: onChanged,
           ),
         ],

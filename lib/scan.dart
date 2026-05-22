@@ -37,35 +37,48 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
 
   Widget _buildPipeline(AppSizes s) {
     final hasApi = _repo.hasBankConnections;
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.1))),
+      decoration: BoxDecoration(
+        color: colorScheme.onSurface.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+      ),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('İŞLEM HATTI', style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600, letterSpacing: 1.2)),
+          Text('İŞLEM HATTI', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600, letterSpacing: 1.2)),
           Row(children: [
-            Container(width: s.sp(8), height: s.sp(8), decoration: BoxDecoration(shape: BoxShape.circle, color: hasApi ? AppColors.primary : AppColors.onSurfaceVariant)),
+            Container(width: s.sp(8), height: s.sp(8), decoration: BoxDecoration(shape: BoxShape.circle, color: hasApi ? colorScheme.primary : colorScheme.onSurfaceVariant)),
             SizedBox(width: s.sp(6)),
-            Text(hasApi ? 'API AKTİF' : 'API BAĞLANTI BEKLENİYOR', style: TextStyle(color: hasApi ? AppColors.primary : AppColors.onSurfaceVariant, fontSize: s.sp(11), fontWeight: FontWeight.bold)),
+            Text(hasApi ? 'API AKTİF' : 'API BAĞLANTI BEKLENİYOR', style: TextStyle(color: hasApi ? colorScheme.primary : colorScheme.onSurfaceVariant, fontSize: s.sp(11), fontWeight: FontWeight.bold)),
           ]),
         ]),
         SizedBox(height: s.sp(24)),
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           _pipeNode(Icons.storage, 'Ham Banka Verisi', false, s),
-          Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: s.sp(8)), child: CustomPaint(size: Size(double.infinity, s.sp(10)), painter: _ArrowPainter()))),
+          Expanded(child: Padding(padding: EdgeInsets.symmetric(horizontal: s.sp(8)), child: CustomPaint(size: Size(double.infinity, s.sp(10)), painter: _ArrowPainter(colorScheme.primary, colorScheme.primaryContainer)))),
           _pipeNode(Icons.memory, 'TOBB API', hasApi, s),
         ]),
         SizedBox(height: s.sp(24)),
         Container(
           padding: EdgeInsets.all(s.sp(12)),
-          decoration: BoxDecoration(color: AppColors.surfaceContainerLow, borderRadius: BorderRadius.circular(8), border: Border.all(color: AppColors.primaryContainer.withOpacity(0.2))),
+          decoration: BoxDecoration(
+            color: colorScheme.surfaceContainerLow,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: colorScheme.primaryContainer.withOpacity(0.2)),
+          ),
           child: Row(children: [
-            Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.primaryContainer), child: Icon(hasApi ? Icons.check_circle : Icons.hourglass_empty, color: AppColors.onPrimaryContainer, size: s.sp(20))),
+            Container(
+              width: s.sp(40), height: s.sp(40),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: colorScheme.primaryContainer),
+              child: Icon(hasApi ? Icons.check_circle : Icons.hourglass_empty, color: colorScheme.onPrimaryContainer, size: s.sp(20)),
+            ),
             SizedBox(width: s.sp(16)),
             Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Text('Çözümlenmiş Sonuç', style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
+              Text('Çözümlenmiş Sonuç', style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant)),
               SizedBox(height: s.sp(2)),
-              Text(hasApi ? 'Çözümleme aktif' : 'API bağlantısı bekleniyor', style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: hasApi ? AppColors.primary : AppColors.onSurfaceVariant)),
+              Text(hasApi ? 'Çözümleme aktif' : 'API bağlantısı bekleniyor', style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: hasApi ? colorScheme.primary : colorScheme.onSurfaceVariant)),
             ])),
           ]),
         ),
@@ -74,25 +87,27 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
   }
 
   Widget _pipeNode(IconData icon, String label, bool active, AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: s.sp(85),
       child: Column(children: [
         Container(
           width: s.sp(48), height: s.sp(48),
           decoration: BoxDecoration(
-            color: active ? AppColors.primary.withOpacity(0.2) : AppColors.surfaceContainerHighest,
+            color: active ? colorScheme.primary.withOpacity(0.2) : colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: active ? AppColors.primary.withOpacity(0.3) : Colors.white.withOpacity(0.1)),
+            border: Border.all(color: active ? colorScheme.primary.withOpacity(0.3) : colorScheme.onSurface.withOpacity(0.1)),
           ),
-          child: Icon(icon, color: active ? AppColors.primary : AppColors.onSurfaceVariant, size: s.sp(22)),
+          child: Icon(icon, color: active ? colorScheme.primary : colorScheme.onSurfaceVariant, size: s.sp(22)),
         ),
         SizedBox(height: s.sp(8)),
-        Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: s.sp(11), color: active ? AppColors.primary : AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+        Text(label, textAlign: TextAlign.center, style: TextStyle(fontSize: s.sp(11), color: active ? colorScheme.primary : colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600)),
       ]),
     );
   }
 
   Widget _buildSectorScroll(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     final sectors = [
       ('Giyim', Icons.checkroom),
       ('Yemek', Icons.restaurant),
@@ -110,11 +125,15 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
           return Container(
             margin: EdgeInsets.only(right: s.sp(8)),
             padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(8)),
-            decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(999), border: Border.all(color: Colors.white.withOpacity(0.1))),
+            decoration: BoxDecoration(
+              color: colorScheme.onSurface.withOpacity(0.05),
+              borderRadius: BorderRadius.circular(999),
+              border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+            ),
             child: Row(children: [
-              Icon(sectors[i].$2, color: AppColors.primary, size: s.sp(18)),
+              Icon(sectors[i].$2, color: colorScheme.primary, size: s.sp(18)),
               SizedBox(width: s.sp(8)),
-              Text(sectors[i].$1, style: TextStyle(color: AppColors.onBackground, fontSize: s.sp(12), fontWeight: FontWeight.w600)),
+              Text(sectors[i].$1, style: TextStyle(color: colorScheme.onSurface, fontSize: s.sp(12), fontWeight: FontWeight.w600)),
             ]),
           );
         },
@@ -124,53 +143,60 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
 
   Widget _buildResolvedHeader(AppSizes s) {
     final txnCount = _repo.transactions.length;
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text('Çözümlenmiş İşlemler', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: AppColors.onSurface)),
-      Text(txnCount > 0 ? '$txnCount İşlem' : 'Veri yok', style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+      Text('Çözümlenmiş İşlemler', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
+      Text(txnCount > 0 ? '$txnCount İşlem' : 'Veri yok', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600)),
     ]);
   }
 
   Widget _buildResolvedList(AppSizes s) {
     final txns = _repo.transactions;
+    final colorScheme = Theme.of(context).colorScheme;
     if (txns.isEmpty) {
       return buildEmptyState(icon: Icons.search_off, title: 'Çözümlenmiş işlem yok', subtitle: 'Banka verileriniz bağlandığında işlemler otomatik olarak çözümlenip kategorize edilecek.', sizes: s);
     }
     return Column(children: txns.take(5).map((t) => Container(
       margin: EdgeInsets.only(bottom: s.sp(12)),
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: Colors.white.withOpacity(0.05), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.1))),
+      decoration: BoxDecoration(
+        color: colorScheme.onSurface.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+      ),
       child: Row(children: [
-        Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(t.icon, color: AppColors.primary, size: s.sp(20))),
+        Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(color: colorScheme.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(t.icon, color: colorScheme.primary, size: s.sp(20))),
         SizedBox(width: s.sp(16)),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(t.resolvedMerchant ?? t.title, style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+          Text(t.resolvedMerchant ?? t.title, style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
           SizedBox(height: s.sp(2)),
-          Text(t.category, style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
+          Text(t.category, style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant)),
         ])),
-        Text(t.formattedAmount, style: TextStyle(fontSize: s.sp(14), fontWeight: FontWeight.w600, color: AppColors.onSurfaceVariant)),
+        Text(t.formattedAmount, style: TextStyle(fontSize: s.sp(14), fontWeight: FontWeight.w600, color: colorScheme.onSurfaceVariant)),
       ]),
     )).toList());
   }
 
   Widget _buildAccuracyBanner(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: colorScheme.onSurface.withOpacity(0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.tertiary.withOpacity(0.3)),
+        border: Border.all(color: colorScheme.tertiary.withOpacity(0.3)),
       ),
       child: Padding(
         padding: EdgeInsets.all(s.sp(16)),
         child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Icon(Icons.auto_awesome, color: AppColors.tertiary, size: s.sp(32)),
+          Icon(Icons.auto_awesome, color: colorScheme.tertiary, size: s.sp(32)),
           SizedBox(width: s.sp(16)),
           Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Doğruluk Artışı', style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+            Text('Doğruluk Artışı', style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
             SizedBox(height: s.sp(4)),
             Text(
               _repo.hasData ? 'API işlemlerinizi başarıyla çözümlüyor.' : 'API bağlantınız kurulduğunda işlem çözümleme doğruluğu burada gösterilecek.',
-              style: TextStyle(fontSize: s.sp(14), color: AppColors.onSurfaceVariant, height: 1.3),
+              style: TextStyle(fontSize: s.sp(14), color: colorScheme.onSurfaceVariant, height: 1.3),
             ),
           ])),
         ]),
@@ -180,12 +206,20 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
 }
 
 class _ArrowPainter extends CustomPainter {
+  final Color primaryColor;
+  final Color containerColor;
+
+  _ArrowPainter(this.primaryColor, this.containerColor);
+
   @override
   void paint(Canvas canvas, Size size) {
-    final paint = Paint()..shader = LinearGradient(colors: [AppColors.primary, AppColors.primaryContainer]).createShader(Rect.fromLTWH(0, 0, size.width, size.height))..style = PaintingStyle.stroke..strokeWidth = 2.0;
+    final paint = Paint()
+      ..shader = LinearGradient(colors: [primaryColor, containerColor]).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0;
     final cy = size.height / 2;
     canvas.drawLine(Offset(0, cy), Offset(size.width - 6, cy), paint);
-    canvas.drawPath(Path()..moveTo(size.width, cy)..lineTo(size.width - 6, cy - 4)..lineTo(size.width - 6, cy + 4)..close(), Paint()..color = AppColors.primaryContainer..style = PaintingStyle.fill);
+    canvas.drawPath(Path()..moveTo(size.width, cy)..lineTo(size.width - 6, cy - 4)..lineTo(size.width - 6, cy + 4)..close(), Paint()..color = containerColor..style = PaintingStyle.fill);
   }
 
   @override

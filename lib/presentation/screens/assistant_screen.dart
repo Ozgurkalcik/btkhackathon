@@ -110,6 +110,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 
   Widget _buildChatBubble(String text, bool isAi, AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Align(
       alignment: isAi ? Alignment.centerLeft : Alignment.centerRight,
       child: Container(
@@ -117,7 +118,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
         padding: EdgeInsets.all(sizes.sp(16)),
         constraints: BoxConstraints(maxWidth: sizes.hp(0.75)),
         decoration: BoxDecoration(
-          color: isAi ? AppColors.surfaceContainerHigh : AppColors.primary.withOpacity(0.2),
+          color: isAi ? colorScheme.surfaceContainerHigh : colorScheme.primary.withOpacity(0.18),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -125,13 +126,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
             bottomRight: Radius.circular(isAi ? 16 : 0),
           ),
           border: Border.all(
-            color: isAi ? Colors.white.withOpacity(0.05) : AppColors.primary.withOpacity(0.3),
+            color: isAi ? colorScheme.onSurface.withOpacity(0.06) : colorScheme.primary.withOpacity(0.3),
           ),
         ),
         child: Text(
           text,
           style: TextStyle(
-            color: AppColors.onSurface,
+            color: colorScheme.onSurface,
             fontSize: sizes.sp(14),
             height: 1.5,
           ),
@@ -141,12 +142,13 @@ class _AssistantScreenState extends State<AssistantScreen> {
   }
 
   Widget _buildChatInput(AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return RepaintBoundary(
       child: Container(
         padding: EdgeInsets.all(sizes.sp(16)),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainer,
-          border: Border(top: BorderSide(color: Colors.white.withOpacity(0.05))),
+          color: colorScheme.surfaceContainer,
+          border: Border(top: BorderSide(color: colorScheme.onSurface.withOpacity(0.06))),
         ),
         child: SafeArea(
           child: Row(
@@ -154,12 +156,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
               Expanded(
                 child: TextField(
                   controller: _chatController,
-                  style: TextStyle(color: AppColors.onSurface),
+                  style: TextStyle(color: colorScheme.onSurface),
                   decoration: InputDecoration(
                     hintText: '"Neden çok harcadım?"',
-                    hintStyle: TextStyle(color: AppColors.onSurfaceVariant),
+                    hintStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                     filled: true,
-                    fillColor: AppColors.background,
+                    fillColor: colorScheme.surface,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(24),
                       borderSide: BorderSide.none,
@@ -170,12 +172,12 @@ class _AssistantScreenState extends State<AssistantScreen> {
               ),
               SizedBox(width: sizes.sp(12)),
               Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  icon: const Icon(Icons.send, color: AppColors.onPrimary),
+                  icon: Icon(Icons.send, color: colorScheme.onPrimary),
                   onPressed: _sendMessage,
                 ),
               ),

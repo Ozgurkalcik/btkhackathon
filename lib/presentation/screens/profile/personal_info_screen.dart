@@ -78,6 +78,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
     if (_formKey.currentState!.validate()) {
       setState(() => _isLoading = true);
+      final colorScheme = Theme.of(context).colorScheme;
       try {
         final name = _nameCtrl.text.trim();
         final email = _emailCtrl.text.trim();
@@ -124,7 +125,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Güncelleme sırasında bir hata oluştu: ${e.toString()}'),
-              backgroundColor: AppColors.error,
+              backgroundColor: colorScheme.error,
             ),
           );
         }
@@ -139,7 +140,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   @override
   Widget build(BuildContext context) {
     final sizes = AppSizes(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: buildCommonAppBar(context: context, title: 'Kişisel Bilgiler', showBackButton: true),
@@ -158,10 +159,14 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                         height: sizes.sp(100),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: isDark ? AppColors.surfaceContainerHigh : Colors.grey[300],
-                          border: Border.all(color: AppColors.primary, width: 2),
+                          color: colorScheme.surfaceContainerHigh,
+                          border: Border.all(color: colorScheme.primary, width: 2),
                         ),
-                        child: Icon(Icons.person, size: sizes.sp(50), color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700]),
+                        child: Icon(
+                          Icons.person,
+                          size: sizes.sp(50),
+                          color: colorScheme.onSurfaceVariant,
+                        ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -172,11 +177,11 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                           },
                           child: Container(
                             padding: EdgeInsets.all(sizes.sp(6)),
-                            decoration: const BoxDecoration(
-                              color: AppColors.primary,
+                            decoration: BoxDecoration(
+                              color: colorScheme.primary,
                               shape: BoxShape.circle,
                             ),
-                            child: Icon(Icons.edit, size: sizes.sp(16), color: AppColors.onPrimary),
+                            child: Icon(Icons.edit, size: sizes.sp(16), color: colorScheme.onPrimary),
                           ),
                         ),
                       )
@@ -191,13 +196,13 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
                 ElevatedButton(
                   onPressed: _isLoading ? null : _saveChanges,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    foregroundColor: AppColors.onPrimary,
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
                     minimumSize: Size(double.infinity, sizes.sp(50)),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: _isLoading 
-                      ? const SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
+                      ? SizedBox(height: 20, width: 20, child: CircularProgressIndicator(color: colorScheme.onPrimary, strokeWidth: 2))
                       : const Text('Değişiklikleri Kaydet'),
                 )
               ],
@@ -210,19 +215,19 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   Widget _buildInfoField(BuildContext context, String label, TextEditingController controller, IconData icon) {
     final sizes = AppSizes(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return Padding(
       padding: EdgeInsets.only(bottom: sizes.sp(16)),
       child: TextFormField(
         controller: controller,
         validator: (val) => val == null || val.isEmpty ? 'Bu alan boş bırakılamaz' : null,
-        style: TextStyle(color: Theme.of(context).textTheme.bodyLarge?.color),
+        style: TextStyle(color: colorScheme.onSurface),
         decoration: InputDecoration(
           labelText: label,
-          prefixIcon: Icon(icon, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[600]),
+          prefixIcon: Icon(icon, color: colorScheme.onSurfaceVariant),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
           filled: true,
-          fillColor: isDark ? AppColors.surfaceContainer : Colors.white,
+          fillColor: colorScheme.surfaceContainer,
         ),
       ),
     );

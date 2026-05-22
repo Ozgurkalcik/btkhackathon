@@ -16,14 +16,17 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget build(BuildContext context) {
     final selectedIndex = getSelectedIndexFromRoute(context);
     final sizes = AppSizes(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Scaffold(
       appBar: buildCommonAppBar(context: context, title: 'Analiz'),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(left: sizes.sp(20), right: sizes.sp(20), top: sizes.sp(24), bottom: sizes.sp(120)),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text('Analiz', style: TextStyle(fontSize: sizes.sp(24), fontWeight: FontWeight.bold, color: AppColors.onBackground)),
+          Text('Analiz', style: TextStyle(fontSize: sizes.sp(24), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
           SizedBox(height: sizes.sp(4)),
-          Text('Finansal sağlık özetiniz', style: TextStyle(fontSize: sizes.sp(14), color: AppColors.onSurfaceVariant)),
+          Text('Finansal sağlık özetiniz', style: TextStyle(fontSize: sizes.sp(14), color: colorScheme.onSurfaceVariant)),
           SizedBox(height: sizes.sp(24)),
           _buildDonutChart(sizes),
           SizedBox(height: sizes.sp(24)),
@@ -39,14 +42,16 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   Widget _buildDonutChart(AppSizes s) {
     final breakdown = _repo.getCategoryBreakdown();
     final totalSpent = breakdown.values.fold(0.0, (a, b) => a + b);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: AppColors.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Text('Kategori Dağılımı', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: AppColors.onSurface)),
-          Icon(Icons.more_vert, color: AppColors.onSurfaceVariant, size: s.sp(20)),
+          Text('Kategori Dağılımı', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
+          Icon(Icons.more_vert, color: colorScheme.onSurfaceVariant, size: s.sp(20)),
         ]),
         SizedBox(height: s.sp(16)),
         SizedBox(
@@ -55,45 +60,49 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             if (breakdown.isNotEmpty)
               Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: _buildSegments(breakdown, totalSpent))))
             else
-              Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: [_ChartSegment(1.0, Colors.white.withOpacity(0.1))]))),
+              Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: [_ChartSegment(1.0, colorScheme.onSurface.withOpacity(0.1))]))),
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Text('TOPLAM', style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+              Text('TOPLAM', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600)),
               SizedBox(height: s.sp(2)),
-              Text(totalSpent > 0 ? '₺${totalSpent.toStringAsFixed(0)}' : '—', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: AppColors.onSurface)),
+              Text(totalSpent > 0 ? '₺${totalSpent.toStringAsFixed(0)}' : '—', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
             ]),
           ]),
         ),
         SizedBox(height: s.sp(16)),
         if (breakdown.isEmpty)
-          Text('Veri bekleniyor...', style: TextStyle(fontSize: s.sp(13), color: AppColors.onSurfaceVariant)),
+          Text('Veri bekleniyor...', style: TextStyle(fontSize: s.sp(13), color: colorScheme.onSurfaceVariant)),
       ]),
     );
   }
 
   List<_ChartSegment> _buildSegments(Map<String, double> breakdown, double total) {
-    final colors = [AppColors.primary, AppColors.tertiary, AppColors.secondary, AppColors.onBackground, AppColors.error];
+    final colorScheme = Theme.of(context).colorScheme;
+    final colors = [colorScheme.primary, colorScheme.tertiary, colorScheme.secondary, colorScheme.onSurface, colorScheme.error];
     int i = 0;
     return breakdown.entries.map((e) => _ChartSegment(e.value / total, colors[i++ % colors.length])).toList();
   }
 
   Widget _buildAiDiagnostics(AppSizes s) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
-      decoration: BoxDecoration(color: AppColors.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(children: [
-          Positioned(top: 0, left: 0, right: 0, child: Container(height: 1.5, decoration: BoxDecoration(gradient: LinearGradient(colors: [AppColors.tertiary, Colors.transparent])))),
+          Positioned(top: 0, left: 0, right: 0, child: Container(height: 1.5, decoration: BoxDecoration(gradient: LinearGradient(colors: [colorScheme.tertiary, Colors.transparent])))),
           Padding(
             padding: EdgeInsets.all(s.sp(16)),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(padding: EdgeInsets.all(s.sp(8)), decoration: BoxDecoration(color: AppColors.tertiary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(Icons.auto_awesome, color: AppColors.tertiary, size: s.sp(20))),
+              Container(padding: EdgeInsets.all(s.sp(8)), decoration: BoxDecoration(color: colorScheme.tertiary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(Icons.auto_awesome, color: colorScheme.tertiary, size: s.sp(20))),
               SizedBox(width: s.sp(16)),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text('AI Teşhis', style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.w600, color: AppColors.tertiary)),
+                Text('AI Teşhis', style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.w600, color: colorScheme.tertiary)),
                 SizedBox(height: s.sp(4)),
                 Text(
                   _repo.hasData ? 'Harcama verileriniz analiz ediliyor. Burada anomali tespitleri ve optimizasyon önerileri gösterilecek.' : 'Banka bağlantınız kurulduğunda AI harcama kalıplarınızı analiz edecek ve önerilerde bulunacak.',
-                  style: TextStyle(fontSize: s.sp(14), color: AppColors.onSurface, height: 1.4),
+                  style: TextStyle(fontSize: s.sp(14), color: colorScheme.onSurface, height: 1.4),
                 ),
               ])),
             ]),
@@ -104,24 +113,27 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
   }
 
   Widget _buildLineChart(AppSizes s) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: AppColors.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: Colors.white.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.end, children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text('Aylık Trend', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: AppColors.onSurface)),
+            Text('Aylık Trend', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
             SizedBox(height: s.sp(2)),
-            Text('Veri bekleniyor', style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant, fontWeight: FontWeight.w600)),
+            Text('Veri bekleniyor', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600)),
           ]),
         ]),
         SizedBox(height: s.sp(24)),
         SizedBox(
           height: s.sp(150), width: double.infinity,
-          child: CustomPaint(painter: _LineChartPainter(dataPoints: const [], lineColor: AppColors.primary)),
+          child: CustomPaint(painter: _LineChartPainter(dataPoints: const [], lineColor: colorScheme.primary)),
         ),
         SizedBox(height: s.sp(8)),
-        Text('Banka verileriniz bağlandığında aylık harcama trendi burada gösterilecek.', style: TextStyle(fontSize: s.sp(12), color: AppColors.onSurfaceVariant), textAlign: TextAlign.center),
+        Text('Banka verileriniz bağlandığında aylık harcama trendi burada gösterilecek.', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant), textAlign: TextAlign.center),
       ]),
     );
   }

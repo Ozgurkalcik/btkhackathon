@@ -87,108 +87,126 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildProfileOverview(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Center(child: Column(children: [
       Container(
         width: s.sp(96), height: s.sp(96), padding: EdgeInsets.all(s.sp(4)),
-        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: AppColors.primary, width: 4)),
+        decoration: BoxDecoration(shape: BoxShape.circle, border: Border.all(color: colorScheme.primary, width: 4)),
         child: Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: AppColors.surfaceContainerHigh),
-          child: Icon(Icons.person, color: AppColors.primary, size: s.sp(40)),
+          decoration: BoxDecoration(shape: BoxShape.circle, color: colorScheme.surfaceContainerHigh),
+          child: Icon(Icons.person, color: colorScheme.primary, size: s.sp(40)),
         ),
       ),
       SizedBox(height: s.sp(16)),
-      Text(_displayName, style: TextStyle(fontSize: s.sp(24), fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface)),
+      Text(_displayName, style: TextStyle(fontSize: s.sp(24), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
       SizedBox(height: s.sp(8)),
       Container(
         padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(6)),
-        decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(999), border: Border.all(color: AppColors.primary.withOpacity(0.3))),
+        decoration: BoxDecoration(color: colorScheme.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(999), border: Border.all(color: colorScheme.primary.withOpacity(0.3))),
         child: Text(
           _repo.hasBankConnections ? '${_repo.connectedBankCount} Banka Bağlı' : 'Bağlantı Yok',
-          style: TextStyle(fontSize: s.sp(12), color: AppColors.primary, fontWeight: FontWeight.w600),
+          style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.w600),
         ),
       ),
     ]));
   }
 
   Widget _buildFinancialSummary(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Row(children: [
       Expanded(child: Container(
         padding: EdgeInsets.all(s.sp(16)),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03),
+          color: colorScheme.surfaceContainerLow.withOpacity(0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05)),
-          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [AppColors.primary.withOpacity(0.15), Colors.transparent]),
+          border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.primary.withOpacity(0.12), Colors.transparent]),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Icon(Icons.account_balance, color: AppColors.primary, size: s.sp(20)),
-            Text('BAKİYE', style: TextStyle(fontSize: s.sp(12), color: AppColors.primary, fontWeight: FontWeight.w600)),
+            Icon(Icons.account_balance, color: colorScheme.primary, size: s.sp(20)),
+            Text('BAKİYE', style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.w600)),
           ]),
           SizedBox(height: s.sp(8)),
-          Text('Toplam', style: TextStyle(fontSize: s.sp(12), color: Theme.of(context).textTheme.bodySmall?.color ?? AppColors.onSurfaceVariant)),
+          Text('Toplam', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant)),
           SizedBox(height: s.sp(4)),
-          Text(_repo.hasData ? '₺${_repo.totalBalance.toStringAsFixed(0)}' : '—', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: AppColors.primary)),
+          Text(_repo.hasData ? '₺${_repo.totalBalance.toStringAsFixed(0)}' : '—', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: colorScheme.primary)),
         ]),
       )),
       SizedBox(width: s.sp(16)),
       Expanded(child: Container(
         padding: EdgeInsets.all(s.sp(16)),
         decoration: BoxDecoration(
-          color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03),
+          color: colorScheme.surfaceContainerLow.withOpacity(0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Theme.of(context).brightness == Brightness.dark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05)),
+          border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.tertiary.withOpacity(0.12), Colors.transparent]),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Icon(Icons.insights, color: AppColors.tertiary, size: s.sp(20)),
-            Text('İŞLEM', style: TextStyle(fontSize: s.sp(12), color: AppColors.tertiary, fontWeight: FontWeight.w600)),
+            Icon(Icons.insights, color: colorScheme.tertiary, size: s.sp(20)),
+            Text('İŞLEM', style: TextStyle(fontSize: s.sp(12), color: colorScheme.tertiary, fontWeight: FontWeight.w600)),
           ]),
           SizedBox(height: s.sp(8)),
-          Text('Toplam', style: TextStyle(fontSize: s.sp(12), color: Theme.of(context).textTheme.bodySmall?.color ?? AppColors.onSurfaceVariant)),
+          Text('Toplam', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant)),
           SizedBox(height: s.sp(4)),
-          Text('${_repo.transactions.length}', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: AppColors.tertiary)),
+          Text('${_repo.transactions.length}', style: TextStyle(fontSize: s.sp(22), fontWeight: FontWeight.bold, color: colorScheme.tertiary)),
         ]),
       )),
     ]);
   }
 
   Widget _buildSectionHeader(String title, AppSizes s) {
-    return Padding(padding: EdgeInsets.only(left: s.sp(4)), child: Text(title, style: TextStyle(fontSize: s.sp(12), color: Theme.of(context).textTheme.bodySmall?.color ?? AppColors.onSurfaceVariant, fontWeight: FontWeight.w600, letterSpacing: 0.5)));
+    final colorScheme = Theme.of(context).colorScheme;
+    return Padding(padding: EdgeInsets.only(left: s.sp(4)), child: Text(title, style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600, letterSpacing: 0.5)));
   }
 
   Widget _buildBankConnectionsList(AppSizes s) {
     final banks = BankRegistry.banks;
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03), borderRadius: BorderRadius.circular(12), border: Border.all(color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05))),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+      ),
       child: Column(children: List.generate(math_min(banks.length, 5), (i) {
         final bank = banks[i];
         final isLast = i == math_min(banks.length, 5) - 1;
         return Container(
           padding: EdgeInsets.all(s.sp(16)),
-          decoration: BoxDecoration(border: !isLast ? Border(bottom: BorderSide(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05))) : null),
+          decoration: BoxDecoration(border: !isLast ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
               Container(
                 width: s.sp(36), height: s.sp(36),
-                decoration: BoxDecoration(color: bank.isReady ? AppColors.primary.withOpacity(0.1) : (isDark ? AppColors.surfaceContainerHighest : Colors.grey.withOpacity(0.2)), borderRadius: BorderRadius.circular(8)),
-                child: Icon(Icons.account_balance, color: bank.isReady ? AppColors.primary : (isDark ? AppColors.onSurfaceVariant : Colors.grey), size: s.sp(18)),
+                decoration: BoxDecoration(
+                  color: bank.isReady ? colorScheme.primary.withOpacity(0.12) : colorScheme.surfaceContainerHigh,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.account_balance, color: bank.isReady ? colorScheme.primary : colorScheme.onSurfaceVariant, size: s.sp(18)),
               ),
               SizedBox(width: s.sp(12)),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(bank.shortName, style: TextStyle(fontSize: s.sp(15), color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface, fontWeight: FontWeight.w500)),
-                Text(bank.isReady ? 'Bağlı' : 'API anahtarı bekleniyor', style: TextStyle(fontSize: s.sp(11), color: bank.isReady ? AppColors.primary : (isDark ? AppColors.onSurfaceVariant : Colors.grey))),
+                Text(bank.shortName, style: TextStyle(fontSize: s.sp(15), color: colorScheme.onSurface, fontWeight: FontWeight.w500)),
+                Text(bank.isReady ? 'Bağlı' : 'API anahtarı bekleniyor', style: TextStyle(fontSize: s.sp(11), color: bank.isReady ? colorScheme.primary : colorScheme.onSurfaceVariant)),
               ]),
             ]),
             Container(
               padding: EdgeInsets.symmetric(horizontal: s.sp(10), vertical: s.sp(4)),
               decoration: BoxDecoration(
-                color: bank.isReady ? AppColors.primary.withOpacity(0.1) : (isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03)),
+                color: bank.isReady ? colorScheme.primary.withOpacity(0.12) : colorScheme.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: bank.isReady ? AppColors.primary.withOpacity(0.3) : (isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05))),
+                border: Border.all(color: bank.isReady ? colorScheme.primary.withOpacity(0.3) : colorScheme.onSurface.withOpacity(0.08)),
               ),
-              child: Text(bank.isReady ? 'Aktif' : 'Yapılandır', style: TextStyle(fontSize: s.sp(11), color: bank.isReady ? AppColors.primary : (isDark ? AppColors.onSurfaceVariant : Colors.grey[700]), fontWeight: FontWeight.w600)),
+              child: Text(
+                bank.isReady ? 'Aktif' : 'Yapılandır',
+                style: TextStyle(
+                  fontSize: s.sp(11),
+                  color: bank.isReady ? colorScheme.primary : colorScheme.onSurfaceVariant,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             ),
           ]),
         );
@@ -197,41 +215,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildAccountSettings(AppSizes s) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03), borderRadius: BorderRadius.circular(12), border: Border.all(color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05))),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+      ),
       child: Column(children: [
         _buildListTile(Icons.person, 'Kişisel Bilgiler', true, s, onTap: () => Navigator.pushNamed(context, '/profile/personal_info').then((_) => _loadUserDisplayName())),
         _buildListTile(Icons.payments, 'Ödeme Yöntemleri', true, s, onTap: () => Navigator.pushNamed(context, '/profile/payment_methods')),
         _buildListTile(Icons.shield, 'Güvenlik', true, s, onTap: () => Navigator.pushNamed(context, '/profile/security_settings')),
-        _buildGeminiApiTile(s, isDark),
+        _buildGeminiApiTile(s),
       ]),
     );
   }
 
   Widget _buildListTile(IconData icon, String title, bool hasDivider, AppSizes s, {required VoidCallback onTap}) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(s.sp(16)),
-        decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05))) : null),
+        decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(children: [Icon(icon, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700], size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface))]),
-          Icon(Icons.chevron_right, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700], size: s.sp(22)),
+          Row(children: [Icon(icon, color: colorScheme.onSurfaceVariant, size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: colorScheme.onSurface))]),
+          Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant, size: s.sp(22)),
         ]),
       ),
     );
   }
 
-  Widget _buildGeminiApiTile(AppSizes s, bool isDark) {
+  Widget _buildGeminiApiTile(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return InkWell(
       onTap: () => _showGeminiApiDialog(),
       child: Container(
         padding: EdgeInsets.all(s.sp(16)),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          Row(children: [Icon(Icons.api, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700], size: s.sp(22)), SizedBox(width: s.sp(16)), Text('API Ayarları (Gemini)', style: TextStyle(fontSize: s.sp(16), color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface))]),
-          Icon(Icons.chevron_right, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700], size: s.sp(22)),
+          Row(children: [Icon(Icons.api, color: colorScheme.onSurfaceVariant, size: s.sp(22)), SizedBox(width: s.sp(16)), Text('API Ayarları (Gemini)', style: TextStyle(fontSize: s.sp(16), color: colorScheme.onSurface))]),
+          Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant, size: s.sp(22)),
         ]),
       ),
     );
@@ -245,27 +268,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
     if (!mounted) return;
 
+    final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Gemini API Anahtarı'),
+          backgroundColor: colorScheme.surface,
+          title: Text('Gemini API Anahtarı', style: TextStyle(color: colorScheme.onSurface)),
           content: RepaintBoundary(
             child: TextField(
               controller: controller,
               obscureText: true,
-              decoration: const InputDecoration(
+              style: TextStyle(color: colorScheme.onSurface),
+              decoration: InputDecoration(
                 hintText: 'API Anahtarınızı girin',
-                border: OutlineInputBorder(),
+                hintStyle: TextStyle(color: colorScheme.onSurfaceVariant.withOpacity(0.6)),
+                border: const OutlineInputBorder(),
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
               ),
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('İptal'),
+              child: Text('İptal', style: TextStyle(color: colorScheme.onSurfaceVariant)),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
+              ),
               onPressed: () async {
                 await SecureStorageService.setGeminiApiKey(controller.text.trim());
                 if (mounted) {
@@ -284,40 +316,52 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Widget _buildAppPreferences(SettingsState state, AppSizes s) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
-      decoration: BoxDecoration(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.03), borderRadius: BorderRadius.circular(12), border: Border.all(color: isDark ? Colors.white.withOpacity(0.1) : Colors.black.withOpacity(0.05))),
+      decoration: BoxDecoration(
+        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+      ),
       child: Column(children: [
-        _buildSwitch(Icons.dark_mode, 'Karanlık Mod', state.themeMode == ThemeMode.dark, AppColors.primary, (v) => context.read<SettingsCubit>().toggleTheme(v), true, s, isDark),
-        _buildSwitch(Icons.notifications_active, 'Bildirimler', state.notificationsEnabled, AppColors.surfaceContainerHighest, (v) => context.read<SettingsCubit>().toggleNotifications(v), true, s, isDark),
-        _buildSwitch(Icons.psychology, 'AI Öneriler', state.aiInsightsEnabled, AppColors.tertiary, (v) => context.read<SettingsCubit>().toggleAiInsights(v), false, s, isDark),
+        _buildSwitch(Icons.dark_mode, 'Karanlık Mod', state.themeMode == ThemeMode.dark, colorScheme.primary, (v) => context.read<SettingsCubit>().toggleTheme(v), true, s),
+        _buildSwitch(Icons.notifications_active, 'Bildirimler', state.notificationsEnabled, colorScheme.secondary, (v) => context.read<SettingsCubit>().toggleNotifications(v), true, s),
+        _buildSwitch(Icons.psychology, 'AI Öneriler', state.aiInsightsEnabled, colorScheme.tertiary, (v) => context.read<SettingsCubit>().toggleAiInsights(v), false, s),
       ]),
     );
   }
 
-  Widget _buildSwitch(IconData icon, String title, bool value, Color activeColor, ValueChanged<bool> onChanged, bool hasDivider, AppSizes s, bool isDark) {
+  Widget _buildSwitch(IconData icon, String title, bool value, Color activeColor, ValueChanged<bool> onChanged, bool hasDivider, AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(12)),
-      decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: isDark ? Colors.white.withOpacity(0.05) : Colors.black.withOpacity(0.05))) : null),
+      decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Row(children: [Icon(icon, color: isDark ? AppColors.onSurfaceVariant : Colors.grey[700], size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: Theme.of(context).textTheme.bodyLarge?.color ?? AppColors.onSurface))]),
-        Switch(value: value, onChanged: onChanged, activeColor: AppColors.onPrimary, activeTrackColor: activeColor == AppColors.surfaceContainerHighest ? (isDark ? AppColors.surfaceContainerHighest : Colors.grey[400]) : activeColor, inactiveThumbColor: isDark ? AppColors.onSurfaceVariant : Colors.grey, inactiveTrackColor: isDark ? AppColors.surfaceContainerHigh : Colors.grey[300]),
+        Row(children: [Icon(icon, color: colorScheme.onSurfaceVariant, size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: colorScheme.onSurface))]),
+        Switch(
+          value: value,
+          onChanged: onChanged,
+          activeColor: colorScheme.onPrimary,
+          activeTrackColor: activeColor,
+        ),
       ]),
     );
   }
 
   Widget _buildLogoutButton(AppSizes s) {
+    final colorScheme = Theme.of(context).colorScheme;
     return SizedBox(
       width: double.infinity, height: s.sp(56),
       child: OutlinedButton(
         onPressed: () {
-          // Çıkış yapıldığında AuthCubit durumu Unauthenticated'a çeker,
-          // ancak profil ekranındayız. Bu yüzden navigator ile login'e atalım
-          // veya AuthCheckScreen ana route'u üzerinden yönlendirme alalım.
           context.read<AuthCubit>().logout();
           Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         },
-        style: OutlinedButton.styleFrom(side: BorderSide(color: AppColors.secondary.withOpacity(0.3)), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), foregroundColor: AppColors.secondary),
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: colorScheme.error.withOpacity(0.4)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          foregroundColor: colorScheme.error,
+        ),
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Icon(Icons.logout, size: s.sp(20)),
           SizedBox(width: s.sp(8)),

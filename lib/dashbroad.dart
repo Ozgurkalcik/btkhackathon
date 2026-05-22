@@ -39,6 +39,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   Widget build(BuildContext context) {
     final selectedIndex = getSelectedIndexFromRoute(context);
     final sizes = AppSizes(context);
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return Scaffold(
       appBar: buildCommonAppBar(
@@ -79,12 +81,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.secondary.withOpacity(0.3 * _pulseAnimation.value),
+                    color: colorScheme.secondary.withOpacity(0.3 * _pulseAnimation.value),
                     blurRadius: 18 * _pulseAnimation.value,
                     spreadRadius: 2 * _pulseAnimation.value,
                   ),
                   BoxShadow(
-                    color: AppColors.tertiary.withOpacity(0.25 * _pulseAnimation.value),
+                    color: colorScheme.tertiary.withOpacity(0.25 * _pulseAnimation.value),
                     blurRadius: 26 * _pulseAnimation.value,
                     spreadRadius: 3 * _pulseAnimation.value,
                   ),
@@ -93,10 +95,10 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               child: Container(
                 width: 56,
                 height: 56,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: LinearGradient(
-                    colors: [AppColors.secondary, AppColors.tertiary],
+                    colors: [colorScheme.secondary, colorScheme.tertiary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   ),
@@ -128,10 +130,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
   /// Banka bağlantı durumu banneri
   Widget _buildConnectionStatusBanner(AppSizes sizes) {
     final hasConnection = _repo.hasBankConnections;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return HoverGlassContainer(
       borderRadius: 12,
-      glowColor: hasConnection ? AppColors.primary : AppColors.tertiary,
+      glowColor: hasConnection ? colorScheme.primary : colorScheme.tertiary,
       child: Stack(
         children: [
           Positioned(
@@ -141,8 +145,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: hasConnection
-                      ? [AppColors.primary, Colors.transparent]
-                      : [AppColors.tertiary, Colors.transparent],
+                      ? [colorScheme.primary, Colors.transparent]
+                      : [colorScheme.tertiary, Colors.transparent],
                 ),
               ),
             ),
@@ -156,13 +160,13 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   padding: EdgeInsets.all(sizes.sp(8)),
                   decoration: BoxDecoration(
                     color: hasConnection
-                        ? AppColors.primary.withOpacity(0.2)
-                        : AppColors.tertiary.withOpacity(0.2),
+                        ? colorScheme.primary.withOpacity(0.2)
+                        : colorScheme.tertiary.withOpacity(0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
                     hasConnection ? Icons.link : Icons.link_off,
-                    color: hasConnection ? AppColors.primary : AppColors.tertiary,
+                    color: hasConnection ? colorScheme.primary : colorScheme.tertiary,
                     size: sizes.sp(20),
                   ),
                 ),
@@ -178,7 +182,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                         style: TextStyle(
                           fontSize: sizes.sp(15),
                           fontWeight: FontWeight.w600,
-                          color: AppColors.onSurface,
+                          color: colorScheme.onSurface,
                         ),
                       ),
                       SizedBox(height: sizes.sp(4)),
@@ -188,7 +192,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                             : 'Banka API anahtarlarınızı config/bank_config.dart dosyasına ekleyin ve verilerinizi görmeye başlayın.',
                         style: TextStyle(
                           fontSize: sizes.sp(13),
-                          color: AppColors.onSurfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                           height: 1.4,
                         ),
                       ),
@@ -205,23 +209,26 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   /// Modern Gradient Header
   Widget _buildGradientHeader(AppSizes sizes) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
+
     return Container(
       width: double.infinity,
       padding: EdgeInsets.all(sizes.sp(24)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF131A2E),
-            Color(0xFF1E2B4C),
-          ],
+        gradient: LinearGradient(
+          colors: isDark
+              ? [const Color(0xFF131A2E), const Color(0xFF1E2B4C)]
+              : [const Color(0xFFF1F5F9), const Color(0xFFE2E8F0)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: Colors.white.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.05),
+            color: colorScheme.primary.withOpacity(0.05),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -240,7 +247,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                     'Hoş Geldin,',
                     style: TextStyle(
                       fontSize: sizes.sp(14),
-                      color: AppColors.onSurfaceVariant,
+                      color: colorScheme.onSurfaceVariant,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -250,7 +257,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                     style: TextStyle(
                       fontSize: sizes.sp(24),
                       fontWeight: FontWeight.w800,
-                      color: AppColors.onSurface,
+                      color: colorScheme.onSurface,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -259,18 +266,18 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               Container(
                 padding: EdgeInsets.symmetric(horizontal: sizes.sp(12), vertical: sizes.sp(6)),
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.12),
+                  color: colorScheme.primary.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.primary.withOpacity(0.2)),
+                  border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
                 ),
                 child: Row(
                   children: [
                     Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(width: sizes.sp(8)),
@@ -279,7 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(
                         fontSize: sizes.sp(11),
                         fontWeight: FontWeight.bold,
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ),
                   ],
@@ -292,7 +299,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             'Bütçe durumun bu ay mükemmel görünüyor! Yapay zeka senin için yeni tasarruf önerileri hazırladı.',
             style: TextStyle(
               fontSize: sizes.sp(13),
-              color: AppColors.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
               height: 1.4,
             ),
           ),
@@ -303,25 +310,28 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   /// AI Insight Card
   Widget _buildAIInsightCard(AppSizes sizes) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return HoverGlassContainer(
       borderRadius: 16,
       padding: EdgeInsets.all(sizes.sp(20)),
-      glowColor: AppColors.secondary,
+      glowColor: colorScheme.secondary,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             padding: EdgeInsets.all(sizes.sp(10)),
             decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                colors: [AppColors.secondary, AppColors.tertiary],
+              gradient: LinearGradient(
+                colors: [colorScheme.secondary, colorScheme.tertiary],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
               ),
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.secondary.withOpacity(0.3),
+                  color: colorScheme.secondary.withOpacity(0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 )
@@ -346,7 +356,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(
                         fontSize: sizes.sp(11),
                         fontWeight: FontWeight.bold,
-                        color: AppColors.secondary,
+                        color: colorScheme.secondary,
                         letterSpacing: 1.0,
                       ),
                     ),
@@ -354,7 +364,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       'Şimdi',
                       style: TextStyle(
                         fontSize: sizes.sp(11),
-                        color: AppColors.onSurfaceVariant.withOpacity(0.7),
+                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
                       ),
                     ),
                   ],
@@ -364,7 +374,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   'Bu ay gıda harcamalarınız %12 azaldı. Tasarrufunuz ile ₺1.200 bütçe fazlası oluşturdunuz! Bu tutarı yatırım sepetinize aktarmak ister misiniz?',
                   style: TextStyle(
                     fontSize: sizes.sp(13),
-                    color: AppColors.onSurface,
+                    color: colorScheme.onSurface,
                     height: 1.4,
                   ),
                 ),
@@ -379,14 +389,14 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                         style: TextStyle(
                           fontSize: sizes.sp(12),
                           fontWeight: FontWeight.bold,
-                          color: AppColors.primary,
+                          color: colorScheme.primary,
                         ),
                       ),
                       SizedBox(width: sizes.sp(4)),
                       Icon(
                         Icons.arrow_forward,
                         size: sizes.sp(14),
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                       ),
                     ],
                   ),
@@ -405,14 +415,16 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     final income = _repo.totalIncome;
     final expense = _repo.totalExpense;
     final maxVal = income > 0 ? income : 1.0;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return HoverGlassContainer(
       borderRadius: 16,
       padding: EdgeInsets.all(sizes.sp(24)),
-      glowColor: AppColors.primary,
+      glowColor: colorScheme.primary,
       gradientColors: [
-        AppColors.primary.withOpacity(0.08),
-        Colors.white.withOpacity(0.02),
+        colorScheme.primary.withOpacity(0.08),
+        colorScheme.onSurface.withOpacity(0.02),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -421,7 +433,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             'TÜM HESAPLAR KONSOLİDE DURUM',
             style: TextStyle(
               fontSize: sizes.sp(12),
-              color: AppColors.onSurfaceVariant,
+              color: colorScheme.onSurfaceVariant,
               fontWeight: FontWeight.w600,
               letterSpacing: 1.2,
             ),
@@ -441,7 +453,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                     style: TextStyle(
                       fontSize: sizes.sp(32),
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: colorScheme.onSurface,
                       letterSpacing: -0.5,
                     ),
                   ),
@@ -451,12 +463,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 SizedBox(width: sizes.sp(8)),
                 Row(
                   children: [
-                    Icon(Icons.trending_up, color: AppColors.primary, size: sizes.sp(14)),
+                    Icon(Icons.trending_up, color: colorScheme.primary, size: sizes.sp(14)),
                     SizedBox(width: sizes.sp(4)),
                     Text(
                       'Canlı',
                       style: TextStyle(
-                        color: AppColors.primary,
+                        color: colorScheme.primary,
                         fontSize: sizes.sp(12),
                         fontWeight: FontWeight.bold,
                       ),
@@ -473,7 +485,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 child: _buildOverviewProgressColumn(
                   'Gelir',
                   _repo.hasData ? '₺${income.toStringAsFixed(0)}' : '—',
-                  AppColors.primary,
+                  colorScheme.primary,
                   income > 0 ? 0.75 : 0.0,
                   sizes,
                 ),
@@ -483,7 +495,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 child: _buildOverviewProgressColumn(
                   'Gider',
                   _repo.hasData ? '₺${expense.toStringAsFixed(0)}' : '—',
-                  AppColors.secondary,
+                  colorScheme.secondary,
                   maxVal > 0 ? (expense / maxVal).clamp(0.0, 1.0) : 0.0,
                   sizes,
                 ),
@@ -497,6 +509,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   Widget _buildOverviewProgressColumn(
       String label, String amount, Color color, double progress, AppSizes sizes) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -508,7 +523,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               decoration: BoxDecoration(shape: BoxShape.circle, color: color),
             ),
             SizedBox(width: sizes.sp(8)),
-            Text(label, style: TextStyle(fontSize: sizes.sp(12), color: AppColors.onSurfaceVariant)),
+            Text(label, style: TextStyle(fontSize: sizes.sp(12), color: colorScheme.onSurfaceVariant)),
           ],
         ),
         SizedBox(height: sizes.sp(4)),
@@ -517,7 +532,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
           style: TextStyle(
             fontSize: sizes.sp(20),
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colorScheme.onSurface,
           ),
         ),
         SizedBox(height: sizes.sp(8)),
@@ -537,7 +552,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             borderRadius: BorderRadius.circular(3),
             child: LinearProgressIndicator(
               value: progress,
-              backgroundColor: Colors.white.withOpacity(0.1),
+              backgroundColor: colorScheme.onSurface.withOpacity(0.1),
               color: color,
               minHeight: sizes.sp(6),
             ),
@@ -552,6 +567,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
     if (!_repo.hasData || _repo.accounts.isEmpty) {
       return const SizedBox.shrink();
     }
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final isDark = theme.brightness == Brightness.dark;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -560,7 +578,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
           'BANKA HESAPLARINIZ',
           style: TextStyle(
             fontSize: sizes.sp(12),
-            color: AppColors.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
             letterSpacing: 1.2,
           ),
@@ -583,8 +601,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 width: sizes.sp(220),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: AppColors.surfaceContainerHigh.withOpacity(0.4),
-                  border: Border.all(color: Colors.white.withOpacity(0.05)),
+                  color: colorScheme.surfaceContainer.withOpacity(0.4),
+                  border: Border.all(color: colorScheme.onSurface.withOpacity(0.05)),
                 ),
                 padding: EdgeInsets.all(sizes.sp(16)),
                 child: Column(
@@ -596,7 +614,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                           width: sizes.sp(32),
                           height: sizes.sp(32),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: isDark ? Colors.white : Colors.blueGrey.withOpacity(0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
@@ -610,7 +628,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                             style: TextStyle(
                               fontSize: sizes.sp(14),
                               fontWeight: FontWeight.bold,
-                              color: AppColors.onSurface,
+                              color: colorScheme.onSurface,
                             ),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -624,7 +642,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       style: TextStyle(
                         fontSize: sizes.sp(20),
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: colorScheme.onSurface,
                       ),
                     ),
                     const Spacer(),
@@ -634,15 +652,15 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Gelir', style: TextStyle(fontSize: sizes.sp(10), color: AppColors.onSurfaceVariant)),
-                            Text('₺${inc.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: AppColors.primary, fontWeight: FontWeight.bold)),
+                            Text('Gelir', style: TextStyle(fontSize: sizes.sp(10), color: colorScheme.onSurfaceVariant)),
+                            Text('₺${inc.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: colorScheme.primary, fontWeight: FontWeight.bold)),
                           ],
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Gider', style: TextStyle(fontSize: sizes.sp(10), color: AppColors.onSurfaceVariant)),
-                            Text('₺${exp.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: AppColors.error, fontWeight: FontWeight.bold)),
+                            Text('Gider', style: TextStyle(fontSize: sizes.sp(10), color: colorScheme.onSurfaceVariant)),
+                            Text('₺${exp.toStringAsFixed(0)}', style: TextStyle(fontSize: sizes.sp(12), color: colorScheme.error, fontWeight: FontWeight.bold)),
                           ],
                         ),
                       ],
@@ -659,6 +677,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
 
   /// Akıllı İçgörüler (Zenginleştirilmiş Pipeline'dan beslenen detaylı kartlar)
   Widget _buildSmartInsights(AppSizes sizes) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -666,18 +687,18 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
           'AKILLI İÇGÖRÜLER',
           style: TextStyle(
             fontSize: sizes.sp(12),
-            color: AppColors.onSurfaceVariant,
+            color: colorScheme.onSurfaceVariant,
             fontWeight: FontWeight.w600,
             letterSpacing: 1.2,
           ),
         ),
         SizedBox(height: sizes.sp(16)),
-        
+
         // Lokasyon Haritası Modülü
         HoverGlassContainer(
           borderRadius: 16,
           padding: EdgeInsets.all(sizes.sp(20)),
-          glowColor: AppColors.primary,
+          glowColor: colorScheme.primary,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -686,10 +707,10 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   Container(
                     padding: EdgeInsets.all(sizes.sp(8)),
                     decoration: BoxDecoration(
-                      color: AppColors.primary.withOpacity(0.12),
+                      color: colorScheme.primary.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: Icon(Icons.location_on, color: AppColors.primary, size: sizes.sp(20)),
+                    child: Icon(Icons.location_on, color: colorScheme.primary, size: sizes.sp(20)),
                   ),
                   SizedBox(width: sizes.sp(16)),
                   Expanded(
@@ -698,12 +719,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       children: [
                         Text(
                           'Sık Ziyaret Edilen Lokasyon',
-                          style: TextStyle(fontSize: sizes.sp(12), color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: sizes.sp(12), color: colorScheme.onSurfaceVariant),
                         ),
                         SizedBox(height: sizes.sp(4)),
                         Text(
                           'Malatya Park AVM',
-                          style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                          style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: colorScheme.onSurface),
                         ),
                       ],
                     ),
@@ -711,13 +732,13 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: sizes.sp(12), vertical: sizes.sp(6)),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerHigh,
+                      color: colorScheme.surfaceContainer,
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white10),
+                      border: Border.all(color: theme.dividerColor),
                     ),
                     child: Text(
                       '4 İşlem',
-                      style: TextStyle(fontSize: sizes.sp(12), fontWeight: FontWeight.bold, color: AppColors.onSurface),
+                      style: TextStyle(fontSize: sizes.sp(12), fontWeight: FontWeight.bold, color: colorScheme.onSurface),
                     ),
                   ),
                 ],
@@ -725,29 +746,29 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               SizedBox(height: sizes.sp(16)),
               Text(
                 'Bu ayki harcamalarınızın %22\'si bu lokasyonda gerçekleşti. Yemek ve kozmetik mağazaları başı çekiyor.',
-                style: TextStyle(fontSize: sizes.sp(13), color: AppColors.onSurfaceVariant, height: 1.4),
+                style: TextStyle(fontSize: sizes.sp(13), color: colorScheme.onSurfaceVariant, height: 1.4),
               ),
             ],
           ),
         ),
-        
+
         SizedBox(height: sizes.sp(16)),
-        
+
         // Sektörel Sapma Uyarısı
         HoverGlassContainer(
           borderRadius: 16,
           padding: EdgeInsets.all(sizes.sp(20)),
-          glowColor: AppColors.error,
+          glowColor: colorScheme.error,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 padding: EdgeInsets.all(sizes.sp(8)),
                 decoration: BoxDecoration(
-                  color: AppColors.error.withOpacity(0.12),
+                  color: colorScheme.error.withOpacity(0.12),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(Icons.trending_up, color: AppColors.error, size: sizes.sp(20)),
+                child: Icon(Icons.trending_up, color: colorScheme.error, size: sizes.sp(20)),
               ),
               SizedBox(width: sizes.sp(16)),
               Expanded(
@@ -756,17 +777,17 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   children: [
                     Text(
                       'Sektörel Harcama Sapması',
-                      style: TextStyle(fontSize: sizes.sp(12), color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: sizes.sp(12), color: colorScheme.onSurfaceVariant),
                     ),
                     SizedBox(height: sizes.sp(4)),
                     Text(
                       'Kozmetik / Kişisel Bakım',
-                      style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: AppColors.error),
+                      style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: colorScheme.error),
                     ),
                     SizedBox(height: sizes.sp(8)),
                     Text(
                       'Normal bütçe limitinizin %30 üzerindesiniz. NACE kodlarına göre bu sektördeki enflasyon ve harcama hacminiz ciddi artışta.',
-                      style: TextStyle(fontSize: sizes.sp(13), color: AppColors.onSurfaceVariant, height: 1.4),
+                      style: TextStyle(fontSize: sizes.sp(13), color: colorScheme.onSurfaceVariant, height: 1.4),
                     ),
                   ],
                 ),

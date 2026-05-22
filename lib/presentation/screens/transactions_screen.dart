@@ -23,6 +23,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   Widget build(BuildContext context) {
     final selectedIndex = getSelectedIndexFromRoute(context);
     final sizes = AppSizes(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: buildCommonAppBar(context: context, title: 'Harcamalar'),
@@ -43,7 +44,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
               style: TextStyle(
                 fontSize: sizes.sp(18),
                 fontWeight: FontWeight.w600,
-                color: AppColors.onSurface,
+                color: colorScheme.onSurface,
               ),
             ),
             SizedBox(height: sizes.sp(16)),
@@ -56,23 +57,24 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   }
 
   Widget _buildInsightsBanner(AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.all(sizes.sp(16)),
       decoration: BoxDecoration(
-        color: AppColors.primary.withOpacity(0.1),
+        color: colorScheme.primary.withOpacity(0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: AppColors.primary.withOpacity(0.3)),
+        border: Border.all(color: colorScheme.primary.withOpacity(0.3)),
       ),
       child: Row(
         children: [
-          Icon(Icons.info_outline, color: AppColors.primary, size: sizes.sp(24)),
+          Icon(Icons.info_outline, color: colorScheme.primary, size: sizes.sp(24)),
           SizedBox(width: sizes.sp(12)),
           Expanded(
             child: Text(
               'İşlemleriniz TOBB veritabanı eşleşmeleriyle otomatik kategorize edilmektedir.',
               style: TextStyle(
                 fontSize: sizes.sp(13),
-                color: AppColors.primary,
+                color: colorScheme.primary,
                 height: 1.4,
               ),
             ),
@@ -83,15 +85,16 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   }
 
   Widget _buildTransactionsList(AppSizes sizes) {
+    final colorScheme = Theme.of(context).colorScheme;
     return Column(
       children: _transactions.map((txn) => Padding(
         padding: EdgeInsets.only(bottom: sizes.sp(12)),
         child: Container(
           padding: EdgeInsets.all(sizes.sp(16)),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainer,
+            color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Colors.white.withOpacity(0.05)),
+            border: Border.all(color: colorScheme.onSurface.withOpacity(0.05)),
           ),
           child: Row(
             children: [
@@ -99,10 +102,10 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                 width: sizes.sp(48),
                 height: sizes.sp(48),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHighest,
+                  color: colorScheme.surfaceContainerHighest,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Icon(_getCategoryIcon(txn.category), color: AppColors.onSurfaceVariant, size: sizes.sp(24)),
+                child: Icon(_getCategoryIcon(txn.category), color: colorScheme.onSurfaceVariant, size: sizes.sp(24)),
               ),
               SizedBox(width: sizes.sp(16)),
               Expanded(
@@ -111,13 +114,13 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                   children: [
                     Text(
                       txn.title,
-                      style: TextStyle(fontSize: sizes.sp(15), color: AppColors.onSurface, fontWeight: FontWeight.bold),
+                      style: TextStyle(fontSize: sizes.sp(15), color: colorScheme.onSurface, fontWeight: FontWeight.bold),
                       overflow: TextOverflow.ellipsis,
                     ),
                     SizedBox(height: sizes.sp(4)),
                     Text(
                       txn.category,
-                      style: TextStyle(fontSize: sizes.sp(13), color: AppColors.primary),
+                      style: TextStyle(fontSize: sizes.sp(13), color: colorScheme.primary),
                     ),
                   ],
                 ),
@@ -130,13 +133,13 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
                     style: TextStyle(
                       fontSize: sizes.sp(16),
                       fontWeight: FontWeight.w600,
-                      color: AppColors.onSurface,
+                      color: colorScheme.onSurface,
                     ),
                   ),
                   SizedBox(height: sizes.sp(4)),
                   Text(
                     '${txn.date.day}/${txn.date.month}/${txn.date.year}',
-                    style: TextStyle(fontSize: sizes.sp(11), color: AppColors.onSurfaceVariant),
+                    style: TextStyle(fontSize: sizes.sp(11), color: colorScheme.onSurfaceVariant),
                   ),
                 ],
               ),

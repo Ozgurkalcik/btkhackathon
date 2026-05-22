@@ -112,9 +112,10 @@ AppBar buildCommonAppBar({
 }) {
   final sizes = AppSizes(context);
   final activeColor = Theme.of(context).colorScheme.primary;
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return AppBar(
-    backgroundColor: AppColors.background.withOpacity(0.8),
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
     elevation: 0,
     scrolledUnderElevation: 4,
     automaticallyImplyLeading: false,
@@ -132,7 +133,7 @@ AppBar buildCommonAppBar({
     ),
     bottom: PreferredSize(
       preferredSize: const Size.fromHeight(1),
-      child: Container(color: Colors.white.withOpacity(0.1), height: 1),
+      child: Container(color: Theme.of(context).dividerColor, height: 1),
     ),
     title: Row(
       children: [
@@ -148,7 +149,7 @@ AppBar buildCommonAppBar({
             height: sizes.sp(32),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.surfaceContainerHigh,
+              color: Theme.of(context).colorScheme.surfaceContainer,
               border: Border.all(color: activeColor.withOpacity(0.3)),
             ),
             child: Icon(Icons.person, color: activeColor, size: sizes.sp(18)),
@@ -180,17 +181,26 @@ AppBar buildCommonAppBar({
 Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
   final sizes = AppSizes(context);
   final bottomPadding = MediaQuery.paddingOf(context).bottom;
+  final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return GlassContainer(
     margin: EdgeInsets.only(left: sizes.sp(16), right: sizes.sp(16), bottom: sizes.sp(16) + bottomPadding),
     height: sizes.sp(68),
     borderRadius: 34,
     blur: 24.0,
-    gradientColors: [
-      Colors.white.withOpacity(0.10),
-      Colors.white.withOpacity(0.03),
-    ],
-    border: Border.all(color: Colors.white.withOpacity(0.15), width: 1.2),
+    gradientColors: isDark
+        ? [
+            Colors.white.withOpacity(0.10),
+            Colors.white.withOpacity(0.03),
+          ]
+        : [
+            Colors.black.withOpacity(0.05),
+            Colors.black.withOpacity(0.01),
+          ],
+    border: Border.all(
+      color: isDark ? Colors.white.withOpacity(0.15) : Colors.black.withOpacity(0.08),
+      width: 1.2,
+    ),
     child: FittedBox(
       fit: BoxFit.scaleDown,
       child: Padding(
@@ -201,54 +211,54 @@ Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
             _NavBarItem(
               index: 0,
               selectedIndex: selectedIndex,
-          icon: Icons.dashboard,
-          label: 'Ana Sayfa',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 0),
+              icon: Icons.dashboard,
+              label: 'Ana Sayfa',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 0),
+            ),
+            _NavBarItem(
+              index: 1,
+              selectedIndex: selectedIndex,
+              icon: Icons.receipt_long,
+              label: 'Harcamalar',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 1),
+            ),
+            _NavBarItem(
+              index: 2,
+              selectedIndex: selectedIndex,
+              icon: Icons.auto_awesome,
+              label: 'Asistan',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 2),
+            ),
+            _NavBarItem(
+              index: 3,
+              selectedIndex: selectedIndex,
+              icon: Icons.health_and_safety,
+              label: 'Sağlık',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 3),
+            ),
+            _NavBarItem(
+              index: 4,
+              selectedIndex: selectedIndex,
+              icon: Icons.account_balance_wallet,
+              label: 'Bütçe',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 4),
+            ),
+            _NavBarItem(
+              index: 5,
+              selectedIndex: selectedIndex,
+              icon: Icons.insights,
+              label: 'Analitik',
+              sizes: sizes,
+              onTap: () => navigateToIndex(context, 5),
+            ),
+          ],
         ),
-        _NavBarItem(
-          index: 1,
-          selectedIndex: selectedIndex,
-          icon: Icons.receipt_long,
-          label: 'Harcamalar',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 1),
-        ),
-        _NavBarItem(
-          index: 2,
-          selectedIndex: selectedIndex,
-          icon: Icons.auto_awesome,
-          label: 'Asistan',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 2),
-        ),
-        _NavBarItem(
-          index: 3,
-          selectedIndex: selectedIndex,
-          icon: Icons.health_and_safety,
-          label: 'Sağlık',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 3),
-        ),
-        _NavBarItem(
-          index: 4,
-          selectedIndex: selectedIndex,
-          icon: Icons.account_balance_wallet,
-          label: 'Bütçe',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 4),
-        ),
-        _NavBarItem(
-          index: 5,
-          selectedIndex: selectedIndex,
-          icon: Icons.insights,
-          label: 'Analitik',
-          sizes: sizes,
-          onTap: () => navigateToIndex(context, 5),
-        ),
-      ],
-    ),
-    ),
+      ),
     ),
   );
 }
@@ -280,7 +290,7 @@ class _NavBarItemState extends State<_NavBarItem> {
   @override
   Widget build(BuildContext context) {
     final isSelected = widget.selectedIndex == widget.index;
-    final activeColor = AppColors.primary;
+    final activeColor = Theme.of(context).colorScheme.primary;
 
     Color iconTextColor;
     if (isSelected) {
@@ -288,7 +298,7 @@ class _NavBarItemState extends State<_NavBarItem> {
     } else if (_isHovered) {
       iconTextColor = activeColor.withOpacity(0.95);
     } else {
-      iconTextColor = AppColors.onSurfaceVariant;
+      iconTextColor = Theme.of(context).colorScheme.onSurfaceVariant;
     }
 
     Decoration decoration;
@@ -413,13 +423,15 @@ Widget buildEmptyState({
   VoidCallback? onAction,
   String? actionLabel,
 }) {
+  final theme = Theme.of(sizes.context);
+
   return Container(
     width: double.infinity,
     padding: EdgeInsets.all(sizes.sp(32)),
     decoration: BoxDecoration(
-      color: AppColors.surfaceContainer,
+      color: theme.colorScheme.surfaceContainer,
       borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: Colors.white.withOpacity(0.05)),
+      border: Border.all(color: theme.colorScheme.onSurface.withOpacity(0.05)),
     ),
     child: Column(
       children: [
@@ -428,9 +440,9 @@ Widget buildEmptyState({
           height: sizes.sp(64),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.primary.withOpacity(0.1),
+            color: theme.colorScheme.primary.withOpacity(0.1),
           ),
-          child: Icon(icon, color: AppColors.primary.withOpacity(0.5), size: sizes.sp(32)),
+          child: Icon(icon, color: theme.colorScheme.primary.withOpacity(0.5), size: sizes.sp(32)),
         ),
         SizedBox(height: sizes.sp(16)),
         Text(
@@ -439,7 +451,7 @@ Widget buildEmptyState({
           style: TextStyle(
             fontSize: sizes.sp(16),
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: theme.colorScheme.onSurface,
           ),
         ),
         SizedBox(height: sizes.sp(8)),
@@ -448,7 +460,7 @@ Widget buildEmptyState({
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: sizes.sp(13),
-            color: AppColors.onSurfaceVariant,
+            color: theme.colorScheme.onSurfaceVariant,
             height: 1.4,
           ),
         ),
@@ -457,8 +469,8 @@ Widget buildEmptyState({
           ElevatedButton(
             onPressed: onAction,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.onPrimary,
+              backgroundColor: theme.colorScheme.primary,
+              foregroundColor: theme.colorScheme.onPrimary,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.symmetric(
                 horizontal: sizes.sp(24),
@@ -472,3 +484,4 @@ Widget buildEmptyState({
     ),
   );
 }
+

@@ -106,6 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showBiometricGuidance() {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
@@ -120,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        backgroundColor: AppColors.tertiary,
+        backgroundColor: colorScheme.tertiary,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -141,6 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _showError(String message) {
+    final colorScheme = Theme.of(context).colorScheme;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
@@ -155,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
         ),
-        backgroundColor: AppColors.error,
+        backgroundColor: colorScheme.error,
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
@@ -165,19 +167,20 @@ class _LoginScreenState extends State<LoginScreen> {
   void _showForgotPasswordDialog() {
     final resetEmailController = TextEditingController(text: _emailController.text);
     final sizes = AppSizes(context);
+    final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: AppColors.surfaceContainer,
+          backgroundColor: colorScheme.surfaceContainer,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
-            side: BorderSide(color: Colors.white.withOpacity(0.08)),
+            side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
           ),
           title: Text(
             'Şifre Sıfırlama',
             style: TextStyle(
-              color: AppColors.onSurface,
+              color: colorScheme.onSurface,
               fontWeight: FontWeight.w800,
               fontSize: sizes.sp(18),
             ),
@@ -189,7 +192,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 'Şifrenizi sıfırlamak için kayıtlı e-posta adresinizi girin. Size sıfırlama linki göndereceğiz.',
                 style: TextStyle(
-                  color: AppColors.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                   fontSize: sizes.sp(13),
                   height: 1.4,
                 ),
@@ -198,19 +201,19 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 controller: resetEmailController,
                 keyboardType: TextInputType.emailAddress,
-                style: TextStyle(color: AppColors.onSurface, fontSize: sizes.sp(14)),
+                style: TextStyle(color: colorScheme.onSurface, fontSize: sizes.sp(14)),
                 decoration: InputDecoration(
                   labelText: 'E-posta Adresi',
-                  labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
+                  labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                   filled: true,
-                  fillColor: AppColors.background.withOpacity(0.6),
+                  fillColor: colorScheme.surface.withOpacity(0.6),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
-                    borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+                    borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                   ),
                   contentPadding: EdgeInsets.symmetric(horizontal: sizes.sp(16), vertical: sizes.sp(14)),
                 ),
@@ -223,7 +226,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Text(
                 'İptal',
                 style: TextStyle(
-                  color: AppColors.onSurfaceVariant,
+                  color: colorScheme.onSurfaceVariant,
                   fontWeight: FontWeight.bold,
                   fontSize: sizes.sp(13),
                 ),
@@ -242,8 +245,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 context.read<AuthCubit>().forgotPassword(email);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.onPrimary,
+                backgroundColor: colorScheme.primary,
+                foregroundColor: colorScheme.onPrimary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                 padding: EdgeInsets.symmetric(horizontal: sizes.sp(16), vertical: sizes.sp(10)),
               ),
@@ -287,6 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final sizes = AppSizes(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
@@ -315,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ],
               ),
-              backgroundColor: AppColors.secondary,
+              backgroundColor: colorScheme.secondary,
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
@@ -323,7 +327,7 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: colorScheme.surface,
         body: Stack(
           children: [
             // Decorative background gradients
@@ -335,7 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: sizes.sp(300),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: colorScheme.primary.withOpacity(0.15),
                 ),
               ),
             ),
@@ -347,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: sizes.sp(300),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: AppColors.secondary.withOpacity(0.08),
+                  color: colorScheme.secondary.withOpacity(0.08),
                 ),
               ),
             ),
@@ -367,13 +371,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: sizes.sp(84),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primary.withOpacity(0.12),
-                            border: Border.all(color: AppColors.primary.withOpacity(0.3), width: 1.5),
+                            color: colorScheme.primary.withOpacity(0.12),
+                            border: Border.all(color: colorScheme.primary.withOpacity(0.3), width: 1.5),
                           ),
                           child: Icon(
                             Icons.auto_awesome,
                             size: sizes.sp(42),
-                            color: AppColors.secondary,
+                            color: colorScheme.secondary,
                           ),
                         ),
                       ),
@@ -384,7 +388,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: sizes.sp(30),
                           fontWeight: FontWeight.w800,
-                          color: AppColors.onSurface,
+                          color: colorScheme.onSurface,
                           letterSpacing: -0.5,
                         ),
                       ),
@@ -394,7 +398,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: sizes.sp(14),
-                          color: AppColors.onSurfaceVariant,
+                          color: colorScheme.onSurfaceVariant,
                           height: 1.3,
                         ),
                       ),
@@ -412,7 +416,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         fontSize: sizes.sp(18),
                                         fontWeight: FontWeight.bold,
-                                        color: AppColors.onSurface,
+                                        color: colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(height: sizes.sp(8)),
@@ -420,7 +424,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       'Lütfen kimlik doğrulayıcı uygulamanızdaki 6 haneli doğrulama kodunu girin.',
                                       style: TextStyle(
                                         fontSize: sizes.sp(13),
-                                        color: AppColors.onSurfaceVariant,
+                                        color: colorScheme.onSurfaceVariant,
                                         height: 1.4,
                                       ),
                                     ),
@@ -432,7 +436,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       keyboardType: TextInputType.number,
                                       maxLength: 6,
                                       style: TextStyle(
-                                        color: AppColors.onSurface,
+                                        color: colorScheme.onSurface,
                                         fontSize: sizes.sp(18),
                                         fontWeight: FontWeight.bold,
                                         letterSpacing: sizes.sp(12),
@@ -440,18 +444,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                       textAlign: TextAlign.center,
                                       decoration: InputDecoration(
                                         labelText: 'Doğrulama Kodu',
-                                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant, letterSpacing: 0),
-                                        prefixIcon: Icon(Icons.security, color: AppColors.onSurfaceVariant),
+                                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant, letterSpacing: 0),
+                                        prefixIcon: Icon(Icons.security, color: colorScheme.onSurfaceVariant),
                                         counterText: '',
                                         filled: true,
-                                        fillColor: AppColors.background.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withOpacity(0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
-                                          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+                                          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(horizontal: sizes.sp(16), vertical: sizes.sp(14)),
                                       ),
@@ -480,8 +484,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   });
                                                 },
                                                 style: OutlinedButton.styleFrom(
-                                                  foregroundColor: AppColors.onSurface,
-                                                  side: BorderSide(color: Colors.white.withOpacity(0.08)),
+                                                  foregroundColor: colorScheme.onSurface,
+                                                  side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
                                                   padding: EdgeInsets.symmetric(vertical: sizes.sp(16)),
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                                                 ),
@@ -494,13 +498,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.circular(16),
                                                   gradient: LinearGradient(
-                                                    colors: [AppColors.primaryContainer, AppColors.primary],
+                                                    colors: [colorScheme.primaryContainer, colorScheme.primary],
                                                     begin: Alignment.topLeft,
                                                     end: Alignment.bottomRight,
                                                   ),
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: AppColors.primary.withOpacity(0.3),
+                                                      color: colorScheme.primary.withOpacity(0.3),
                                                       blurRadius: 12,
                                                       offset: const Offset(0, 4),
                                                     )
@@ -530,7 +534,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     style: TextStyle(
                                                       fontSize: sizes.sp(16),
                                                       fontWeight: FontWeight.bold,
-                                                      color: AppColors.onPrimary,
+                                                      color: colorScheme.onPrimary,
                                                     ),
                                                   ),
                                                 ),
@@ -547,7 +551,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: TextStyle(
                                         fontSize: sizes.sp(18),
                                         fontWeight: FontWeight.bold,
-                                        color: AppColors.onSurface,
+                                        color: colorScheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(height: sizes.sp(20)),
@@ -556,20 +560,20 @@ class _LoginScreenState extends State<LoginScreen> {
                                     TextField(
                                       controller: _emailController,
                                       keyboardType: TextInputType.emailAddress,
-                                      style: TextStyle(color: AppColors.onSurface, fontSize: sizes.sp(14)),
+                                      style: TextStyle(color: colorScheme.onSurface, fontSize: sizes.sp(14)),
                                       decoration: InputDecoration(
                                         labelText: 'E-posta',
-                                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
-                                        prefixIcon: Icon(Icons.email_outlined, color: AppColors.onSurfaceVariant),
+                                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                                        prefixIcon: Icon(Icons.email_outlined, color: colorScheme.onSurfaceVariant),
                                         filled: true,
-                                        fillColor: AppColors.background.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withOpacity(0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
-                                          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+                                          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(horizontal: sizes.sp(16), vertical: sizes.sp(14)),
                                       ),
@@ -580,28 +584,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                     TextField(
                                       controller: _passwordController,
                                       obscureText: _obscurePassword,
-                                      style: TextStyle(color: AppColors.onSurface, fontSize: sizes.sp(14)),
+                                      style: TextStyle(color: colorScheme.onSurface, fontSize: sizes.sp(14)),
                                       decoration: InputDecoration(
                                         labelText: 'Şifre',
-                                        labelStyle: TextStyle(color: AppColors.onSurfaceVariant),
-                                        prefixIcon: Icon(Icons.lock_outline, color: AppColors.onSurfaceVariant),
+                                        labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
+                                        prefixIcon: Icon(Icons.lock_outline, color: colorScheme.onSurfaceVariant),
                                         suffixIcon: IconButton(
                                           icon: Icon(
                                             _obscurePassword ? Icons.visibility_outlined : Icons.visibility_off_outlined,
-                                            color: AppColors.onSurfaceVariant,
+                                            color: colorScheme.onSurfaceVariant,
                                             size: sizes.sp(20),
                                           ),
                                           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                         ),
                                         filled: true,
-                                        fillColor: AppColors.background.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withOpacity(0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
-                                          borderSide: BorderSide(color: AppColors.primary, width: 1.5),
+                                          borderSide: BorderSide(color: colorScheme.primary, width: 1.5),
                                         ),
                                         contentPadding: EdgeInsets.symmetric(horizontal: sizes.sp(16), vertical: sizes.sp(14)),
                                       ),
@@ -619,10 +623,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                               height: sizes.sp(20),
                                               child: Checkbox(
                                                 value: _rememberMe,
-                                                activeColor: AppColors.primary,
+                                                activeColor: colorScheme.primary,
                                                 checkColor: Colors.white,
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                                side: BorderSide(color: AppColors.onSurfaceVariant.withOpacity(0.5)),
+                                                side: BorderSide(color: colorScheme.onSurfaceVariant.withOpacity(0.5)),
                                                 onChanged: (val) {
                                                   setState(() {
                                                     _rememberMe = val ?? false;
@@ -636,7 +640,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                               child: Text(
                                                 'Beni Hatırla',
                                                 style: TextStyle(
-                                                  color: AppColors.onSurface,
+                                                  color: colorScheme.onSurface,
                                                   fontSize: sizes.sp(13),
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -650,7 +654,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             padding: EdgeInsets.zero,
                                             minimumSize: Size.zero,
                                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                                            foregroundColor: AppColors.secondary,
+                                            foregroundColor: colorScheme.secondary,
                                           ),
                                           child: Text(
                                             'Şifremi Unuttum',
@@ -685,13 +689,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     decoration: BoxDecoration(
                                                       borderRadius: BorderRadius.circular(16),
                                                       gradient: LinearGradient(
-                                                        colors: [AppColors.primaryContainer, AppColors.primary],
+                                                        colors: [colorScheme.primaryContainer, colorScheme.primary],
                                                         begin: Alignment.topLeft,
                                                         end: Alignment.bottomRight,
                                                       ),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: AppColors.primary.withOpacity(0.3),
+                                                          color: colorScheme.primary.withOpacity(0.3),
                                                           blurRadius: 12,
                                                           offset: const Offset(0, 4),
                                                         )
@@ -710,7 +714,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         style: TextStyle(
                                                           fontSize: sizes.sp(16),
                                                           fontWeight: FontWeight.bold,
-                                                          color: AppColors.onPrimary,
+                                                          color: colorScheme.onPrimary,
                                                         ),
                                                       ),
                                                     ),
@@ -723,19 +727,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                                      width: sizes.sp(56),
                                                      decoration: BoxDecoration(
                                                        borderRadius: BorderRadius.circular(16),
-                                                       color: Colors.white.withOpacity(0.07),
+                                                       color: colorScheme.onSurface.withOpacity(0.07),
                                                        border: Border.all(
                                                          color: (_isBiometricEnabled && _hasBiometricCredentials)
-                                                             ? AppColors.primary.withOpacity(0.3)
-                                                             : Colors.white.withOpacity(0.12),
+                                                             ? colorScheme.primary.withOpacity(0.3)
+                                                             : colorScheme.onSurface.withOpacity(0.12),
                                                        ),
                                                      ),
                                                      child: IconButton(
                                                        icon: Icon(
                                                          Icons.fingerprint,
                                                          color: (_isBiometricEnabled && _hasBiometricCredentials)
-                                                             ? AppColors.primary
-                                                             : Colors.white.withOpacity(0.3),
+                                                             ? colorScheme.primary
+                                                             : colorScheme.onSurface.withOpacity(0.3),
                                                          size: sizes.sp(28),
                                                        ),
                                                        onPressed: () {
@@ -753,15 +757,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                             SizedBox(height: sizes.sp(20)),
                                             Row(
                                               children: [
-                                                Expanded(child: Divider(color: Colors.white.withOpacity(0.08))),
+                                                Expanded(child: Divider(color: colorScheme.onSurface.withOpacity(0.08))),
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(horizontal: sizes.sp(16)),
                                                   child: Text(
                                                     'veya',
-                                                    style: TextStyle(color: AppColors.onSurfaceVariant, fontSize: sizes.sp(12)),
+                                                    style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: sizes.sp(12)),
                                                   ),
                                                 ),
-                                                Expanded(child: Divider(color: Colors.white.withOpacity(0.08))),
+                                                Expanded(child: Divider(color: colorScheme.onSurface.withOpacity(0.08))),
                                               ],
                                             ),
                                             SizedBox(height: sizes.sp(20)),
@@ -770,11 +774,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 context.read<AuthCubit>().signInWithGoogle(rememberMe: _rememberMe);
                                               },
                                               style: OutlinedButton.styleFrom(
-                                                foregroundColor: AppColors.onSurface,
-                                                side: BorderSide(color: Colors.white.withOpacity(0.08)),
+                                                foregroundColor: colorScheme.onSurface,
+                                                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
                                                 padding: EdgeInsets.symmetric(vertical: sizes.sp(14)),
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                                backgroundColor: AppColors.surfaceContainerHigh.withOpacity(0.3),
+                                                backgroundColor: colorScheme.surfaceContainerHigh.withOpacity(0.3),
                                               ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -807,7 +811,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       TextButton(
                         onPressed: () => Navigator.pushNamed(context, '/register'),
                         style: TextButton.styleFrom(
-                          foregroundColor: AppColors.secondary,
+                          foregroundColor: colorScheme.secondary,
                         ),
                         child: Text(
                           'Hesabınız yok mu? Yeni Hesap Oluşturun',

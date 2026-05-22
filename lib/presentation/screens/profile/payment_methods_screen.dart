@@ -5,9 +5,14 @@ class PaymentCard {
   final String number;
   final String expiry;
   final String bankName;
-  final Color bgColor;
+  final int colorIndex;
 
-  PaymentCard({required this.number, required this.expiry, required this.bankName, required this.bgColor});
+  PaymentCard({
+    required this.number,
+    required this.expiry,
+    required this.bankName,
+    required this.colorIndex,
+  });
 }
 
 class PaymentMethodsScreen extends StatefulWidget {
@@ -19,8 +24,8 @@ class PaymentMethodsScreen extends StatefulWidget {
 
 class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   final List<PaymentCard> _cards = [
-    PaymentCard(number: '**** **** **** 1234', expiry: '12/26', bankName: 'Garanti BBVA', bgColor: AppColors.primaryContainer),
-    PaymentCard(number: '**** **** **** 9876', expiry: '08/25', bankName: 'Akbank', bgColor: AppColors.tertiaryContainer),
+    PaymentCard(number: '**** **** **** 1234', expiry: '12/26', bankName: 'Garanti BBVA', colorIndex: 0),
+    PaymentCard(number: '**** **** **** 9876', expiry: '08/25', bankName: 'Akbank', colorIndex: 1),
   ];
 
   final _formKey = GlobalKey<FormState>();
@@ -35,6 +40,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
       builder: (ctx) {
         final sizes = AppSizes(context);
+        final colorScheme = Theme.of(context).colorScheme;
         return Padding(
           padding: EdgeInsets.only(
             bottom: MediaQuery.viewInsetsOf(ctx).bottom,
@@ -48,7 +54,14 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text('Yeni Kart Ekle', style: TextStyle(fontSize: sizes.sp(20), fontWeight: FontWeight.bold)),
+                  Text(
+                    'Yeni Kart Ekle',
+                    style: TextStyle(
+                      fontSize: sizes.sp(20),
+                      fontWeight: FontWeight.bold,
+                      color: colorScheme.onSurface,
+                    ),
+                  ),
                   SizedBox(height: sizes.sp(20)),
                   TextFormField(
                     decoration: const InputDecoration(labelText: 'Banka Adı', border: OutlineInputBorder()),
@@ -75,9 +88,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                   SizedBox(height: sizes.sp(24)),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      foregroundColor: AppColors.onPrimary,
+                      backgroundColor: colorScheme.primary,
+                      foregroundColor: colorScheme.onPrimary,
                       minimumSize: Size(double.infinity, sizes.sp(50)),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                     ),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
@@ -87,7 +101,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                             number: _newCardNumber,
                             expiry: _newExpiry,
                             bankName: _newBankName,
-                            bgColor: AppColors.secondaryContainer,
+                            colorIndex: 2,
                           ));
                         });
                         Navigator.pop(ctx);
@@ -116,18 +130,31 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
   @override
   Widget build(BuildContext context) {
     final sizes = AppSizes(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: buildCommonAppBar(context: context, title: 'Ödeme Yöntemleri', showBackButton: true),
       body: ListView(
         padding: sizes.screenPadding.copyWith(top: sizes.sp(24)),
         children: [
-          Text('Kayıtlı Kartlarım', style: TextStyle(fontSize: sizes.sp(18), fontWeight: FontWeight.bold, color: Theme.of(context).textTheme.bodyLarge?.color)),
+          Text(
+            'Kayıtlı Kartlarım',
+            style: TextStyle(
+              fontSize: sizes.sp(18),
+              fontWeight: FontWeight.bold,
+              color: colorScheme.onSurface,
+            ),
+          ),
           SizedBox(height: sizes.sp(16)),
           if (_cards.isEmpty)
             Padding(
               padding: EdgeInsets.symmetric(vertical: sizes.sp(30)),
-              child: const Center(child: Text('Henüz kayıtlı kartınız yok.')),
+              child: Center(
+                child: Text(
+                  'Henüz kayıtlı kartınız yok.',
+                  style: TextStyle(color: colorScheme.onSurfaceVariant),
+                ),
+              ),
             ),
           ..._cards.asMap().entries.map((entry) {
             final idx = entry.key;
@@ -141,10 +168,10 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 background: Container(
                   alignment: Alignment.centerRight,
                   padding: EdgeInsets.only(right: sizes.sp(20)),
-                  decoration: BoxDecoration(color: Colors.red, borderRadius: BorderRadius.circular(16)),
-                  child: const Icon(Icons.delete, color: Colors.white),
+                  decoration: BoxDecoration(color: colorScheme.error, borderRadius: BorderRadius.circular(16)),
+                  child: Icon(Icons.delete, color: colorScheme.onError),
                 ),
-                child: _buildCreditCard(context, card.number, card.expiry, card.bankName, card.bgColor),
+                child: _buildCreditCard(context, card),
               ),
             );
           }),
@@ -154,8 +181,8 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
             icon: const Icon(Icons.add),
             label: const Text('Yeni Kart Ekle'),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.primary,
-              side: BorderSide(color: AppColors.primary),
+              foregroundColor: colorScheme.primary,
+              side: BorderSide(color: colorScheme.primary),
               padding: EdgeInsets.symmetric(vertical: sizes.sp(16)),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             ),
@@ -165,14 +192,42 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
     );
   }
 
-  Widget _buildCreditCard(BuildContext context, String number, String expiry, String bankName, Color bgColor) {
+  Widget _buildCreditCard(BuildContext context, PaymentCard card) {
     final sizes = AppSizes(context);
+    final colorScheme = Theme.of(context).colorScheme;
+
+    // Resolve M3 container and text colors dynamically
+    Color cardBgColor;
+    Color cardTextColor;
+
+    switch (card.colorIndex) {
+      case 0:
+        cardBgColor = colorScheme.primaryContainer;
+        cardTextColor = colorScheme.onPrimaryContainer;
+        break;
+      case 1:
+        cardBgColor = colorScheme.tertiaryContainer;
+        cardTextColor = colorScheme.onTertiaryContainer;
+        break;
+      case 2:
+      default:
+        cardBgColor = colorScheme.secondaryContainer;
+        cardTextColor = colorScheme.onSecondaryContainer;
+        break;
+    }
+
     return Container(
       padding: EdgeInsets.all(sizes.sp(20)),
       decoration: BoxDecoration(
-        color: bgColor,
+        color: cardBgColor,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 10, offset: const Offset(0, 5))],
+        boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow.withOpacity(0.08),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          )
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,18 +235,45 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(bankName, style: TextStyle(fontSize: sizes.sp(16), fontWeight: FontWeight.bold, color: Colors.white)),
-              Icon(Icons.credit_card, color: Colors.white, size: sizes.sp(28)),
+              Text(
+                card.bankName,
+                style: TextStyle(
+                  fontSize: sizes.sp(16),
+                  fontWeight: FontWeight.bold,
+                  color: cardTextColor,
+                ),
+              ),
+              Icon(Icons.credit_card, color: cardTextColor, size: sizes.sp(28)),
             ],
           ),
           SizedBox(height: sizes.sp(24)),
-          Text(number, style: TextStyle(fontSize: sizes.sp(22), letterSpacing: 2, color: Colors.white)),
+          Text(
+            card.number,
+            style: TextStyle(
+              fontSize: sizes.sp(22),
+              letterSpacing: 2,
+              color: cardTextColor,
+            ),
+          ),
           SizedBox(height: sizes.sp(16)),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Son Kullanma', style: TextStyle(fontSize: sizes.sp(12), color: Colors.white70)),
-              Text(expiry, style: TextStyle(fontSize: sizes.sp(14), fontWeight: FontWeight.bold, color: Colors.white)),
+              Text(
+                'Son Kullanma',
+                style: TextStyle(
+                  fontSize: sizes.sp(12),
+                  color: cardTextColor.withOpacity(0.7),
+                ),
+              ),
+              Text(
+                card.expiry,
+                style: TextStyle(
+                  fontSize: sizes.sp(14),
+                  fontWeight: FontWeight.bold,
+                  color: cardTextColor,
+                ),
+              ),
             ],
           )
         ],
