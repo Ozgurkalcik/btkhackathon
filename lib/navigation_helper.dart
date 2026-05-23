@@ -156,13 +156,16 @@ AppBar buildCommonAppBar({
           ),
         ),
         SizedBox(width: sizes.sp(12)),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: sizes.sp(24),
-            fontWeight: FontWeight.w700,
-            color: activeColor,
-            letterSpacing: -0.5,
+        Expanded(
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: sizes.sp(24),
+              fontWeight: FontWeight.w700,
+              color: activeColor,
+              letterSpacing: -0.5,
+            ),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
