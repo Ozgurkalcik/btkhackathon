@@ -5,7 +5,7 @@ import 'firebase_options.dart';
 
 import 'presentation/screens/transactions_screen.dart';
 import 'presentation/screens/assistant_screen.dart';
-import 'dashbroad.dart' as dashboard;
+import 'dashboard.dart' as dashboard;
 import 'budget.dart' as budget;
 import 'health.dart' as health;
 import 'profile.dart' as profile;

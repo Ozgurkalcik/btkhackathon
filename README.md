@@ -1,88 +1,85 @@
 <div align="center">
   
-# 🚀 Finance Expert: Cognitive Wealth Manager
+# 🚀 AI Financial Persona Engine (Finance Expert)
 
-**Sıradan bir bütçe defteri değil. Sizin için düşünen, matematiksel modellerle geleceğinizi öngören ve yapay zeka ile harcama döngülerinizi optimize eden kişisel "Servet Yöneticiniz."**
+**Sıradan bir bütçe defteri değil. Yeni nesil, uçtan uca, otonom bir "Yapay Zeka CFO" (Chief Financial Officer) Asistanı ve Davranışsal Finans Platformu.**
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![Dart](https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev)
+[![Neo4j](https://img.shields.io/badge/Neo4j-008CC1?style=for-the-badge&logo=neo4j&logoColor=white)](https://neo4j.com/)
 
 </div>
 
 ---
 
-## 🌟 Vizyon: "Geçmişi Kaydetmeyin, Geleceği Yönetin"
-Geleneksel finans uygulamaları size sadece *"Dün ne kadar harcadınız?"* sorusunun cevabını verir. **Finance Expert** ise *"Mevcut harcama hızınızla ne zaman iflas edersiniz?", "Fast-food bağımlılığınızın bütçenize maliyeti nedir?"* ve *"Hangi psikolojik tetikleyici gece alışverişi yapmanıza sebep oluyor?"* gibi zor soruların cevabını verir.
+## 🌟 Vizyon: Finansal İkizinizi (Digital Twin) Yapay Zeka İle Yönetin
 
-Proje, **Açık Bankacılık (Open Banking / PSD2)** ham verilerini alır, Büyük Dil Modelleri (LLM) ile anlamlandırır ve Ayrık Matematik tabanlı kognitif algoritmalarla finansal hayatınızı yeniden şekillendirir.
+Geleneksel finans uygulamaları *"Dün ne kadar harcadınız?"* sorusunu sorarken; **AI Financial Persona Engine** şu soruların cevabını gerçek zamanlı üretir:
+- *"Mevcut harcama hızınızla (Burn Rate) paranız tam olarak kaç gün sonra bitecek?"* (Survival Runway Score)
+- *"Hangi psikolojik stres faktörü sizin gece yarısı internetten alışveriş yapmanızı tetikliyor?"*
+- *"Dürtüsel harcamalarınızın (Dopamine Spending Index) toplam servetinize maliyeti nedir?"*
+
+Projemiz, devasa banka verilerinizi (Open Banking) alır, **Büyük Dil Modelleri (LLM)** ile yapısal formata sokar ve arka planda çalışan **Davranışsal Bilişsel Motor (Cognitive Engine)** ile finansal hayatınızı yeniden şekillendirir.
 
 ---
 
-## 🧠 Bilişsel Finans Motoru (Cognitive Finance Engine)
+## 🧠 Bilişsel Finans Motoru: Kaputun Altında Ne Var?
 
-Finance Expert'in kalbinde, **"Deterministik Yazılım"** statükosunu yıkan ve yerine **"Öngörücü Veri Bilimi"** prensiplerini koyan güçlü bir analitik motor yatar. 
+Klasik yazılımların sınırlarını aşarak, makine öğrenmesi ve ayrık matematik tabanlı **4 Gelişmiş Tescilli Skoru** sistemimize entegre ettik:
 
-Bu motor, 4 farklı gelişmiş matematik disiplinini eşzamanlı kullanır:
+### 1. 💉 Dopamin Harcama İndeksi (Dopamine Spending Index - DSI)
+Sistemin **Davranışsal Psikoloji** modülü. Kullanıcının gece geç saatlerde (23:00-05:00) yaptığı, hafta sonu gerçekleşen, fast-food veya mikro ödeme karakterli dürtüsel harcamalarını yüzdelik (w1, w2, w3) ağırlıklarla hesaplar. DSI oranı %30'u aştığında yapay zeka devreye girer (AI Nudging) ve *"Cüzdan uygulamalarınızı dondurun"* önerisiyle harcama krizini durdurur.
 
-### 1. 📈 Nakit Akışı Öngörüsü (Linear Regression)
-Kullanıcının harcama hızını (Burn Rate) En Küçük Kareler Yöntemi (Ordinary Least Squares) ile modeller. Ayın henüz 15. gününde olsanız bile, ay sonu bakiyenizi (y = mx + c) milimetrik olarak tahmin eder ve *"Runway" (İflasa kalan gün)* sayınızı hesaplar. Bütçe aşımı riski varsa önceden kırmızı alarm verir.
+### 2. ⏳ Hayatta Kalma Süresi (Survival Runway Score)
+Kaplan-Meier ve Monte Carlo simülasyonu mantığına dayanan **Prediktif Finans** algoritması. Kullanıcının son 30 günlük harcama hızını (Burn Rate) baz alarak, mevcut konsolide bakiyesinin milimetrik olarak **"Kaç gün yetebileceğini"** (Runway) hesaplar. 
 
-### 2. 🧬 Davranışsal Ardışıklık Analizi (Markov Chains)
-Harcama geçmişini bir yönlü graf (Directed Graph) olarak ele alır. Olasılık matrisleri kurarak kullanıcının sıradaki eylemini tahmin eder. *"Kullanıcı Süpermarketten sonra %80 ihtimalle Fast-Food restoranına gidiyor"* bilgisini yakaladığı an, kullanıcının telefonuna bir **Nudging (Dürtme)** bildirimi yollayarak bu israf döngüsünü kırar.
-
-### 3. 🎯 Optimizasyon Problemi (Knapsack - Sırt Çantası)
-Kombinatorik algoritmalar kullanarak "Kısıtlı Bütçe & Sınırsız İstek" sorununu çözer. Elinizdeki mevcut bakiye (Kapasite) ve wishlist (Hedefler) arasında Dinamik Programlama (DP) çalıştırarak, size en yüksek öncelik puanını (Maksimum Fayda) kazandıracak ideal alışveriş sepeti kombinasyonunu sunar.
+### 3. 🎯 Optimizasyon Problemi (Knapsack - Sırt Çantası Modeli)
+"Kısıtlı Bütçe & Sınırsız İstek" sorununu çözer. Kullanıcının bütçesi (Kapasite) ve wishlist'i (Hedefler) arasında **Dinamik Programlama (DP - Backtracking)** çalıştırarak, en yüksek öncelik puanını kazandıracak ideal alışveriş sepeti kombinasyonunu sunar.
 
 ### 4. 🕸️ Tetikleyici Analizi (Graph Theory Korelasyonları)
-Harcama düğümleri arasındaki ilişkiselliği (Edge) tartar. Örneğin; uygulamanın motoru, *"Akaryakıt harcaması yaptığınız günlerde, dışarıda yemek yeme oranınız %80 artıyor"* şeklinde bir içgörü sunar. Görünmez harcama tetikleyicilerini (Trigger) gün yüzüne çıkarır.
+Kullanıcının harcama alışkanlıklarını bir yönlü graf (Directed Graph) olarak ele alır. *"Akaryakıt harcaması yaptığınız günlerde, dışarıda yemek yeme oranınız %80 artıyor"* şeklinde görünmez harcama tetikleyicilerini (Trigger) gün yüzüne çıkarır.
 
 ---
 
-## ⚡ Enriched AI Data Pipeline (Zenginleştirilmiş Veri Mimarisi)
+## ⚡ Enterprise AI Mimarisi & LLM Entegrasyonu
 
-Uygulama arka planda kusursuz bir veri temizleme ve anlamlandırma boru hattına sahiptir:
+Arka planda çalışan kurumsal sınıf veri hattımız:
 
-1. **Ingestion:** Bankalardan veya SMS'lerden gelen okunması imkansız ham POS dökümleri (Örn: `ISL*K109V NIKBEY GIDA`) sisteme girer.
-2. **LLM Parsing:** Google Gemini API entegrasyonu devreye girer. Prompt Engineering teknikleriyle donatılmış bu katman, ham veriyi saniyeler içinde zenginleştirilmiş yapısal bir JSON objesine dönüştürür.
-3. **NACE Kategorizasyonu:** İşlem, global NACE standartlarına göre sınıflandırılır (Sağlık, Eğitim, Akaryakıt vb.).
-4. **Dashboard:** Tüm farklı banka hesaplarınız tek bir "Konsolide Bakiye" ekranında toplanır.
-
----
-
-## 💎 Premium Arayüz: Glassmorphism & UI/UX
-
-Sıkıcı kurumsal renkler (B2B) yerine, uygulamamız Premium Kişisel Asistan (B2C) hissiyatı vermek üzere **"Deep Dark Mode"** temasıyla inşa edilmiştir.
-
-- **Glassmorphism Tasarım:** Arka planı bulanıklaştıran cam kart efektleriyle kullanıcılara modern bir zarafet sunar. Neon yansımalar ve (Glow) efektleri ile veri vurgulanır.
-- **Mikro Etkileşimler:** Özelleştirilmiş `CustomPaint` çizimleri, harcama barlarındaki pürüzsüz animasyonlar ve pürüzsüz navigasyon geçişleri ile uygulama canlı hissettirir.
-- **Kıdemli Ton (Tone of Voice):** Uygulamanın metinleri, kullanıcısıyla 20 yıllık kıdemli bir servet danışmanı ciddiyetinde, lüks ve resmi bir dille konuşur.
+1. **Ingestion:** Bankalardan gelen okunması imkansız ham POS dökümleri (Örn: `POS*STARB COFFEE 0921`).
+2. **Semantic Enrichment (LLM):** Google Gemini entegrasyonu ile ham stringler saniyeler içinde zenginleştirilmiş yapısal JSON objelerine dönüşür (Satıcı, Kategori, Abonelik Durumu, İma Edilen Duygu).
+3. **Behavioral Persona Engine:** Veriler kognitif analiz motoruna (Dart/Flutter tabanlı On-Device Inference) girer ve matematiksel skorlamalardan geçer.
+4. **Autonomous AI CFO:** Kullanıcıyı zararlı finansal kalıplardan (pattern) koruyan aksiyon planları oluşturulur.
 
 ---
 
-## 🛠 Kurulum ve Kullanım (Local Development)
+## 💎 Premium Arayüz: Glassmorphism & UX
 
-Proje, çapraz platform destekli **Flutter** çerçevesiyle yazılmıştır. 
+Sıkıcı kurumsal bankacılık arayüzleri yerine, Premium Kişisel CFO hissiyatı veren **"Deep Dark Mode"** temasıyla inşa edilmiştir:
+- Arka planı bulanıklaştıran cam kart efektleri (Glassmorphism), neon yansımalar ve (Glow) aydınlatmaları.
+- Pürüzsüz mikro-animasyonlar, özelleştirilmiş graf çizimleri.
+- Kullanıcısıyla 20 yıllık kıdemli bir servet danışmanı ciddiyetinde konuşan, lüks ve resmi metin (Tone of Voice) kimliği.
 
-### Önkoşullar
-- [Flutter SDK](https://docs.flutter.dev/get-started/install) (Sürüm >= 3.0.0)
-- Dart SDK
-- (Opsiyonel) Eğer LLM Parsing kullanılacaksa sisteme entegre edilecek bir `.env` içindeki Gemini API Key.
+---
+
+## 🛠 Kurulum ve Kullanım
+
+Çapraz platform destekli **Flutter** çerçevesiyle yazılmış tam teşekküllü mobil mimari.
 
 ### Başlangıç
 
 1. Depoyu bilgisayarınıza klonlayın:
 ```bash
 git clone https://github.com/Ozgurkalcik/btkhackathon.git
-cd btkhackathon/finance_expert
+cd btkhackathon
 ```
 
-2. Paketleri ve bağımlılıkları indirin:
+2. Paketleri indirin:
 ```bash
 flutter pub get
 ```
 
-3. Gerekli lint ve kod analizini yapın (0 hata ile çalışır):
+3. Gerekli kod analizini yapın (0 Hata/0 Uyarı garantisiyle çalışır):
 ```bash
 flutter analyze
 ```

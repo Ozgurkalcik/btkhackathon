@@ -115,7 +115,7 @@ AppBar buildCommonAppBar({
   final isDark = Theme.of(context).brightness == Brightness.dark;
 
   return AppBar(
-    backgroundColor: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
+    backgroundColor: Theme.of(context).scaffoldBackgroundColor.withValues(alpha: 0.8),
     elevation: 0,
     scrolledUnderElevation: 4,
     automaticallyImplyLeading: false,
@@ -150,7 +150,7 @@ AppBar buildCommonAppBar({
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Theme.of(context).colorScheme.surfaceContainer,
-              border: Border.all(color: activeColor.withOpacity(0.3)),
+              border: Border.all(color: activeColor.withValues(alpha: 0.3)),
             ),
             child: Icon(Icons.person, color: activeColor, size: sizes.sp(18)),
           ),
@@ -190,15 +190,15 @@ Widget buildBottomNavBar(BuildContext context, int selectedIndex) {
     blur: 24.0,
     gradientColors: isDark
         ? [
-            Colors.white.withOpacity(0.10),
-            Colors.white.withOpacity(0.03),
+            Colors.white.withValues(alpha: 0.10),
+            Colors.white.withValues(alpha: 0.03),
           ]
         : [
-            Colors.black.withOpacity(0.05),
-            Colors.black.withOpacity(0.01),
+            Colors.black.withValues(alpha: 0.05),
+            Colors.black.withValues(alpha: 0.01),
           ],
     border: Border.all(
-      color: isDark ? Colors.white.withOpacity(0.15) : Colors.black.withOpacity(0.08),
+      color: isDark ? Colors.white.withValues(alpha: 0.15) : Colors.black.withValues(alpha: 0.08),
       width: 1.2,
     ),
     child: FittedBox(
@@ -296,7 +296,7 @@ class _NavBarItemState extends State<_NavBarItem> {
     if (isSelected) {
       iconTextColor = activeColor;
     } else if (_isHovered) {
-      iconTextColor = activeColor.withOpacity(0.95);
+      iconTextColor = activeColor.withValues(alpha: 0.95);
     } else {
       iconTextColor = Theme.of(context).colorScheme.onSurfaceVariant;
     }
@@ -307,19 +307,19 @@ class _NavBarItemState extends State<_NavBarItem> {
         borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
           colors: [
-            activeColor.withOpacity(0.22),
-            activeColor.withOpacity(0.06),
+            activeColor.withValues(alpha: 0.22),
+            activeColor.withValues(alpha: 0.06),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: activeColor.withOpacity(0.4),
+          color: activeColor.withValues(alpha: 0.4),
           width: 1.5,
         ),
         boxShadow: [
           BoxShadow(
-            color: activeColor.withOpacity(0.25),
+            color: activeColor.withValues(alpha: 0.25),
             blurRadius: 14,
             offset: const Offset(0, 4),
             spreadRadius: 1,
@@ -331,19 +331,19 @@ class _NavBarItemState extends State<_NavBarItem> {
         borderRadius: BorderRadius.circular(24),
         gradient: LinearGradient(
           colors: [
-            activeColor.withOpacity(0.10),
-            activeColor.withOpacity(0.02),
+            activeColor.withValues(alpha: 0.10),
+            activeColor.withValues(alpha: 0.02),
           ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
         border: Border.all(
-          color: activeColor.withOpacity(0.25),
+          color: activeColor.withValues(alpha: 0.25),
           width: 1.0,
         ),
         boxShadow: [
           BoxShadow(
-            color: activeColor.withOpacity(0.08),
+            color: activeColor.withValues(alpha: 0.08),
             blurRadius: 8,
             offset: const Offset(0, 2),
           )
@@ -368,8 +368,8 @@ class _NavBarItemState extends State<_NavBarItem> {
         });
       },
       hoverColor: Colors.transparent,
-      highlightColor: activeColor.withOpacity(0.1),
-      splashColor: activeColor.withOpacity(0.2),
+      highlightColor: activeColor.withValues(alpha: 0.1),
+      splashColor: activeColor.withValues(alpha: 0.2),
       borderRadius: BorderRadius.circular(24),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -431,7 +431,7 @@ Widget buildEmptyState({
     decoration: BoxDecoration(
       color: theme.colorScheme.surfaceContainer,
       borderRadius: BorderRadius.circular(12),
-      border: Border.all(color: theme.colorScheme.onSurface.withOpacity(0.05)),
+      border: Border.all(color: theme.colorScheme.onSurface.withValues(alpha: 0.05)),
     ),
     child: Column(
       children: [
@@ -440,9 +440,9 @@ Widget buildEmptyState({
           height: sizes.sp(64),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: theme.colorScheme.primary.withOpacity(0.1),
+            color: theme.colorScheme.primary.withValues(alpha: 0.1),
           ),
-          child: Icon(icon, color: theme.colorScheme.primary.withOpacity(0.5), size: sizes.sp(32)),
+          child: Icon(icon, color: theme.colorScheme.primary.withValues(alpha: 0.5), size: sizes.sp(32)),
         ),
         SizedBox(height: sizes.sp(16)),
         Text(

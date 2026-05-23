@@ -110,10 +110,10 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.tertiary.withOpacity(0.1),
+            color: colorScheme.tertiary.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -166,7 +166,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 Container(
                   padding: EdgeInsets.all(sizes.sp(10)),
                   decoration: BoxDecoration(
-                    color: insight.color.withOpacity(0.15),
+                    color: insight.color.withValues(alpha: 0.15),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(insight.icon, color: insight.color, size: sizes.sp(24)),
@@ -198,9 +198,9 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
               Container(
                 padding: EdgeInsets.all(sizes.sp(12)),
                 decoration: BoxDecoration(
-                  color: insight.color.withOpacity(0.1),
+                  color: insight.color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: insight.color.withOpacity(0.3)),
+                  border: Border.all(color: insight.color.withValues(alpha: 0.3)),
                 ),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -287,7 +287,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                 Container(
                   height: sizes.sp(8),
                   decoration: BoxDecoration(
-                    color: colorScheme.onSurface.withOpacity(0.05),
+                    color: colorScheme.onSurface.withValues(alpha: 0.05),
                     borderRadius: BorderRadius.circular(4),
                   ),
                   child: FractionallySizedBox(
@@ -299,7 +299,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
                         borderRadius: BorderRadius.circular(4),
                         boxShadow: [
                           BoxShadow(
-                            color: colorScheme.primary.withOpacity(0.4),
+                            color: colorScheme.primary.withValues(alpha: 0.4),
                             blurRadius: 6,
                           )
                         ],

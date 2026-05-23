@@ -39,12 +39,12 @@ class GlassContainer extends StatelessWidget {
     // Işık kırılmasını simüle eden gradyan renkleri
     final defaultGradientColors = isDark
         ? [
-            Colors.white.withOpacity(0.07),
-            Colors.white.withOpacity(0.02),
+            Colors.white.withValues(alpha: 0.07),
+            Colors.white.withValues(alpha: 0.02),
           ]
         : [
-            Colors.black.withOpacity(0.04),
-            Colors.black.withOpacity(0.01),
+            Colors.black.withValues(alpha: 0.04),
+            Colors.black.withValues(alpha: 0.01),
           ];
 
     final backgroundGradient = LinearGradient(
@@ -56,15 +56,15 @@ class GlassContainer extends StatelessWidget {
     // İnce şeffaf cam sınır çizgisi (ışık yansıması)
     final defaultBorder = Border.all(
       color: isDark
-          ? Colors.white.withOpacity(0.12)
-          : Colors.black.withOpacity(0.08),
+          ? Colors.white.withValues(alpha: 0.12)
+          : Colors.black.withValues(alpha: 0.08),
       width: 1.0,
     );
 
     // Derinlik hissi veren yumuşak gölge
     final defaultShadow = [
       BoxShadow(
-        color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+        color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
         blurRadius: 24,
         offset: const Offset(0, 8),
       ),
@@ -145,12 +145,12 @@ class _HoverGlassContainerState extends State<HoverGlassContainer> {
 
     final defaultGradientColors = isDark
         ? [
-            Colors.white.withOpacity(0.08),
-            Colors.white.withOpacity(0.03),
+            Colors.white.withValues(alpha: 0.08),
+            Colors.white.withValues(alpha: 0.03),
           ]
         : [
-            Colors.black.withOpacity(0.04),
-            Colors.black.withOpacity(0.01),
+            Colors.black.withValues(alpha: 0.04),
+            Colors.black.withValues(alpha: 0.01),
           ];
 
     final backgroundGradient = LinearGradient(
@@ -162,8 +162,8 @@ class _HoverGlassContainerState extends State<HoverGlassContainer> {
     // Dynamic glow border on hover
     final activeBorder = Border.all(
       color: _isHovered 
-          ? activeGlowColor.withOpacity(0.5) 
-          : (isDark ? Colors.white.withOpacity(0.12) : Colors.black.withOpacity(0.08)),
+          ? activeGlowColor.withValues(alpha: 0.5) 
+          : (isDark ? Colors.white.withValues(alpha: 0.12) : Colors.black.withValues(alpha: 0.08)),
       width: _isHovered ? 1.5 : 1.0,
     );
 
@@ -171,20 +171,20 @@ class _HoverGlassContainerState extends State<HoverGlassContainer> {
     final activeShadow = _isHovered
         ? [
             BoxShadow(
-              color: activeGlowColor.withOpacity(0.4),
+              color: activeGlowColor.withValues(alpha: 0.4),
               blurRadius: 20,
               offset: Offset(0, widget.lift),
               spreadRadius: -2,
             ),
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.4 : 0.1),
+              color: Colors.black.withValues(alpha: isDark ? 0.4 : 0.1),
               blurRadius: 16,
               offset: Offset(0, widget.lift + 2),
             ),
           ]
         : [
             BoxShadow(
-              color: Colors.black.withOpacity(isDark ? 0.3 : 0.05),
+              color: Colors.black.withValues(alpha: isDark ? 0.3 : 0.05),
               blurRadius: 24,
               offset: const Offset(0, 8),
             ),
@@ -198,8 +198,8 @@ class _HoverGlassContainerState extends State<HoverGlassContainer> {
         });
       },
       hoverColor: Colors.transparent,
-      splashColor: activeGlowColor.withOpacity(0.15),
-      highlightColor: activeGlowColor.withOpacity(0.08),
+      splashColor: activeGlowColor.withValues(alpha: 0.15),
+      highlightColor: activeGlowColor.withValues(alpha: 0.08),
       borderRadius: BorderRadius.circular(widget.borderRadius),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
@@ -223,8 +223,11 @@ class _HoverGlassContainerState extends State<HoverGlassContainer> {
         width: widget.width,
         height: widget.height,
         margin: widget.margin,
+        // ignore: deprecated_member_use
         transform: Matrix4.identity()
+          // ignore: deprecated_member_use
           ..translate(0.0, _isHovered ? -widget.lift : 0.0)
+          // ignore: deprecated_member_use
           ..scale(_isHovered ? 1.02 : 1.0),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(widget.borderRadius),

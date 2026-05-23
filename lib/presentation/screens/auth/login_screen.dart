@@ -175,7 +175,7 @@ class _LoginScreenState extends State<LoginScreen> {
           backgroundColor: colorScheme.surfaceContainer,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(24),
-            side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+            side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
           ),
           title: Text(
             'Şifre Sıfırlama',
@@ -206,7 +206,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   labelText: 'E-posta Adresi',
                   labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                   filled: true,
-                  fillColor: colorScheme.surface.withOpacity(0.6),
+                  fillColor: colorScheme.surface.withValues(alpha: 0.6),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(16),
                     borderSide: BorderSide.none,
@@ -339,7 +339,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: sizes.sp(300),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: colorScheme.primary.withOpacity(0.15),
+                  color: colorScheme.primary.withValues(alpha: 0.15),
                 ),
               ),
             ),
@@ -351,7 +351,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: sizes.sp(300),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: colorScheme.secondary.withOpacity(0.08),
+                  color: colorScheme.secondary.withValues(alpha: 0.08),
                 ),
               ),
             ),
@@ -371,8 +371,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: sizes.sp(84),
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: colorScheme.primary.withOpacity(0.12),
-                            border: Border.all(color: colorScheme.primary.withOpacity(0.3), width: 1.5),
+                            color: colorScheme.primary.withValues(alpha: 0.12),
+                            border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3), width: 1.5),
                           ),
                           child: Icon(
                             Icons.auto_awesome,
@@ -448,7 +448,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         prefixIcon: Icon(Icons.security, color: colorScheme.onSurfaceVariant),
                                         counterText: '',
                                         filled: true,
-                                        fillColor: colorScheme.surface.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withValues(alpha: 0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
@@ -485,7 +485,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 },
                                                 style: OutlinedButton.styleFrom(
                                                   foregroundColor: colorScheme.onSurface,
-                                                  side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+                                                  side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
                                                   padding: EdgeInsets.symmetric(vertical: sizes.sp(16)),
                                                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
                                                 ),
@@ -504,7 +504,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   ),
                                                   boxShadow: [
                                                     BoxShadow(
-                                                      color: colorScheme.primary.withOpacity(0.3),
+                                                      color: colorScheme.primary.withValues(alpha: 0.3),
                                                       blurRadius: 12,
                                                       offset: const Offset(0, 4),
                                                     )
@@ -566,7 +566,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         labelStyle: TextStyle(color: colorScheme.onSurfaceVariant),
                                         prefixIcon: Icon(Icons.email_outlined, color: colorScheme.onSurfaceVariant),
                                         filled: true,
-                                        fillColor: colorScheme.surface.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withValues(alpha: 0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
@@ -598,7 +598,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           onPressed: () => setState(() => _obscurePassword = !_obscurePassword),
                                         ),
                                         filled: true,
-                                        fillColor: colorScheme.surface.withOpacity(0.6),
+                                        fillColor: colorScheme.surface.withValues(alpha: 0.6),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(16),
                                           borderSide: BorderSide.none,
@@ -626,7 +626,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 activeColor: colorScheme.primary,
                                                 checkColor: Colors.white,
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-                                                side: BorderSide(color: colorScheme.onSurfaceVariant.withOpacity(0.5)),
+                                                side: BorderSide(color: colorScheme.onSurfaceVariant.withValues(alpha: 0.5)),
                                                 onChanged: (val) {
                                                   setState(() {
                                                     _rememberMe = val ?? false;
@@ -695,7 +695,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       ),
                                                       boxShadow: [
                                                         BoxShadow(
-                                                          color: colorScheme.primary.withOpacity(0.3),
+                                                          color: colorScheme.primary.withValues(alpha: 0.3),
                                                           blurRadius: 12,
                                                           offset: const Offset(0, 4),
                                                         )
@@ -727,11 +727,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                      width: sizes.sp(56),
                                                      decoration: BoxDecoration(
                                                        borderRadius: BorderRadius.circular(16),
-                                                       color: colorScheme.onSurface.withOpacity(0.07),
+                                                       color: colorScheme.onSurface.withValues(alpha: 0.07),
                                                        border: Border.all(
                                                          color: (_isBiometricEnabled && _hasBiometricCredentials)
-                                                             ? colorScheme.primary.withOpacity(0.3)
-                                                             : colorScheme.onSurface.withOpacity(0.12),
+                                                             ? colorScheme.primary.withValues(alpha: 0.3)
+                                                             : colorScheme.onSurface.withValues(alpha: 0.12),
                                                        ),
                                                      ),
                                                      child: IconButton(
@@ -739,7 +739,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                          Icons.fingerprint,
                                                          color: (_isBiometricEnabled && _hasBiometricCredentials)
                                                              ? colorScheme.primary
-                                                             : colorScheme.onSurface.withOpacity(0.3),
+                                                             : colorScheme.onSurface.withValues(alpha: 0.3),
                                                          size: sizes.sp(28),
                                                        ),
                                                        onPressed: () {
@@ -757,7 +757,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             SizedBox(height: sizes.sp(20)),
                                             Row(
                                               children: [
-                                                Expanded(child: Divider(color: colorScheme.onSurface.withOpacity(0.08))),
+                                                Expanded(child: Divider(color: colorScheme.onSurface.withValues(alpha: 0.08))),
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(horizontal: sizes.sp(16)),
                                                   child: Text(
@@ -765,7 +765,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     style: TextStyle(color: colorScheme.onSurfaceVariant, fontSize: sizes.sp(12)),
                                                   ),
                                                 ),
-                                                Expanded(child: Divider(color: colorScheme.onSurface.withOpacity(0.08))),
+                                                Expanded(child: Divider(color: colorScheme.onSurface.withValues(alpha: 0.08))),
                                               ],
                                             ),
                                             SizedBox(height: sizes.sp(20)),
@@ -775,10 +775,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                               },
                                               style: OutlinedButton.styleFrom(
                                                 foregroundColor: colorScheme.onSurface,
-                                                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+                                                side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
                                                 padding: EdgeInsets.symmetric(vertical: sizes.sp(14)),
                                                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-                                                backgroundColor: colorScheme.surfaceContainerHigh.withOpacity(0.3),
+                                                backgroundColor: colorScheme.surfaceContainerHigh.withValues(alpha: 0.3),
                                               ),
                                               child: Row(
                                                 mainAxisAlignment: MainAxisAlignment.center,

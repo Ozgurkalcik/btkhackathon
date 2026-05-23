@@ -41,9 +41,9 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
       decoration: BoxDecoration(
-        color: colorScheme.onSurface.withOpacity(0.05),
+        color: colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1)),
       ),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -66,7 +66,7 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainerLow,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: colorScheme.primaryContainer.withOpacity(0.2)),
+            border: Border.all(color: colorScheme.primaryContainer.withValues(alpha: 0.2)),
           ),
           child: Row(children: [
             Container(
@@ -94,9 +94,9 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
         Container(
           width: s.sp(48), height: s.sp(48),
           decoration: BoxDecoration(
-            color: active ? colorScheme.primary.withOpacity(0.2) : colorScheme.surfaceContainerHighest,
+            color: active ? colorScheme.primary.withValues(alpha: 0.2) : colorScheme.surfaceContainerHighest,
             borderRadius: BorderRadius.circular(8),
-            border: Border.all(color: active ? colorScheme.primary.withOpacity(0.3) : colorScheme.onSurface.withOpacity(0.1)),
+            border: Border.all(color: active ? colorScheme.primary.withValues(alpha: 0.3) : colorScheme.onSurface.withValues(alpha: 0.1)),
           ),
           child: Icon(icon, color: active ? colorScheme.primary : colorScheme.onSurfaceVariant, size: s.sp(22)),
         ),
@@ -126,9 +126,9 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
             margin: EdgeInsets.only(right: s.sp(8)),
             padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(8)),
             decoration: BoxDecoration(
-              color: colorScheme.onSurface.withOpacity(0.05),
+              color: colorScheme.onSurface.withValues(alpha: 0.05),
               borderRadius: BorderRadius.circular(999),
-              border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+              border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1)),
             ),
             child: Row(children: [
               Icon(sectors[i].$2, color: colorScheme.primary, size: s.sp(18)),
@@ -160,12 +160,12 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
       margin: EdgeInsets.only(bottom: s.sp(12)),
       padding: EdgeInsets.all(s.sp(16)),
       decoration: BoxDecoration(
-        color: colorScheme.onSurface.withOpacity(0.05),
+        color: colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1)),
       ),
       child: Row(children: [
-        Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(color: colorScheme.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(t.icon, color: colorScheme.primary, size: s.sp(20))),
+        Container(width: s.sp(40), height: s.sp(40), decoration: BoxDecoration(color: colorScheme.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)), child: Icon(t.icon, color: colorScheme.primary, size: s.sp(20))),
         SizedBox(width: s.sp(16)),
         Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Text(t.resolvedMerchant ?? t.title, style: TextStyle(fontSize: s.sp(16), fontWeight: FontWeight.bold, color: colorScheme.onSurface)),
@@ -182,9 +182,9 @@ class _ResolutionScreenState extends State<ResolutionScreen> {
     return Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        color: colorScheme.onSurface.withOpacity(0.05),
+        color: colorScheme.onSurface.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.tertiary.withOpacity(0.3)),
+        border: Border.all(color: colorScheme.tertiary.withValues(alpha: 0.3)),
       ),
       child: Padding(
         padding: EdgeInsets.all(s.sp(16)),

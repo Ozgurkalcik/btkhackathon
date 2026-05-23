@@ -16,7 +16,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
   
   bool _isLoading = true;
   String _insight = "";
-  List<Map<String, dynamic>> _chatHistory = [];
+  final List<Map<String, dynamic>> _chatHistory = [];
   final TextEditingController _chatController = TextEditingController();
 
   @override
@@ -118,7 +118,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
         padding: EdgeInsets.all(sizes.sp(16)),
         constraints: BoxConstraints(maxWidth: sizes.hp(0.75)),
         decoration: BoxDecoration(
-          color: isAi ? colorScheme.surfaceContainerHigh : colorScheme.primary.withOpacity(0.18),
+          color: isAi ? colorScheme.surfaceContainerHigh : colorScheme.primary.withValues(alpha: 0.18),
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -126,7 +126,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
             bottomRight: Radius.circular(isAi ? 16 : 0),
           ),
           border: Border.all(
-            color: isAi ? colorScheme.onSurface.withOpacity(0.06) : colorScheme.primary.withOpacity(0.3),
+            color: isAi ? colorScheme.onSurface.withValues(alpha: 0.06) : colorScheme.primary.withValues(alpha: 0.3),
           ),
         ),
         child: Text(
@@ -148,7 +148,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
         padding: EdgeInsets.all(sizes.sp(16)),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
-          border: Border(top: BorderSide(color: colorScheme.onSurface.withOpacity(0.06))),
+          border: Border(top: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.06))),
         ),
         child: SafeArea(
           child: Row(

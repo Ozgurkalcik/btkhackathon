@@ -1,0 +1,18 @@
+🚀 Geleceğin Finansal Teknolojisini İnşa Ettim: AI Financial Persona Engine!
+
+Sıradan bütçe takip uygulamalarından sıkılmadınız mı? Finansal hayatımızı yönetmek, sadece "Dün kahveye ne kadar harcadım?" sorusunun ötesine geçmeliydi. Bu vizyonla, kullanıcıların finansal psikolojisini analiz eden ve gerçek bir Otonom Yapay Zeka CFO gibi çalışan "AI Financial Persona Engine" (Finance Expert) projesini hayata geçirdim! 💡
+
+Projenin sadece bir mobil uygulama olmasının ötesinde, kaputun altında muazzam bir Bilişsel Yapay Zeka (Cognitive AI) motoru yatıyor:
+
+🧠 Dopamin Harcama İndeksi (DSI): Sistem, gece geç saatlerde veya hafta sonları yapılan dürtüsel harcamaları yüzdelik olarak hesaplıyor. Psikolojik zaaflarınızı yakaladığı an "Cüzdanı 12 saat dondur" tavsiyesi veriyor!
+⏳ Survival Runway Modeli: Monte Carlo & Kaplan-Meier simülasyonları mantığıyla, 30 günlük harcama hızınıza (Burn Rate) bakarak cebinizdeki paranın tam olarak kaç gün sonra sıfırlanacağını saptıyor.
+🎯 Knapsack Optimizasyonu: Sınırlı bütçe ve sınırsız istek! Dinamik Programlama kullanarak bütçenize en uygun ideal alışveriş sepeti kombinasyonunu sunuyor.
+🤖 LLM & Semantic AI: Bankalardan gelen karmaşık POS loglarını Google Gemini API ile saniyeler içinde anlamlı finansal veri modellerine dönüştürüyor.
+
+Tüm bu devasa arka plan mimarisini (Graph Data teorileri, Temporal Pattern Mining) tamamen Premium bir "Glassmorphism" arayüzle giydirdim.
+
+Şimdi bu inovasyonu çok daha ileri taşımak ve ekosistemi büyütmek için sabırsızlanıyorum! Geri bildirimleriniz ve fikirleriniz benim için çok değerli, kodları GitHub üzerinden inceleyebilirsiniz. 👇
+
+🔗 GitHub Linki: [Buraya Link Gelecek]
+
+#ArtificialIntelligence #Fintech #Flutter #MachineLearning #OpenBanking #SoftwareEngineering #DataScience #Innovation #AI #BTKHackathon

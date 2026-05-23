@@ -42,9 +42,9 @@ class _BudgetScreenState extends State<BudgetScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainer.withOpacity(0.7),
+        color: colorScheme.surfaceContainer.withValues(alpha: 0.7),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.1)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1)),
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -90,7 +90,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
     if (cats.isEmpty) return buildEmptyState(icon: Icons.pie_chart_outline, title: 'Bütçe kategorisi yok', subtitle: 'Banka bağlantınız kurulduğunda harcamalar kategorize edilecek.', sizes: s);
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: colorScheme.surfaceContainer, borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.05))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer, borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.05))),
       child: Column(children: cats.map((c) {
         final color = c.isOverBudget ? colorScheme.error : (c.progress > 0.85 ? colorScheme.tertiary : colorScheme.primary);
         return Padding(padding: EdgeInsets.only(bottom: s.sp(16)), child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -99,7 +99,7 @@ class _BudgetScreenState extends State<BudgetScreen> {
             Text(c.statusText, style: TextStyle(fontSize: s.sp(12), color: color, fontWeight: FontWeight.w600)),
           ]),
           SizedBox(height: s.sp(8)),
-          LinearProgressIndicator(value: c.progress.clamp(0.0, 1.0), backgroundColor: colorScheme.onSurface.withOpacity(0.1), color: color, minHeight: s.sp(8), borderRadius: BorderRadius.circular(999)),
+          LinearProgressIndicator(value: c.progress.clamp(0.0, 1.0), backgroundColor: colorScheme.onSurface.withValues(alpha: 0.1), color: color, minHeight: s.sp(8), borderRadius: BorderRadius.circular(999)),
         ]));
       }).toList()),
     );

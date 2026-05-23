@@ -52,8 +52,6 @@ class AnalyticsEngine {
         t.date.isAfter(thirtyDaysAgo) && t.type == TransactionType.expense
     ).toList();
 
-    final totalExpense = recentExpenses.fold(0.0, (sum, item) => sum + item.amount);
-
     if (recentExpenses.isEmpty) return [];
 
     // 1. ANALİZ: Fast Food & Sağlık Finansmanı
@@ -65,7 +63,10 @@ class AnalyticsEngine {
     // 3. ANALİZ: Abonelik Denetçisi
     _analyzeSubscriptions(recentExpenses, results);
 
-    // 4. ANALİZ: Hafta Sonu Harcama Eğilimi
+    // 4. ANALİZ: Ulaşım Giderleri
+    _analyzeTransportHabits(recentExpenses, results);
+
+    // 5. ANALİZ: Hafta Sonu Harcama Eğilimi
     _analyzeWeekendSpikes(recentExpenses, results);
 
     // 5. ANALİZ: Gece Kuşu (Dürtüsel Alışveriş)
@@ -205,6 +206,27 @@ class AnalyticsEngine {
       ));
     }
   }
+
+  void _analyzeTransportHabits(List<Transaction> txns, List<InsightResult> results) {
+    final transportTxns = txns.where((t) {
+      final name = (t.resolvedMerchant ?? t.title).toUpperCase();
+      return _transportKeywords.any((k) => name.contains(k));
+    }).toList();
+
+    if (transportTxns.length >= 8) {
+      double total = transportTxns.fold(0, (sum, item) => sum + item.amount);
+      results.add(InsightResult(
+        title: 'Yüksek Ulaşım Gideri',
+        description: 'Son 30 günde ${transportTxns.length} kez taksi veya özel ulaşım kullanmışsınız (₺${total.toStringAsFixed(0)}).',
+        actionPlan: 'Kısa mesafelerde yürüyüşü veya toplu taşımayı tercih ederek ulaşım bütçenizi optimize edebilirsiniz.',
+        severity: 'medium',
+        icon: Icons.local_taxi,
+        color: Colors.deepOrange,
+        type: InsightType.saving,
+        totalAmount: total,
+      ));
+    }
+  }
 }
 
 /// Yapay Zeka ve Ayrık Matematik Temelli Analiz Motoru
@@ -290,8 +312,18 @@ class CognitiveAnalyticsEngine {
         }
       }
     }
-    // Seçilen öğeleri geri izleme (backtracking) ile bulabiliriz...
-    return []; // Örnek olması açısından boş dönüldü.
+    
+    // Seçilen öğeleri geri izleme (backtracking) ile bulma
+    List<Transaction> selectedItems = [];
+    int w = budget.toInt();
+    for (int i = n; i > 0 && w > 0; i--) {
+      if (dp[i][w] != dp[i - 1][w]) {
+        selectedItems.add(wishlist[i - 1]);
+        w -= wishlist[i - 1].amount.toInt();
+      }
+    }
+    
+    return selectedItems;
   }
 
   double _calculatePriority(Transaction t) {
@@ -356,6 +388,107 @@ class CognitiveAnalyticsEngine {
     // Graph Theory Analizi
     results.addAll(analyzeCorrelatedSpending(txns));
 
+    // Dopamine Spending Index (DSI)
+    results.addAll(_calculateDopamineSpendingIndex(txns));
+
+    // Financial Stability & Survival Runway
+    results.addAll(_calculateSurvivalRunwayScore(txns, balance));
+
     return results;
+  }
+
+  /// PROPRIETARY SCORING: Dopamine Spending Index (DSI)
+  /// Gece alışverişleri, fast-food ve mikro işlemlerin toplam hacme oranını hesaplar.
+  List<InsightResult> _calculateDopamineSpendingIndex(List<Transaction> txns) {
+    if (txns.isEmpty) return [];
+    
+    double totalSpend = txns.fold(0, (sum, t) => sum + t.amount);
+    if (totalSpend == 0) return [];
+
+    double dopamineSpend = 0;
+    int dopamineTxnCount = 0;
+    
+    for (var t in txns) {
+      bool isNight = t.date.hour >= 23 || t.date.hour <= 5;
+      bool isWeekend = t.date.weekday >= 6;
+      bool isFastFood = t.category.toLowerCase().contains('food') || t.category.toLowerCase().contains('yemek');
+      bool isMicro = t.amount < 150; // Mikro işlem sınırı
+
+      // Ağırlıklandırılmış Dopamin Skoru
+      double weight = 0;
+      if (isNight) weight += 0.4;
+      if (isWeekend) weight += 0.2;
+      if (isFastFood) weight += 0.3;
+      if (isMicro) weight += 0.1;
+
+      if (weight >= 0.4) {
+        dopamineSpend += t.amount;
+        dopamineTxnCount++;
+      }
+    }
+
+    double dsi = dopamineSpend / totalSpend;
+
+    if (dsi > 0.3) {
+      return [
+        InsightResult(
+          title: 'Yüksek Dopamin Harcaması',
+          description: 'Harcamalarınızın %${(dsi * 100).toStringAsFixed(1)}\'i ($dopamineTxnCount adet işlem, ₺${dopamineSpend.toStringAsFixed(0)}) dürtüsel veya ödül odaklı (gece, hafta sonu, fast-food).',
+          actionPlan: 'AI CFO Önerisi: Saat 22:00\'den sonra cüzdan uygulamalarınızı dijital olarak dondurarak DSI skorunuzu düşürün.',
+          severity: 'critical',
+          icon: Icons.psychology,
+          color: Colors.purple,
+          type: InsightType.warning,
+          totalAmount: dopamineSpend,
+        )
+      ];
+    }
+    return [];
+  }
+
+  /// PROPRIETARY SCORING: Survival Runway Score (Kaplan-Meier & Monte Carlo yaklaşımı simulasyonu)
+  /// Mevcut bakiyenin ve harcama hızının kaç gün dayanacağını hesaplar.
+  List<InsightResult> _calculateSurvivalRunwayScore(List<Transaction> txns, double balance) {
+    if (txns.isEmpty || balance <= 0) return [];
+
+    final now = DateTime.now();
+    final thirtyDaysAgo = now.subtract(const Duration(days: 30));
+    final recentTxns = txns.where((t) => t.date.isAfter(thirtyDaysAgo)).toList();
+    
+    if (recentTxns.isEmpty) return [];
+
+    double total30DaysSpend = recentTxns.fold(0, (sum, t) => sum + t.amount);
+    double dailyBurnRate = total30DaysSpend / 30.0;
+    
+    if (dailyBurnRate <= 0) return [];
+
+    int survivalDays = (balance / dailyBurnRate).floor();
+
+    if (survivalDays < 15) {
+      return [
+        InsightResult(
+          title: 'Kritik Hayatta Kalma Süresi (Runway)',
+          description: 'Günlük ₺${dailyBurnRate.toStringAsFixed(0)} harcama hızınız (Burn Rate) ile mevcut bakiyeniz sadece $survivalDays gün yetecek.',
+          actionPlan: 'Acil durum: Gereksiz abonelikleri iptal edin ve "Optimizasyon" sekmesinden Knapsack bütçe planlayıcısını çalıştırın.',
+          severity: 'critical',
+          icon: Icons.warning_amber_rounded,
+          color: Colors.redAccent,
+          type: InsightType.warning,
+        )
+      ];
+    } else if (survivalDays > 45) {
+      return [
+        InsightResult(
+          title: 'Güçlü Finansal Dayanıklılık',
+          description: 'Finansal Runway skorunuz çok yüksek. Mevcut hızla $survivalDays gün dayanabilirsiniz.',
+          actionPlan: 'Atıl duran paranızı değerlendirmek için yatırım/fon araçlarını inceleyebilirsiniz.',
+          severity: 'low',
+          icon: Icons.shield,
+          color: Colors.green,
+          type: InsightType.saving,
+        )
+      ];
+    }
+    return [];
   }
 }

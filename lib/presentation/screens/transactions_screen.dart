@@ -61,9 +61,9 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
     return Container(
       padding: EdgeInsets.all(sizes.sp(16)),
       decoration: BoxDecoration(
-        color: colorScheme.primary.withOpacity(0.1),
+        color: colorScheme.primary.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.primary.withOpacity(0.3)),
+        border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3)),
       ),
       child: Row(
         children: [
@@ -94,7 +94,7 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
           decoration: BoxDecoration(
             color: colorScheme.surfaceContainer,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: colorScheme.onSurface.withOpacity(0.05)),
+            border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.05)),
           ),
           child: Row(
             children: [

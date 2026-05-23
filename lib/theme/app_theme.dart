@@ -46,7 +46,7 @@ class AppTheme {
       ),
 
       appBarTheme: AppBarTheme(
-        backgroundColor: softLightBg.withOpacity(0.8),
+        backgroundColor: softLightBg.withValues(alpha: 0.8),
         elevation: 0,
         scrolledUnderElevation: 4,
         iconTheme: const IconThemeData(color: originalMintLight),
@@ -93,7 +93,7 @@ class AppTheme {
           borderSide: const BorderSide(color: originalMintLight, width: 2),
         ),
         labelStyle: GoogleFonts.inter(color: AppColors.textLightSecondary),
-        hintStyle: GoogleFonts.inter(color: AppColors.textLightSecondary.withOpacity(0.7)),
+        hintStyle: GoogleFonts.inter(color: AppColors.textLightSecondary.withValues(alpha: 0.7)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
 
@@ -132,7 +132,7 @@ class AppTheme {
       ),
 
       appBarTheme: AppBarTheme(
-        backgroundColor: AppColors.darkBackground.withOpacity(0.8),
+        backgroundColor: AppColors.darkBackground.withValues(alpha: 0.8),
         elevation: 0,
         scrolledUnderElevation: 4,
         iconTheme: const IconThemeData(color: originalMintDark),
@@ -148,7 +148,7 @@ class AppTheme {
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: Colors.white.withOpacity(0.05), width: 1.0),
+          side: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1.0),
         ),
       ),
 
@@ -172,14 +172,14 @@ class AppTheme {
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide(color: Colors.white.withOpacity(0.05), width: 1.0),
+          borderSide: BorderSide(color: Colors.white.withValues(alpha: 0.05), width: 1.0),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: const BorderSide(color: originalMintDark, width: 2),
         ),
         labelStyle: GoogleFonts.inter(color: AppColors.textDarkSecondary),
-        hintStyle: GoogleFonts.inter(color: AppColors.textDarkSecondary.withOpacity(0.7)),
+        hintStyle: GoogleFonts.inter(color: AppColors.textDarkSecondary.withValues(alpha: 0.7)),
         contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
       ),
 
@@ -204,7 +204,7 @@ class AppTheme {
         bodyLarge: TextStyle(fontSize: 16, color: color),
         bodyMedium: TextStyle(fontSize: 14, color: color),
         labelLarge: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: color),
-        bodySmall: TextStyle(fontSize: 12, color: color.withOpacity(0.7)),
+        bodySmall: TextStyle(fontSize: 12, color: color.withValues(alpha: 0.7)),
       ),
     );
   }

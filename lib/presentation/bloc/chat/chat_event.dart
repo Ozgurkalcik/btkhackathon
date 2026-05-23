@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import '../../../domain/entities/chat_message.dart';
 
 /// Chat BLoC Events
 abstract class ChatEvent extends Equatable {

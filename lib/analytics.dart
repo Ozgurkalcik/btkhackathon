@@ -47,7 +47,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1))),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Text('Kategori Dağılımı', style: TextStyle(fontSize: s.sp(20), fontWeight: FontWeight.w600, color: colorScheme.onSurface)),
@@ -60,7 +60,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
             if (breakdown.isNotEmpty)
               Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: _buildSegments(breakdown, totalSpent))))
             else
-              Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: [_ChartSegment(1.0, colorScheme.onSurface.withOpacity(0.1))]))),
+              Positioned.fill(child: CustomPaint(painter: _DonutChartPainter(segments: [_ChartSegment(1.0, colorScheme.onSurface.withValues(alpha: 0.1))]))),
             Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text('TOPLAM', style: TextStyle(fontSize: s.sp(12), color: colorScheme.onSurfaceVariant, fontWeight: FontWeight.w600)),
               SizedBox(height: s.sp(2)),
@@ -87,7 +87,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
     final colorScheme = theme.colorScheme;
 
     return Container(
-      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1))),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(12),
         child: Stack(children: [
@@ -95,7 +95,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
           Padding(
             padding: EdgeInsets.all(s.sp(16)),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Container(padding: EdgeInsets.all(s.sp(8)), decoration: BoxDecoration(color: colorScheme.tertiary.withOpacity(0.1), borderRadius: BorderRadius.circular(8)), child: Icon(Icons.auto_awesome, color: colorScheme.tertiary, size: s.sp(20))),
+              Container(padding: EdgeInsets.all(s.sp(8)), decoration: BoxDecoration(color: colorScheme.tertiary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8)), child: Icon(Icons.auto_awesome, color: colorScheme.tertiary, size: s.sp(20))),
               SizedBox(width: s.sp(16)),
               Expanded(child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text('AI Teşhis', style: TextStyle(fontSize: s.sp(18), fontWeight: FontWeight.w600, color: colorScheme.tertiary)),
@@ -118,7 +118,7 @@ class _AnalyticsScreenState extends State<AnalyticsScreen> {
 
     return Container(
       padding: EdgeInsets.all(s.sp(16)),
-      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withOpacity(0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withOpacity(0.1))),
+      decoration: BoxDecoration(color: colorScheme.surfaceContainer.withValues(alpha: 0.7), borderRadius: BorderRadius.circular(12), border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.1))),
       child: Column(children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, crossAxisAlignment: CrossAxisAlignment.end, children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -167,7 +167,7 @@ class _LineChartPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final gridPaint = Paint()..color = Colors.white.withOpacity(0.05)..strokeWidth = 1.0;
+    final gridPaint = Paint()..color = Colors.white.withValues(alpha: 0.05)..strokeWidth = 1.0;
     canvas.drawLine(Offset(0, size.height * 0.25), Offset(size.width, size.height * 0.25), gridPaint);
     canvas.drawLine(Offset(0, size.height * 0.50), Offset(size.width, size.height * 0.50), gridPaint);
     canvas.drawLine(Offset(0, size.height * 0.75), Offset(size.width, size.height * 0.75), gridPaint);

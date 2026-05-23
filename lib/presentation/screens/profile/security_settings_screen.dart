@@ -53,7 +53,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
               backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
               ),
               title: Text('Şifreyi Değiştir', style: TextStyle(color: colorScheme.onSurface)),
               content: SingleChildScrollView(
@@ -186,7 +186,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
               backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
               ),
               title: Row(
                 children: [
@@ -221,7 +221,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                         onPressed: () => setStateDialog(() => obscurePassword = !obscurePassword),
                       ),
                       filled: true,
-                      fillColor: colorScheme.surface.withOpacity(0.6),
+                      fillColor: colorScheme.surface.withValues(alpha: 0.6),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide.none,
@@ -341,7 +341,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
               backgroundColor: colorScheme.surfaceContainer,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
-                side: BorderSide(color: colorScheme.onSurface.withOpacity(0.08)),
+                side: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08)),
               ),
               title: Row(
                 children: [
@@ -369,7 +369,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.15),
+                            color: Colors.black.withValues(alpha: 0.15),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           )
@@ -406,9 +406,9 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                       decoration: BoxDecoration(
-                        color: colorScheme.surface.withOpacity(0.6),
+                        color: colorScheme.surface.withValues(alpha: 0.6),
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+                        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
                       ),
                       child: Row(
                         children: [
@@ -460,7 +460,7 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                         labelStyle: TextStyle(letterSpacing: 0, color: colorScheme.onSurfaceVariant),
                         counterText: '',
                         filled: true,
-                        fillColor: colorScheme.surface.withOpacity(0.6),
+                        fillColor: colorScheme.surface.withValues(alpha: 0.6),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16),
                           borderSide: BorderSide.none,
@@ -563,24 +563,24 @@ class _SecuritySettingsScreenState extends State<SecuritySettingsScreen> {
                   title: Text('Biyometrik Giriş (Face ID / Touch ID)', style: TextStyle(color: colorScheme.onSurface)),
                   trailing: Switch(
                     value: _biometricEnabled,
-                    activeColor: colorScheme.secondary,
+                    activeThumbColor: colorScheme.secondary,
                     onChanged: _toggleBiometric,
                   ),
                 ),
-                Divider(color: colorScheme.onSurface.withOpacity(0.08), height: 1),
+                Divider(color: colorScheme.onSurface.withValues(alpha: 0.08), height: 1),
                 ListTile(
                   leading: Icon(Icons.password, color: colorScheme.onSurfaceVariant),
                   title: Text('Şifreyi Değiştir', style: TextStyle(color: colorScheme.onSurface)),
                   trailing: Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant),
                   onTap: _showChangePasswordDialog,
                 ),
-                Divider(color: colorScheme.onSurface.withOpacity(0.08), height: 1),
+                Divider(color: colorScheme.onSurface.withValues(alpha: 0.08), height: 1),
                 ListTile(
                   leading: Icon(Icons.security, color: colorScheme.onSurfaceVariant),
                   title: Text('İki Faktörlü Doğrulama (2FA)', style: TextStyle(color: colorScheme.onSurface)),
                   trailing: Switch(
                     value: _twoFactorEnabled,
-                    activeColor: colorScheme.secondary,
+                    activeThumbColor: colorScheme.secondary,
                     onChanged: (val) async {
                       if (val) {
                         _show2FASetup();

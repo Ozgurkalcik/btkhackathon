@@ -81,12 +81,12 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: colorScheme.secondary.withOpacity(0.3 * _pulseAnimation.value),
+                    color: colorScheme.secondary.withValues(alpha: 0.3 * _pulseAnimation.value),
                     blurRadius: 18 * _pulseAnimation.value,
                     spreadRadius: 2 * _pulseAnimation.value,
                   ),
                   BoxShadow(
-                    color: colorScheme.tertiary.withOpacity(0.25 * _pulseAnimation.value),
+                    color: colorScheme.tertiary.withValues(alpha: 0.25 * _pulseAnimation.value),
                     blurRadius: 26 * _pulseAnimation.value,
                     spreadRadius: 3 * _pulseAnimation.value,
                   ),
@@ -160,8 +160,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   padding: EdgeInsets.all(sizes.sp(8)),
                   decoration: BoxDecoration(
                     color: hasConnection
-                        ? colorScheme.primary.withOpacity(0.2)
-                        : colorScheme.tertiary.withOpacity(0.2),
+                        ? colorScheme.primary.withValues(alpha: 0.2)
+                        : colorScheme.tertiary.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Icon(
@@ -225,10 +225,10 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.primary.withOpacity(0.05),
+            color: colorScheme.primary.withValues(alpha: 0.05),
             blurRadius: 20,
             offset: const Offset(0, 8),
           ),
@@ -266,9 +266,9 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               Container(
                 padding: EdgeInsets.symmetric(horizontal: sizes.sp(12), vertical: sizes.sp(6)),
                 decoration: BoxDecoration(
-                  color: colorScheme.primary.withOpacity(0.12),
+                  color: colorScheme.primary.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: colorScheme.primary.withOpacity(0.2)),
+                  border: Border.all(color: colorScheme.primary.withValues(alpha: 0.2)),
                 ),
                 child: Row(
                   children: [
@@ -331,7 +331,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: colorScheme.secondary.withOpacity(0.3),
+                  color: colorScheme.secondary.withValues(alpha: 0.3),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 )
@@ -364,7 +364,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                       'Şimdi',
                       style: TextStyle(
                         fontSize: sizes.sp(11),
-                        color: colorScheme.onSurfaceVariant.withOpacity(0.7),
+                        color: colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                       ),
                     ),
                   ],
@@ -423,8 +423,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
       padding: EdgeInsets.all(sizes.sp(24)),
       glowColor: colorScheme.primary,
       gradientColors: [
-        colorScheme.primary.withOpacity(0.08),
-        colorScheme.onSurface.withOpacity(0.02),
+        colorScheme.primary.withValues(alpha: 0.08),
+        colorScheme.onSurface.withValues(alpha: 0.02),
       ],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -542,7 +542,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             borderRadius: BorderRadius.circular(3),
             boxShadow: [
               BoxShadow(
-                color: color.withOpacity(0.35),
+                color: color.withValues(alpha: 0.35),
                 blurRadius: 8,
                 offset: const Offset(0, 2),
               ),
@@ -552,7 +552,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
             borderRadius: BorderRadius.circular(3),
             child: LinearProgressIndicator(
               value: progress,
-              backgroundColor: colorScheme.onSurface.withOpacity(0.1),
+              backgroundColor: colorScheme.onSurface.withValues(alpha: 0.1),
               color: color,
               minHeight: sizes.sp(6),
             ),
@@ -601,8 +601,8 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                 width: sizes.sp(220),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  color: colorScheme.surfaceContainer.withOpacity(0.4),
-                  border: Border.all(color: colorScheme.onSurface.withOpacity(0.05)),
+                  color: colorScheme.surfaceContainer.withValues(alpha: 0.4),
+                  border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.05)),
                 ),
                 padding: EdgeInsets.all(sizes.sp(16)),
                 child: Column(
@@ -614,7 +614,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                           width: sizes.sp(32),
                           height: sizes.sp(32),
                           decoration: BoxDecoration(
-                            color: isDark ? Colors.white : Colors.blueGrey.withOpacity(0.1),
+                            color: isDark ? Colors.white : Colors.blueGrey.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
@@ -707,7 +707,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
                   Container(
                     padding: EdgeInsets.all(sizes.sp(8)),
                     decoration: BoxDecoration(
-                      color: colorScheme.primary.withOpacity(0.12),
+                      color: colorScheme.primary.withValues(alpha: 0.12),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Icon(Icons.location_on, color: colorScheme.primary, size: sizes.sp(20)),
@@ -765,7 +765,7 @@ class _DashboardScreenState extends State<DashboardScreen> with SingleTickerProv
               Container(
                 padding: EdgeInsets.all(sizes.sp(8)),
                 decoration: BoxDecoration(
-                  color: colorScheme.error.withOpacity(0.12),
+                  color: colorScheme.error.withValues(alpha: 0.12),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(Icons.trending_up, color: colorScheme.error, size: sizes.sp(20)),

@@ -223,7 +223,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: colorScheme.shadow.withOpacity(0.08),
+            color: colorScheme.shadow.withValues(alpha: 0.08),
             blurRadius: 10,
             offset: const Offset(0, 5),
           )
@@ -263,7 +263,7 @@ class _PaymentMethodsScreenState extends State<PaymentMethodsScreen> {
                 'Son Kullanma',
                 style: TextStyle(
                   fontSize: sizes.sp(12),
-                  color: cardTextColor.withOpacity(0.7),
+                  color: cardTextColor.withValues(alpha: 0.7),
                 ),
               ),
               Text(

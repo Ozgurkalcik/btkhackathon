@@ -59,10 +59,12 @@ class _ChatScreenState extends State<ChatScreen> {
           if (state is ChatNotConfigured) return _buildApiKeySetup(sizes);
           if (state is ChatLoading) return const Center(child: CircularProgressIndicator());
           if (state is ChatLoaded) return _buildChatBody(state, sizes);
-          if (state is ChatError) return _buildChatBody(
+          if (state is ChatError) {
+            return _buildChatBody(
             ChatLoaded(messages: state.previousMessages), sizes,
             errorMessage: state.message,
           );
+          }
           return const SizedBox.shrink();
         },
       ),
@@ -136,7 +138,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         padding: EdgeInsets.all(s.sp(14)),
         decoration: BoxDecoration(
-          color: isUser ? colorScheme.primary.withOpacity(0.15) : colorScheme.surfaceContainer,
+          color: isUser ? colorScheme.primary.withValues(alpha: 0.15) : colorScheme.surfaceContainer,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(s.sp(16)),
             topRight: Radius.circular(s.sp(16)),
@@ -144,7 +146,7 @@ class _ChatScreenState extends State<ChatScreen> {
             bottomRight: isUser ? Radius.circular(s.sp(4)) : Radius.circular(s.sp(16)),
           ),
           border: Border.all(
-            color: isUser ? colorScheme.primary.withOpacity(0.3) : colorScheme.onSurface.withOpacity(0.08),
+            color: isUser ? colorScheme.primary.withValues(alpha: 0.3) : colorScheme.onSurface.withValues(alpha: 0.08),
           ),
         ),
         child: Text(
@@ -169,7 +171,7 @@ class _ChatScreenState extends State<ChatScreen> {
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
           borderRadius: BorderRadius.circular(s.sp(16)),
-          border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+          border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
         ),
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           SizedBox(
@@ -191,7 +193,7 @@ class _ChatScreenState extends State<ChatScreen> {
         padding: EdgeInsets.only(left: s.sp(16), right: s.sp(8), top: s.sp(12), bottom: s.sp(12) + bottomPadding),
         decoration: BoxDecoration(
           color: colorScheme.surfaceContainer,
-          border: Border(top: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))),
+          border: Border(top: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08))),
         ),
         child: Row(children: [
           Expanded(
@@ -228,7 +230,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Container(
       padding: EdgeInsets.all(s.sp(12)),
       margin: EdgeInsets.symmetric(horizontal: s.sp(16)),
-      decoration: BoxDecoration(color: colorScheme.error.withOpacity(0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: colorScheme.error.withOpacity(0.3))),
+      decoration: BoxDecoration(color: colorScheme.error.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(8), border: Border.all(color: colorScheme.error.withValues(alpha: 0.3))),
       child: Text(msg, style: TextStyle(fontSize: s.sp(12), color: colorScheme.error)),
     );
   }
@@ -242,7 +244,7 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(mainAxisSize: MainAxisSize.min, children: [
           Container(
             width: s.sp(80), height: s.sp(80),
-            decoration: BoxDecoration(shape: BoxShape.circle, color: colorScheme.primary.withOpacity(0.1)),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: colorScheme.primary.withValues(alpha: 0.1)),
             child: Icon(Icons.key, color: colorScheme.primary, size: s.sp(40)),
           ),
           SizedBox(height: s.sp(24)),
@@ -256,8 +258,8 @@ class _ChatScreenState extends State<ChatScreen> {
             style: TextStyle(color: colorScheme.onSurface),
             decoration: InputDecoration(
               hintText: 'API anahtarınızı yapıştırın...',
-              hintStyle: TextStyle(color: colorScheme.onSurfaceVariant.withOpacity(0.6)),
-              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
+              hintStyle: TextStyle(color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6)),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.2))),
             ),
           ),
           SizedBox(height: s.sp(16)),

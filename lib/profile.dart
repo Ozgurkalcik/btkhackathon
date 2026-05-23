@@ -102,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       SizedBox(height: s.sp(8)),
       Container(
         padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(6)),
-        decoration: BoxDecoration(color: colorScheme.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(999), border: Border.all(color: colorScheme.primary.withOpacity(0.3))),
+        decoration: BoxDecoration(color: colorScheme.primary.withValues(alpha: 0.1), borderRadius: BorderRadius.circular(999), border: Border.all(color: colorScheme.primary.withValues(alpha: 0.3))),
         child: Text(
           _repo.hasBankConnections ? '${_repo.connectedBankCount} Banka Bağlı' : 'Bağlantı Yok',
           style: TextStyle(fontSize: s.sp(12), color: colorScheme.primary, fontWeight: FontWeight.w600),
@@ -117,10 +117,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Expanded(child: Container(
         padding: EdgeInsets.all(s.sp(16)),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+          color: colorScheme.surfaceContainerLow.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
-          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.primary.withOpacity(0.12), Colors.transparent]),
+          border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
+          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.primary.withValues(alpha: 0.12), Colors.transparent]),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -137,10 +137,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
       Expanded(child: Container(
         padding: EdgeInsets.all(s.sp(16)),
         decoration: BoxDecoration(
-          color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+          color: colorScheme.surfaceContainerLow.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
-          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.tertiary.withOpacity(0.12), Colors.transparent]),
+          border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
+          gradient: RadialGradient(center: Alignment.topLeft, radius: 1.4, colors: [colorScheme.tertiary.withValues(alpha: 0.12), Colors.transparent]),
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -166,22 +166,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        color: colorScheme.surfaceContainerLow.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
       ),
-      child: Column(children: List.generate(math_min(banks.length, 5), (i) {
+      child: Column(children: List.generate(_mathMin(banks.length, 5), (i) {
         final bank = banks[i];
-        final isLast = i == math_min(banks.length, 5) - 1;
+        final isLast = i == _mathMin(banks.length, 5) - 1;
         return Container(
           padding: EdgeInsets.all(s.sp(16)),
-          decoration: BoxDecoration(border: !isLast ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
+          decoration: BoxDecoration(border: !isLast ? Border(bottom: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08))) : null),
           child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Row(children: [
               Container(
                 width: s.sp(36), height: s.sp(36),
                 decoration: BoxDecoration(
-                  color: bank.isReady ? colorScheme.primary.withOpacity(0.12) : colorScheme.surfaceContainerHigh,
+                  color: bank.isReady ? colorScheme.primary.withValues(alpha: 0.12) : colorScheme.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(Icons.account_balance, color: bank.isReady ? colorScheme.primary : colorScheme.onSurfaceVariant, size: s.sp(18)),
@@ -195,9 +195,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
             Container(
               padding: EdgeInsets.symmetric(horizontal: s.sp(10), vertical: s.sp(4)),
               decoration: BoxDecoration(
-                color: bank.isReady ? colorScheme.primary.withOpacity(0.12) : colorScheme.surfaceContainerHigh,
+                color: bank.isReady ? colorScheme.primary.withValues(alpha: 0.12) : colorScheme.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(999),
-                border: Border.all(color: bank.isReady ? colorScheme.primary.withOpacity(0.3) : colorScheme.onSurface.withOpacity(0.08)),
+                border: Border.all(color: bank.isReady ? colorScheme.primary.withValues(alpha: 0.3) : colorScheme.onSurface.withValues(alpha: 0.08)),
               ),
               child: Text(
                 bank.isReady ? 'Aktif' : 'Yapılandır',
@@ -218,9 +218,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        color: colorScheme.surfaceContainerLow.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
       ),
       child: Column(children: [
         _buildListTile(Icons.person, 'Kişisel Bilgiler', true, s, onTap: () => Navigator.pushNamed(context, '/profile/personal_info').then((_) => _loadUserDisplayName())),
@@ -237,7 +237,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(s.sp(16)),
-        decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
+        decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08))) : null),
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           Row(children: [Icon(icon, color: colorScheme.onSurfaceVariant, size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: colorScheme.onSurface))]),
           Icon(Icons.chevron_right, color: colorScheme.onSurfaceVariant, size: s.sp(22)),
@@ -271,7 +271,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     showDialog(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return AlertDialog(
           backgroundColor: colorScheme.surface,
           title: Text('Gemini API Anahtarı', style: TextStyle(color: colorScheme.onSurface)),
@@ -282,15 +282,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: TextStyle(color: colorScheme.onSurface),
               decoration: InputDecoration(
                 hintText: 'API Anahtarınızı girin',
-                hintStyle: TextStyle(color: colorScheme.onSurfaceVariant.withOpacity(0.6)),
+                hintStyle: TextStyle(color: colorScheme.onSurfaceVariant.withValues(alpha: 0.6)),
                 border: const OutlineInputBorder(),
-                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withOpacity(0.2))),
+                enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.2))),
               ),
             ),
           ),
           actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pop(dialogContext),
               child: Text('İptal', style: TextStyle(color: colorScheme.onSurfaceVariant)),
             ),
             ElevatedButton(
@@ -300,9 +300,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               onPressed: () async {
                 await SecureStorageService.setGeminiApiKey(controller.text.trim());
-                if (mounted) {
-                  Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
+                if (dialogContext.mounted) {
+                  Navigator.pop(dialogContext);
+                  ScaffoldMessenger.of(dialogContext).showSnackBar(
                     const SnackBar(content: Text('Gemini API anahtarı kaydedildi.')),
                   );
                 }
@@ -319,9 +319,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       decoration: BoxDecoration(
-        color: colorScheme.surfaceContainerLow.withOpacity(0.5),
+        color: colorScheme.surfaceContainerLow.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: colorScheme.onSurface.withOpacity(0.08)),
+        border: Border.all(color: colorScheme.onSurface.withValues(alpha: 0.08)),
       ),
       child: Column(children: [
         _buildSwitch(Icons.dark_mode, 'Karanlık Mod', state.themeMode == ThemeMode.dark, colorScheme.primary, (v) => context.read<SettingsCubit>().toggleTheme(v), true, s),
@@ -335,13 +335,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: s.sp(16), vertical: s.sp(12)),
-      decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withOpacity(0.08))) : null),
+      decoration: BoxDecoration(border: hasDivider ? Border(bottom: BorderSide(color: colorScheme.onSurface.withValues(alpha: 0.08))) : null),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(children: [Icon(icon, color: colorScheme.onSurfaceVariant, size: s.sp(22)), SizedBox(width: s.sp(16)), Text(title, style: TextStyle(fontSize: s.sp(16), color: colorScheme.onSurface))]),
         Switch(
           value: value,
           onChanged: onChanged,
-          activeColor: colorScheme.onPrimary,
+          activeThumbColor: colorScheme.onPrimary,
           activeTrackColor: activeColor,
         ),
       ]),
@@ -358,7 +358,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
         },
         style: OutlinedButton.styleFrom(
-          side: BorderSide(color: colorScheme.error.withOpacity(0.4)),
+          side: BorderSide(color: colorScheme.error.withValues(alpha: 0.4)),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           foregroundColor: colorScheme.error,
         ),
@@ -371,5 +371,5 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  int math_min(int a, int b) => a < b ? a : b;
+  int _mathMin(int a, int b) => a < b ? a : b;
 }
