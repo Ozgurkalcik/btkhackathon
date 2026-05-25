@@ -4,6 +4,9 @@
 
 **Sıradan bir bütçe defteri değil. Yeni nesil, uçtan uca, otonom bir "Yapay Zeka CFO" (Chief Financial Officer) Asistanı ve Davranışsal Finans Platformu.**
 
+
+
+
 **Lütfen Başlamadan Önce Lisans Dosyamıza Göz Atın**
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
