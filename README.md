@@ -7,7 +7,7 @@
 
 
 
-**Lütfen Başlamadan Önce Lisans Dosyamıza Göz Atın**
+**❗❗Lütfen Başlamadan Önce Lisans Dosyamıza Göz Atın❗❗**
 
 [![Flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev)
 [![Gemini AI](https://img.shields.io/badge/Google_Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
